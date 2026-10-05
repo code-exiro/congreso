@@ -3,7 +3,15 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import Profile, User, UserArea
+from .models import (
+    Privilege,
+    Profile,
+    Role,
+    RolePrivilege,
+    User,
+    UserArea,
+    UserRole,
+)
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
@@ -29,7 +37,6 @@ class CustomUserAdmin(UserAdmin):
         "privacy_notice_accepted_at",
     )
 
-
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = (
@@ -52,7 +59,6 @@ class ProfileAdmin(admin.ModelAdmin):
         "state",
     )
 
-
 @admin.register(UserArea)
 class UserAreaAdmin(admin.ModelAdmin):
     list_display = (
@@ -70,7 +76,61 @@ class UserAreaAdmin(admin.ModelAdmin):
 
     list_filter = ("area",)
 
+@admin.register(Role)
+class RoleAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "name",
+        "is_active",
+    )
 
+    search_fields = ("name",)
+
+@admin.register(Privilege)
+class PrivilegeAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "code",
+        "name",
+    )
+
+    search_fields = (
+        "code",
+        "name",
+    )
+
+@admin.register(UserRole)
+class UserRoleAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "user",
+        "role",
+        "assigned_at",
+    )
+
+    list_filter = ("role",)
+
+    search_fields = (
+        "user__username",
+        "user__email",
+        "role__name",
+    )
+
+@admin.register(RolePrivilege)
+class RolePrivilegeAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "role",
+        "privilege",
+    )
+
+    list_filter = ("role",)
+
+    search_fields = (
+        "role__name",
+        "privilege__name",
+        "privilege__code",
+    )
 
 
 
