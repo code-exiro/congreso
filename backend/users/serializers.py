@@ -1,8 +1,9 @@
 # backend/users/serializers.py
 
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate
 from django.utils import timezone
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import Role, UserRole
 
@@ -103,4 +104,35 @@ class UserSerializer(serializers.ModelSerializer):
             for user_role in obj.user_roles.select_related("role").all()
         ]
 
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField(
+        write_only=True,
+    )
 
+    def validate(self, attrs):
+        username = attrs.get("username")
+        password = attrs.get("password")
+
+        user = authenticate(
+            username=username,
+            password=password,
+        )
+
+        if not user:
+            raise serializers.ValidationError(
+                "Usuario o contraseña incorrectos."
+            )
+
+        if not user.is_active:
+            raise serializers.ValidationError(
+                "Este usuario se encuentra inactivo."
+            )
+
+        refresh = RefreshToken.for_user(user)
+
+        return {
+            "user": user,
+            "access": str(refresh.access_token),
+            "refresh": str(refresh),
+        }
