@@ -72,6 +72,7 @@ export default function LoginPage() {
       <Paper
         elevation={3}
         sx={{
+          backgroundColor: "#f0f48d",
           width: "100%",
           maxWidth: 420,
           p: 4,
