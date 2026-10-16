@@ -45,21 +45,14 @@ export function AuthProvider({ children }) {
     loadUser();
   }, [accessToken]);
 
-  const login = async (username, password) => {
+  const login = async (email, password) => {
     const data = await loginRequest({
-      username,
+      email: email.trim().toLowerCase(),
       password,
     });
 
-    localStorage.setItem(
-      "access_token",
-      data.access
-    );
-
-    localStorage.setItem(
-      "refresh_token",
-      data.refresh
-    );
+    localStorage.setItem("access_token", data.access);
+    localStorage.setItem("refresh_token", data.refresh);
 
     setAccessToken(data.access);
     setUser(data.user);

@@ -9,7 +9,12 @@ import {
   Typography,
   Link,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+
+import {
+  Link as RouterLink,
+  useNavigate,
+} from "react-router-dom";
+
 import { useAuth } from "../context/AuthContext";
 
 export default function LoginPage() {
@@ -17,7 +22,7 @@ export default function LoginPage() {
   const { login } = useAuth();
 
   const [form, setForm] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -35,16 +40,22 @@ export default function LoginPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (loading) return;
 
     setError("");
     setLoading(true);
 
     try {
-      await login(form.username, form.password);
-      navigate("/");
+      await login(form.email, form.password);
+      navigate("/", { replace: true });
     } catch (requestError) {
+      const data = requestError.response?.data;
+
       setError(
-        requestError.response?.data?.non_field_errors?.[0] ??
+        data?.email?.[0] ??
+          data?.password?.[0] ??
+          data?.non_field_errors?.[0] ??
+          data?.detail ??
           "No fue posible iniciar sesión."
       );
     } finally {
@@ -135,14 +146,22 @@ export default function LoginPage() {
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
                   <TextField
                     label="Correo electrónico"
-                    name="username"
-                    value={form.username}
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    value={form.email}
                     onChange={handleChange}
+                    disabled={loading}
                     fullWidth
                     required
                     variant="standard"
-                    InputLabelProps={{
-                      sx: { fontSize: '0.9rem', color: '#475569' }
+                    slotProps={{
+                      inputLabel: {
+                        sx: {
+                          fontSize: "0.9rem",
+                          color: "#475569",
+                        },
+                      },
                     }}
                   />
 
@@ -151,13 +170,20 @@ export default function LoginPage() {
                       label="Contraseña"
                       name="password"
                       type="password"
+                      autoComplete="current-password"
                       value={form.password}
                       onChange={handleChange}
+                      disabled={loading}
                       fullWidth
                       required
                       variant="standard"
-                      InputLabelProps={{
-                        sx: { fontSize: '0.9rem', color: '#475569' }
+                      slotProps={{
+                        inputLabel: {
+                          sx: {
+                            fontSize: "0.9rem",
+                            color: "#475569",
+                          },
+                        },
                       }}
                     />
                     <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1 }}>
@@ -190,6 +216,22 @@ export default function LoginPage() {
                 >
                   {loading ? "Ingresando..." : "Ingresar"}
                 </Button>
+
+                <Typography
+                  variant="body2"
+                  textAlign="center"
+                  color="#475569"
+                >
+                  ¿No tienes cuenta?{" "}
+                  <Link
+                    component={RouterLink}
+                    to="/registro"
+                    underline="hover"
+                  >
+                    Crear cuenta
+                  </Link>
+                </Typography>
+                
               </Stack>
             </Box>
           </Paper>
