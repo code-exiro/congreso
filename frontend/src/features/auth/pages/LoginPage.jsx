@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import {
   Alert,
   Box,
@@ -8,12 +7,10 @@ import {
   Stack,
   TextField,
   Typography,
+  Link,
 } from "@mui/material";
-
 import { useNavigate } from "react-router-dom";
-
 import { useAuth } from "../context/AuthContext";
-
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -43,11 +40,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      await login(
-        form.username,
-        form.password
-      );
-
+      await login(form.username, form.password);
       navigate("/");
     } catch (requestError) {
       setError(
@@ -62,77 +55,171 @@ export default function LoginPage() {
   return (
     <Box
       sx={{
+        display: "flex",
         minHeight: "100vh",
-        display: "grid",
-        placeItems: "center",
-        bgcolor: "grey.100",
-        px: 2,
+        width: "100vw",
+        flexDirection: { xs: "column", md: "row" },
       }}
     >
-      <Paper
-        elevation={3}
+      <Box
         sx={{
-          backgroundColor: "#f0f48d",
-          width: "100%",
-          maxWidth: 420,
-          p: 4,
+          flex: 2,
+          minWidth: { xs: "100%", md: "480px" },
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          bgcolor: "#f8f9fa",
+          p: { xs: 4, md: 6, lg: 8 },
         }}
       >
-        <Stack
-          component="form"
-          spacing={3}
-          onSubmit={handleSubmit}
-        >
+        
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 2 }}>
           <Box>
-            <Typography
-              variant="h4"
-              fontWeight={700}
-            >
-              Congreso
+            <Typography variant="body2" fontWeight={600} color="#2c3e50" sx={{ letterSpacing: 0.5 }}>
+              UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO
             </Typography>
-
-            <Typography color="text.secondary">
-              Inicia sesión para continuar
+            <Typography variant="caption" color="text.secondary">
+              Portal Académico Institucional
             </Typography>
           </Box>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Box sx={{ width: 6, height: 6, borderRadius: "50%", bgcolor: "#27ae60" }} />
+            <Typography variant="caption" fontWeight="600" color="text.secondary">
+              SISTEMA EN LÍNEA
+            </Typography>
+          </Box>
+        </Box>
 
-          {error && (
-            <Alert severity="error">
-              {error}
-            </Alert>
-          )}
-
-          <TextField
-            label="Usuario"
-            name="username"
-            value={form.username}
-            onChange={handleChange}
-            fullWidth
-            required
-          />
-
-          <TextField
-            label="Contraseña"
-            name="password"
-            type="password"
-            value={form.password}
-            onChange={handleChange}
-            fullWidth
-            required
-          />
-
-          <Button
-            variant="contained"
-            size="large"
-            type="submit"
-            disabled={loading}
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", flex: 1, my: 4 }}>
+          <Paper
+            elevation={4}
+            sx={{
+              backgroundColor: "#fdf899",
+              width: "100%",
+              maxWidth: 400,
+              borderRadius: "24px",
+              transform: "rotate(-2deg)",
+              boxShadow: "4px 8px 24px rgba(0,0,0,0.08)",
+              transition: "transform 0.3s ease",
+            }}
           >
-            {loading
-              ? "Iniciando sesión..."
-              : "Iniciar sesión"}
-          </Button>
-        </Stack>
-      </Paper>
+            <Box sx={{ transform: "rotate(2deg)", p: { xs: 3, md: 5 }, position: "relative", zIndex: 2 }}>
+              <Stack
+                component="form"
+                spacing={3.5}
+                onSubmit={handleSubmit}
+              >
+                <Box>
+                  <Typography
+                    variant="caption"
+                    fontWeight="700"
+                    sx={{
+                      color: "#8a8342",
+                      letterSpacing: 1,
+                      display: "block",
+                      mb: 1
+                    }}
+                  >
+                    ACCESO INSTITUCIONAL
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} color="#1e293b">
+                    Bienvenido.
+                  </Typography>
+                  <Typography variant="body1" color="#475569" sx={{ mt: 0.5 }}>
+                    Inicio de Sesión
+                  </Typography>
+                </Box>
+
+                {error && <Alert severity="error" sx={{ borderRadius: 2, py: 0 }}>{error}</Alert>}
+
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
+                  <TextField
+                    label="Correo electrónico"
+                    name="username"
+                    value={form.username}
+                    onChange={handleChange}
+                    fullWidth
+                    required
+                    variant="standard"
+                    InputLabelProps={{
+                      sx: { fontSize: '0.9rem', color: '#475569' }
+                    }}
+                  />
+
+                  <Box>
+                    <TextField
+                      label="Contraseña"
+                      name="password"
+                      type="password"
+                      value={form.password}
+                      onChange={handleChange}
+                      fullWidth
+                      required
+                      variant="standard"
+                      InputLabelProps={{
+                        sx: { fontSize: '0.9rem', color: '#475569' }
+                      }}
+                    />
+                    <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1 }}>
+                      <Link href="#" underline="hover" variant="caption" sx={{ color: "#3b82f6", fontWeight: 500 }}>
+                        ¿Olvidó su contraseña?
+                      </Link>
+                    </Box>
+                  </Box>
+                </Box>
+
+                <Button
+                  variant="contained"
+                  size="large"
+                  type="submit"
+                  disabled={loading}
+                  sx={{
+                    mt: 2,
+                    py: 1.2,
+                    borderRadius: "12px",
+                    backgroundColor: "#0f172a",
+                    fontWeight: '600',
+                    textTransform: 'none',
+                    fontSize: '0.95rem',
+                    boxShadow: "none",
+                    "&:hover": {
+                      backgroundColor: "#1e293b",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                    }
+                  }}
+                >
+                  {loading ? "Ingresando..." : "Ingresar"}
+                </Button>
+              </Stack>
+            </Box>
+          </Paper>
+        </Box>
+
+        {/* Pie de página */}
+        <Typography variant="caption" color="text.secondary" sx={{ textAlign: "center", mt: 2 }}>
+          Si presenta problemas para acceder, contacte a <strong>ejemplo.soporte@cuautitlan.unam.mx</strong> o llame a la extensión 4400.
+        </Typography>
+      </Box>
+
+      
+      <Box
+        sx={{
+          flex: 3,
+          bgcolor: "#364150", 
+          display: { xs: "none", md: "flex" },
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Box sx={{ color: "white", textAlign: "center", px: 6, maxWidth: "800px" }}>
+          <Typography variant="h3" fontWeight={300} sx={{ fontStyle: "italic", mb: 3 }}>
+            "Congreso de tecnología e innovación."
+          </Typography>
+          <Typography variant="subtitle2" color="grey.400" sx={{ letterSpacing: 3, textTransform: 'uppercase' }}>
+            — Congreso Universitario FESC
+          </Typography>
+        </Box>
+      </Box>
     </Box>
   );
 }
