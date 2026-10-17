@@ -9,10 +9,14 @@ import {
   Stack,
   TextField,
   Typography,
+  IconButton,
 } from "@mui/material";
+
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
 
 const fieldSx = {
   "& .MuiOutlinedInput-root": {
@@ -250,16 +254,24 @@ export default function LoginPage() {
                     input: {
                       endAdornment: (
                         <InputAdornment position="end">
-                          <Button
+                          <IconButton
                             type="button"
-                            onClick={() => setShowPassword((previous) => !previous)}
                             disabled={loading}
-                            aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                            onClick={() => setShowPassword((previous) => !previous)}
+                            onMouseDown={(event) => event.preventDefault()}
+                            aria-label={
+                              showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                            }
                             aria-pressed={showPassword}
-                            sx={{ minWidth: 0, px: 0.5, color: "#344761", textTransform: "none", fontSize: "0.75rem" }}
+                            edge="end"
+                            sx={{ color: "#526176" }}
                           >
-                            {showPassword ? "Ocultar" : "Mostrar"}
-                          </Button>
+                            {showPassword ? (
+                              <VisibilityOffOutlinedIcon fontSize="small" />
+                            ) : (
+                              <VisibilityOutlinedIcon fontSize="small" />
+                            )}
+                          </IconButton>
                         </InputAdornment>
                       ),
                     },
