@@ -97,13 +97,37 @@ export default function LoginPage() {
           display: "flex",
           flexDirection: "column",
           color: "#fff",
-          bgcolor: "#0d1c2d",
-          backgroundImage: {
-            xs: `linear-gradient(180deg, rgba(7, 18, 33, .65), rgba(7, 18, 33, .93)), url("${backgroundImage}")`,
-            md: `linear-gradient(90deg, rgba(7, 18, 33, .64) 0%, rgba(7, 18, 33, .50) 45%, rgba(7, 18, 33, .89) 100%), url("${backgroundImage}")`,
+          position: "relative",
+          isolation: "isolate",
+          overflow: "hidden",
+
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            inset: "-8px",
+            zIndex: -2,
+            backgroundImage: `url("${backgroundImage}")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            filter: "blur(2px)",
           },
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            inset: 0,
+            zIndex: -1,
+            background: {
+              xs: "rgba(7, 18, 33, .65)",
+              md: `linear-gradient(
+                90deg,
+                rgba(7, 18, 33, .55) 0%,
+                rgba(7, 18, 33, .40) 45%,
+                rgba(7, 18, 33, .80) 100%
+              )`,
+            },
+          },
+          bgcolor: "#0d1c2d",
           px: { xs: 3, sm: 5, md: 7, lg: 10 },
           py: { xs: 3, md: 5 },
           "& a:focus-visible, & button:focus-visible": {
@@ -159,13 +183,20 @@ export default function LoginPage() {
               </Box>
             </Typography>
             <Box sx={{ width: 54, height: 3, bgcolor: "#e7c77d", my: 3.5 }} />
-            <Typography sx={{ maxWidth: 430, color: "#e1e7ef", fontSize: { xs: "1rem", md: "1.rem" }, lineHeight: 1.8 }}>
+            <Typography sx={{ maxWidth: 430, color: "#e1e7ef", fontSize: { xs: "1rem", md: "1.2rem" }, lineHeight: 1.8 }}>
               Un espacio para compartir conocimiento, presentar tus trabajos
               y construir nuevas perspectivas.
             </Typography>
           </Box>
 
-          <Box sx={{ width: "100%", maxWidth: 410, justifySelf: { xs: "center", md: "end" }, minWidth: 0 }}>
+          <Box 
+            sx={{ 
+              width: "100%", 
+              maxWidth: 410, 
+              justifySelf: { xs: "center", md: "end" }, 
+              minWidth: 0,
+            }}
+          >
             <Stack component="form" spacing={3} onSubmit={handleSubmit} aria-labelledby="login-heading" aria-busy={loading}>
               <Box>
                 <Typography component="h2" id="login-heading" sx={{ fontSize: "2rem", fontWeight: 750, letterSpacing: "-0.03em" }}>
