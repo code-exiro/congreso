@@ -17,7 +17,7 @@ import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import AcUnitIcon from '@mui/icons-material/AcUnit';
 
 import { NavLink } from "react-router-dom";
 
@@ -105,7 +105,7 @@ export default function Sidebar({
 
           <ListItemButton disabled sx={{ borderRadius: 1 }}>
             <ListItemIcon>
-              <PersonOutlineOutlinedIcon />
+              <AcUnitIcon />
             </ListItemIcon>
 
             <ListItemText primary="Perfil" />
