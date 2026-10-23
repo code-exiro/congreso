@@ -7,7 +7,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import LegalDocument, Menu, Profile, Role, UserLegalDocument, UserRole
-from .services import get_user_menus, get_user_privilege_codes
+from .services import effective_profile_status, get_user_menus, get_user_privilege_codes
 
 
 User = get_user_model()
@@ -15,15 +15,39 @@ User = get_user_model()
 
 class ProfileSerializer(serializers.ModelSerializer):
     country = serializers.IntegerField(source="state.country_id", read_only=True, default=None)
+    is_complete = serializers.SerializerMethodField()
+    basic_profile_complete = serializers.SerializerMethodField()
+    legal_complete = serializers.SerializerMethodField()
+    pending_legal_document_ids = serializers.SerializerMethodField()
+    unavailable_legal_types = serializers.SerializerMethodField()
+
+    def _status(self, obj):
+        return effective_profile_status(obj.user, obj)
+
+    def get_is_complete(self, obj):
+        return self._status(obj)["is_complete"]
+
+    def get_basic_profile_complete(self, obj):
+        return self._status(obj)["basic_profile_complete"]
+
+    def get_legal_complete(self, obj):
+        return self._status(obj)["legal_complete"]
+
+    def get_pending_legal_document_ids(self, obj):
+        return self._status(obj)["pending_legal_document_ids"]
+
+    def get_unavailable_legal_types(self, obj):
+        return self._status(obj)["unavailable_legal_types"]
 
     class Meta:
         model = Profile
         fields = (
             "id", "state", "country", "institution", "academic_level", "dialing_code",
             "profile_picture", "mobile_phone", "phone", "biography", "is_complete",
+            "basic_profile_complete", "legal_complete", "pending_legal_document_ids", "unavailable_legal_types",
             "created_at", "updated_at",
         )
-        read_only_fields = ("id", "country", "is_complete", "created_at", "updated_at")
+        read_only_fields = ("id", "country", "is_complete", "basic_profile_complete", "legal_complete", "pending_legal_document_ids", "unavailable_legal_types", "created_at", "updated_at")
 
 
 class MenuSerializer(serializers.ModelSerializer):
@@ -167,3 +191,24 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Correo o contraseña incorrectos.")
         refresh = RefreshToken.for_user(user)
         return {"user": user, "access": str(refresh.access_token), "refresh": str(refresh)}
+
+
+class AdminLegalDocumentSerializer(serializers.ModelSerializer):
+    has_acceptances = serializers.SerializerMethodField()
+
+    class Meta:
+        model = LegalDocument
+        fields = ("id", "type", "version", "name", "file", "published_at", "is_active", "has_acceptances")
+        read_only_fields = ("id", "is_active", "has_acceptances")
+
+    def get_has_acceptances(self, obj):
+        return obj.user_acceptances.exists()
+
+    def validate(self, attrs):
+        if self.instance and self.instance.user_acceptances.exists():
+            raise serializers.ValidationError("Un documento con aceptaciones no puede editarse.")
+        return attrs
+
+
+class OwnLegalAcceptanceSerializer(serializers.Serializer):
+    document_id = serializers.IntegerField(min_value=1)

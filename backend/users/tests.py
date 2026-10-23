@@ -47,7 +47,7 @@ class RegistrationWorkflowTests(APITestCase):
         return LegalDocument.objects.create(
             type=document_type, version=version, name=f"Documento de prueba {document_type}",
             file=SimpleUploadedFile("documento.txt", b"Contenido exclusivamente de prueba."),
-            **extra,
+            **({"is_active": True} | extra),
         )
 
     def payload(self, **extra):
@@ -343,3 +343,60 @@ class HistoricalMigrationTests(TransactionTestCase):
                 MigrationExecutor(connection).migrate([self.latest])
         finally:
             OldUser.objects.filter(pk=user.pk).delete()
+
+
+class LegalAdministrationNewTests(APITestCase):
+    def setUp(self):
+        self.media = tempfile.TemporaryDirectory()
+        self.addCleanup(self.media.cleanup)
+        self.override = override_settings(MEDIA_ROOT=self.media.name)
+        self.override.enable()
+        self.addCleanup(self.override.disable)
+        self.admin_user = User.objects.create_user("legaladmin@example.test", PASSWORD)
+        self.user = User.objects.create_user("regular@example.test", PASSWORD)
+        self.role = Role.objects.create(name="Gestor legal")
+        UserRole.objects.create(user=self.admin_user, role=self.role)
+        for code in ["ver", "crear", "editar", "publicar", "desactivar"]:
+            privilege, _ = Privilege.objects.get_or_create(code=f"documentos_legales.{code}", defaults={"name": code})
+            RolePrivilege.objects.create(role=self.role, privilege=privilege)
+        self.client.force_authenticate(self.admin_user)
+
+    def test_creation_is_draft_and_publication_replaces_active(self):
+        data = {"type": "TERMS", "version": "1", "name": "Términos", "published_at": timezone.now().isoformat(), "file": SimpleUploadedFile("terms.txt", b"terms")}
+        created = self.client.post(reverse("admin_legal_documents"), data, format="multipart")
+        self.assertEqual(created.status_code, 201, created.data)
+        self.assertFalse(created.data["is_active"])
+        pk = created.data["id"]
+        self.assertEqual(len(self.client.get(reverse("legal_documents")).data), 0)
+        self.assertEqual(self.client.post(reverse("admin_legal_document_publish", args=[pk])).status_code, 200)
+        self.assertEqual(len(self.client.get(reverse("legal_documents")).data), 1)
+        new_data = {"type": "TERMS", "version": "2", "name": "Términos 2", "published_at": timezone.now().isoformat(), "file": SimpleUploadedFile("terms2.txt", b"terms2")}
+        second = self.client.post(reverse("admin_legal_documents"), new_data, format="multipart")
+        self.assertEqual(second.status_code, 201, second.data)
+        self.client.post(reverse("admin_legal_document_publish", args=[second.data["id"]]))
+        self.assertFalse(LegalDocument.objects.get(pk=pk).is_active)
+
+    def test_acceptance_is_personal_idempotent_and_version_sensitive(self):
+        docs = []
+        for doc_type in (LegalDocument.Type.TERMS, LegalDocument.Type.PRIVACY_NOTICE):
+            docs.append(LegalDocument.objects.create(type=doc_type, version="1", name=doc_type, file=SimpleUploadedFile(f"{doc_type}.txt", b"x"), is_active=True))
+        self.client.force_authenticate(self.user)
+        r = self.client.post(reverse("legal_acceptances"), {"document_id": docs[0].pk}, format="json")
+        self.assertEqual(r.status_code, 201, r.data)
+        r = self.client.post(reverse("legal_acceptances"), {"document_id": docs[0].pk}, format="json")
+        self.assertEqual(r.status_code, 200, r.data)
+        self.assertEqual(UserLegalDocument.objects.filter(user=self.user).count(), 1)
+        self.assertFalse(self.client.get(reverse("me")).data["profile"]["legal_complete"])
+        self.client.post(reverse("legal_acceptances"), {"document_id": docs[1].pk}, format="json")
+        self.assertTrue(self.client.get(reverse("me")).data["profile"]["legal_complete"])
+        old = docs[0]
+        old.is_active = False
+        old.save()
+        new = LegalDocument.objects.create(type=old.type, version="2", name="Nuevos términos", file=SimpleUploadedFile("new.txt", b"new"), is_active=True)
+        self.assertIn(new.pk, self.client.get(reverse("me")).data["profile"]["pending_legal_document_ids"])
+        self.assertEqual(self.client.post(reverse("legal_acceptances"), {"document_id": old.pk}, format="json").status_code, 400)
+
+    def test_regular_user_cannot_manage_documents(self):
+        self.client.force_authenticate(self.user)
+        self.assertEqual(self.client.get(reverse("admin_legal_documents")).status_code, 403)
+        self.assertEqual(self.client.post(reverse("admin_legal_documents"), {}, format="json").status_code, 403)

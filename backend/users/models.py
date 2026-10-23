@@ -182,7 +182,7 @@ class LegalDocument(models.Model):
     name = models.CharField(max_length=255, verbose_name="nombre del documento")
     file = models.FileField(upload_to="legal_documents/%Y/%m/", verbose_name="archivo")
     published_at = models.DateTimeField(default=timezone.now, verbose_name="fecha de publicación")
-    is_active = models.BooleanField(default=True, verbose_name="activo")
+    is_active = models.BooleanField(default=False, verbose_name="activo")
 
     def clean(self):
         super().clean()
