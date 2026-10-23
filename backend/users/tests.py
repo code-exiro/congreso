@@ -400,3 +400,33 @@ class LegalAdministrationNewTests(APITestCase):
         self.client.force_authenticate(self.user)
         self.assertEqual(self.client.get(reverse("admin_legal_documents")).status_code, 403)
         self.assertEqual(self.client.post(reverse("admin_legal_documents"), {}, format="json").status_code, 403)
+
+
+    def test_new_legal_version_does_not_block_profile(self):
+        from users.services import effective_profile_status
+
+        self.client.force_authenticate(self.user)
+
+        before = effective_profile_status(self.user)
+
+        LegalDocument.objects.create(
+            type=LegalDocument.Type.TERMS,
+            version="2",
+            name="Nuevos términos",
+            file=SimpleUploadedFile("new_terms.txt", b"new terms"),
+            is_active=True,
+        )
+
+        after = effective_profile_status(self.user)
+
+        self.assertEqual(
+            before["is_complete"],
+            after["is_complete"],
+        )
+
+        self.assertFalse(after["legal_complete"])
+        self.assertEqual(
+            len(after["pending_legal_document_ids"]),
+            1,
+        )
+

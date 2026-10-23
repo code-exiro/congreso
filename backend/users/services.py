@@ -39,7 +39,15 @@ def legal_status(user):
 def effective_profile_status(user, profile=None):
     if profile is None:
         profile = getattr(user, "profile", None)
+
     data = legal_status(user)
-    data["basic_profile_complete"] = bool(profile and profile.calculate_is_complete())
-    data["is_complete"] = data["basic_profile_complete"] and data["legal_complete"]
+
+    data["basic_profile_complete"] = bool(
+        profile and profile.calculate_is_complete()
+    )
+
+    # La completitud depende solo de los datos básicos.
+    # Las nuevas versiones legales no bloquean el perfil.
+    data["is_complete"] = data["basic_profile_complete"]
+
     return data

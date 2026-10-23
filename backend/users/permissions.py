@@ -14,9 +14,20 @@ class HasPrivilege(BasePermission):
 
 
 class HasCompleteProfile(BasePermission):
-    """Opt-in: attach to actions that require a complete basic and legal profile."""
-    message = "Completa tu perfil y acepta los documentos legales vigentes para continuar."
+    """
+    Verifica que el usuario tenga su perfil básico completo.
+
+    Las aceptaciones de nuevas versiones legales
+    no bloquean las funcionalidades.
+    """
+
+    message = "Completa los datos obligatorios de tu perfil para continuar."
 
     def has_permission(self, request, view):
         from .services import effective_profile_status
-        return bool(request.user.is_authenticated and request.user.is_active and effective_profile_status(request.user)["is_complete"])
+
+        return bool(
+            request.user.is_authenticated
+            and request.user.is_active
+            and effective_profile_status(request.user)["is_complete"]
+        )
