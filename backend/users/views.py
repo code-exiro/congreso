@@ -46,6 +46,8 @@ class MeView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        # Las cuentas creadas por vías distintas al registro pueden no tener perfil.
+        Profile.objects.get_or_create(user=request.user)
         return Response(UserSerializer(request.user, context={"request": request}).data)
 
 

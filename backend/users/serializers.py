@@ -200,6 +200,10 @@ class AdminLegalDocumentSerializer(serializers.ModelSerializer):
         model = LegalDocument
         fields = ("id", "type", "version", "name", "file", "published_at", "is_active", "has_acceptances")
         read_only_fields = ("id", "is_active", "has_acceptances")
+        validators = []
+        extra_kwargs = {
+            "type": {"validators": []},
+        }
 
     def get_has_acceptances(self, obj):
         return obj.user_acceptances.exists()
@@ -207,6 +211,14 @@ class AdminLegalDocumentSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         if self.instance and self.instance.user_acceptances.exists():
             raise serializers.ValidationError("Un documento con aceptaciones no puede editarse.")
+        doc_type = attrs.get("type", self.instance.type if self.instance else None)
+        version = attrs.get("version", self.instance.version if self.instance else None)
+        if doc_type and version:
+            existing = LegalDocument.objects.filter(type=doc_type, version=version)
+            if self.instance:
+                existing = existing.exclude(pk=self.instance.pk)
+            if existing.exists():
+                raise serializers.ValidationError({"version": "Ya existe esta versión para este tipo de documento."})
         return attrs
 
 
