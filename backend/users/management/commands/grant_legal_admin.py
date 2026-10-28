@@ -2,10 +2,17 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from users.models import Privilege, Role, RolePrivilege, User, UserRole
 
-CODES = ("documentos_legales.ver", "documentos_legales.crear", "documentos_legales.editar", "documentos_legales.publicar", "documentos_legales.desactivar")
+CODES = (
+    "documentos_legales.ver",
+    "documentos_legales.crear",
+    "documentos_legales.editar",
+    "documentos_legales.publicar",
+    "documentos_legales.desactivar",
+)
+
 
 class Command(BaseCommand):
-    help = "Asigna explícitamente permisos de documentos legales a un superusuario existente (idempotente)."
+    help = "Asigna explícitamente permisos de documentos legales al rol Administrador para un superusuario existente (idempotente)."
 
     def add_arguments(self, parser):
         parser.add_argument("--email", required=True, help="Correo de superusuario ya creado")
@@ -18,10 +25,16 @@ class Command(BaseCommand):
         privs = list(Privilege.objects.filter(code__in=CODES))
         if len(privs) != len(CODES):
             raise CommandError("Faltan privilegios; ejecuta las migraciones primero.")
-        role, _ = Role.objects.get_or_create(name="Administrador global", defaults={"description": "Gestión global autorizada explícitamente."})
+        role, _ = Role.objects.get_or_create(
+            name="Administrador",
+            defaults={
+                "description": "Administrador del sistema con acceso total a configuraciones y documentos legales.",
+                "is_active": True,
+            },
+        )
         if not role.is_active:
-            raise CommandError("El rol Administrador global está desactivado.")
+            raise CommandError("El rol Administrador está desactivado.")
         for privilege in privs:
             RolePrivilege.objects.get_or_create(role=role, privilege=privilege)
         UserRole.objects.get_or_create(user=user, role=role)
-        self.stdout.write(self.style.SUCCESS("Permisos legales asignados a la cuenta indicada."))
+        self.stdout.write(self.style.SUCCESS("Permisos legales y rol Administrador asignados a la cuenta indicada."))

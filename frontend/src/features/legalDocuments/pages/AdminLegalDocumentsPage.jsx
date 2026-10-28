@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import {
   Alert,
   Box,
@@ -500,9 +501,42 @@ export default function AdminLegalDocumentsPage() {
 
   if (!can("ver")) {
     return (
-      <Alert severity="warning" sx={{ borderRadius: "14px" }}>
-        No tienes el privilegio documentos_legales.ver para consultar esta pantalla.
-      </Alert>
+      <Box sx={{ width: "100%", textAlign: "left" }}>
+        <Paper
+          elevation={0}
+          sx={{
+            p: { xs: 3, sm: 4 },
+            color: "#ffffff",
+            bgcolor: "rgba(10, 24, 42, 0.78)",
+            backdropFilter: "blur(16px)",
+            border: "1px solid rgba(255, 255, 255, 0.12)",
+            borderRadius: "20px",
+            boxShadow: "0 24px 70px rgba(0, 0, 0, 0.25)",
+          }}
+        >
+          <Alert
+            severity="warning"
+            sx={{
+              borderRadius: "14px",
+              bgcolor: "rgba(231, 199, 125, 0.12)",
+              color: "#f2d99c",
+              border: "1px solid rgba(231, 199, 125, 0.35)",
+              "& .MuiAlert-icon": { color: "#e7c77d" },
+              mb: 3,
+            }}
+          >
+            Acceso restringido: no cuentas con permisos para consultar o administrar documentos legales. Esta sección está reservada para administradores.
+          </Alert>
+          <Button
+            component={RouterLink}
+            to="/"
+            variant="contained"
+            sx={goldButtonSx}
+          >
+            Volver al inicio
+          </Button>
+        </Paper>
+      </Box>
     );
   }
 
