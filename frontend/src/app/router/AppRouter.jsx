@@ -8,6 +8,7 @@ import RegisterPage from "../../features/auth/pages/RegisterPage";
 import AdminLegalDocumentsPage from "../../features/legalDocuments/pages/AdminLegalDocumentsPage";
 import LandingPage from "../../features/landing/pages/LandingPage"
 
+
 export default function AppRouter() {
   return (
     <BrowserRouter>

@@ -1,12 +1,14 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import './landing.css'
-import bannerImg from './images/banner.png';
 
 const NAV = [
   ['convocatoria', 'Convocatoria'],
   ['programa', 'Programa'],
   ['actividades', 'Actividades'],
   ['organizacion', 'Organización'],
+  ['videos', 'Videos'],
+  ['historicos', 'Históricos'],
   ['contacto', 'Contacto'],
   ['patrocinadores', 'Patrocinadores'],
 ]
@@ -31,6 +33,7 @@ const KEYNOTES = TOPICS.map((t, i) => ({
   director: NAMES[i], speakers: [NAMES[(i + 3) % 10], NAMES[(i + 6) % 10]],
   date: `${DAYS[i % 5]} 2026`, time: `${10 + (i % 4)}:00 h`,
 }))
+
 const ORALS = TOPICS.slice(0, 8).map((t, i) => ({
   t: `Avances en ${t.toLowerCase()} aplicados a la ingeniería`, topic: t, hue: HUES[(i + 4) % 10],
   speakers: [NAMES[(i + 1) % 10]], parts: [NAMES[(i + 4) % 10], NAMES[(i + 8) % 10]],
@@ -55,6 +58,7 @@ const ACTS = [
   ['Prototipos de IA', 'Demostración de prototipos e inteligencia artificial.'],
   ['Ponencias', 'Sesiones temáticas por área.'],
 ]
+
 const REQS = [
   ['Resumen', 'Enviar resumen en la plantilla oficial dentro del plazo.'],
   ['Registro', 'Completar el registro individual del participante.'],
@@ -63,7 +67,27 @@ const REQS = [
   ['Constancias', 'Se liberan según participación y requisitos cumplidos.'],
   ['Pago', 'Cuotas vigentes por modalidad y pago individual.'],
 ]
+
 const DOCS = ['Convocatoria oficial 21° Congreso', 'Guía de autores', 'Plantilla oficial de extensos', 'Plantilla de videoponencia', 'Requisitos de prototipos e IA', 'Cartelera del congreso']
+
+const VIDEOS = [
+  { title: 'Conferencia Magistral 2025: La IA en la Industria Moderna', img: '/images/poster.jpeg', link: '#' },
+  { title: 'Panel de Expertos: Retos en Energías Renovables', img: '/images/banner.jpeg', link: '#' },
+  { title: 'Avances en Robótica y Sistemas Embebidos', img: '/images/poster.jpeg', link: '#' },
+  { title: 'Clausura y Premiación del 20° Congreso (2025)', img: '/images/banner.jpeg', link: '#' },
+  { title: 'Taller Práctico de Manufactura Industrial', img: '/images/poster.jpeg', link: '#' },
+]
+
+const HISTORICOS = [
+  { title: 'Implementación de Redes Neuronales en Manufactura', author: 'Ing. María López', year: 2025, topic: 'Inteligencia artificial', link: '#' },
+  { title: 'Control PID Avanzado para Brazos Robóticos', author: 'Dr. Juan Pérez', year: 2024, topic: 'Robótica', link: '#' },
+  { title: 'Optimización Energética en Sistemas de Paneles Solares', author: 'Dra. Ana Gómez', year: 2025, topic: 'Energías renovables', link: '#' },
+  { title: 'Sistemas IoT de Bajo Costo para Monitoreo de Cultivos', author: 'M. en C. Carlos Ruiz', year: 2024, topic: 'Telecomunicaciones', link: '#' },
+  { title: 'Automatización de Procesos con Sistemas Embebidos', author: 'Dra. Patricia Núñez Arce', year: 2023, topic: 'Sistemas embebidos', link: '#' },
+  { title: 'Diseño de Convertidores para Vehículos Eléctricos', author: 'Dr. Alejandro Torres Vega', year: 2023, topic: 'Electrónica de potencia', link: '#' }
+]
+
+const PATROCINADORES = [0, 1, 2, 3, 0, 1, 2, 3]; 
 
 const MAP = 'https://www.google.com/maps?q=FES+Cuautitl%C3%A1n+Campo+4+UNAM&output=embed'
 const MAPLINK = 'https://www.google.com/maps/search/?api=1&query=FES+Cuautitl%C3%A1n+Campo+4'
@@ -75,7 +99,7 @@ function go(id) {
 function Cover({ topic, hue }) {
   return (
     <div className="cover" style={{ background: `linear-gradient(135deg,hsl(${hue} 70% 35%),hsl(${hue + 40} 80% 55%))` }}>
-      <svg viewBox="0 0 100 60" aria-hidden>
+      <svg viewBox="0 0 100 60" aria-hidden="true">
         {[0, 1, 2, 3, 4].map((i) => <circle key={i} cx={15 + i * 17} cy={30 + Math.sin(i * 1.5) * 14} r={4 + i} fill="none" stroke="#fff" strokeOpacity=".6" />)}
         <polyline fill="none" stroke="#fff" strokeOpacity=".5" points={[0, 1, 2, 3, 4].map((i) => `${15 + i * 17},${30 + Math.sin(i * 1.5) * 14}`).join(' ')} />
       </svg>
@@ -85,7 +109,7 @@ function Cover({ topic, hue }) {
 }
 
 function Calendar() {
-  const first = 1 // 1 sep 2026 es martes -> offset lunes=0
+  const first = 1 
   const marks = { 1: 'Inicio de ponencias', 4: 'Cierre', 10: 'Evaluación', 15: 'Cierre solicitudes', 22: 'Resultados' }
   const cells = [...Array(first).fill(0), ...Array.from({ length: 30 }, (_, i) => i + 1)]
   return (
@@ -100,7 +124,7 @@ function Calendar() {
   )
 }
 
-export default function App() {
+export default function LandingPage() {
   const [open, setOpen] = useState(false)
   const [com, setCom] = useState(0)
   const nav = (id) => { setOpen(false); go(id) }
@@ -110,18 +134,18 @@ export default function App() {
       <header className="hdr">
         <button className="logo" onClick={() => nav('convocatoria')}>
           <span className="crest">UNAM</span>
-          <span><b>FES Cuautitlán</b><small>Universidad Nacional Autónoma de México</small></span>
+          <span><b>CONING</b><small>Sistema del Congreso de las ingenierías</small></span>
         </button>
         <button className="burger" aria-label="Menú" onClick={() => setOpen(!open)}>☰</button>
         <nav className={open ? 'open' : ''}>
           {NAV.map(([id, l]) => <button key={id} onClick={() => nav(id)}>{l}</button>)}
-          <button className="cta" onClick={() => alert('Registro / Inicio de sesión')}>Registrarse / Iniciar sesión</button>
+          <Link to="/login" className="cta">Iniciar Sesión</Link>
         </nav>
       </header>
 
       <section id="convocatoria" className="hero">
         <div className="wrap">
-          <img className="banner" src="./images/banner.png" alt="Banner del Congreso Científico y Tecnológico, 7 de septiembre de 2026" />
+          <img className="banner" src="/images/banner.png" alt="Banner del Congreso" />
           <div className="herogrid">
             <div>
               <span className="tag">21° Congreso · Edición en curso</span>
@@ -130,7 +154,7 @@ export default function App() {
               <p className="period">Periodo de la edición: del 31 de agosto al 4 de septiembre de 2026.</p>
               <ul className="facts">
                 <li><small>Registro</small>Hasta el 15 de agosto de 2026</li>
-                <li><small>Sede</small>FES Cuautitlán, Campo Cuatro — Unidad de Seminarios Dr. Jaime Keller Torres</li>
+                <li><small>Sede</small>FES Cuautitlán, Campo Cuatro — Unidad de Seminarios</li>
                 <li><small>Modalidad</small>Presencial</li>
               </ul>
               <div className="btns">
@@ -139,8 +163,8 @@ export default function App() {
               </div>
             </div>
             <figure className="poster">
-              <img src="./images/poster.jpeg" alt="Poster de la convocatoria del 21° Congreso" />
-              <a className="gold dl" href="./images/poster.jpeg" download="convocatoria-21-congreso.jpg">Descargar póster (JPG)</a>
+              <img src="/images/poster.jpeg" alt="Poster convocatoria" />
+              <a className="gold dl" href="/images/poster.jpeg" download>Descargar póster (JPG)</a>
             </figure>
           </div>
         </div>
@@ -210,14 +234,12 @@ export default function App() {
               <ul>{COMMITTEES[com].people.map((p) => <li key={p}><i>{p.split(' ')[1][0]}</i>{p}</li>)}</ul>
             </div>
           </div>
-
           <h2 className="sub">Tipos de actividades y áreas temáticas</h2>
           <div className="mini">{ACTS.map(([t, d]) => <div key={t}><h3>{t}</h3><p>{d}</p></div>)}</div>
           <div className="chips">{TOPICS.map((t) => <span key={t}>{t}</span>)}</div>
-
-          <h2 className="sub">Requisitos de participación</h2>
-          <div className="mini req">{REQS.map(([t, d]) => <div key={t}><h3>{t}</h3><p>{d}</p></div>)}</div>
         </div>
+
+        {/* SECCIÓN DOCUMENTOS RESTAURADA AQUÍ */}
         <div className="docs">
           <div className="wrap">
             <span className="eyebrow gold">Guías y accesos oficiales</span>
@@ -229,30 +251,64 @@ export default function App() {
         </div>
       </section>
 
-      <section id="contacto" className="sec contact">
+      <section id="videos" className="sec alt">
+        <div className="wrap">
+          <span className="eyebrow">Multimedia</span>
+          <h2>Últimas Conferencias</h2>
+          <div className="video-carousel">
+            {VIDEOS.map((v, i) => (
+              <a key={i} href={v.link} target="_blank" rel="noreferrer" className="video-card">
+                <div className="video-thumb">
+                  <img src={v.img} alt={v.title} loading="lazy" />
+                  <div className="play-btn">▶</div>
+                </div>
+                <h3>{v.title}</h3>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="historicos" className="sec">
+        <div className="wrap">
+          <span className="eyebrow">Repositorio Histórico</span>
+          <h2>Trabajos presentados últimamente</h2>
+          <div className="history-grid">
+            {HISTORICOS.map((h, i) => (
+              <a key={i} href={h.link} target="_blank" rel="noreferrer" className="history-card">
+                <span className="tag">{h.year} · {h.topic}</span>
+                <h3>{h.title}</h3>
+                <p><b>Autor/a:</b> {h.author}</p>
+                <span className="action">Ver trabajo ↗</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="contacto" className="sec contact alt">
         <div className="wrap two">
           <div>
             <span className="eyebrow">Contacto</span>
             <h2>Ubicación de la sede</h2>
-            <div className="box">Facultad de Estudios Superiores Cuautitlán, Campo 4<br />Carretera Cuautitlán–Teoloyucan Km. 2.5, San Sebastián Xhala, C.P. 54714, Cuautitlán Izcalli, Estado de México.</div>
-            <p>En caso de tener una duda, sugerencia u opinión acerca del Congreso contacta a través del siguiente medio:</p>
+            <div className="box">Facultad de Estudios Superiores Cuautitlán, Campo 4<br />Carretera Cuautitlán–Teoloyucan Km. 2.5</div>
             <a className="box mail" href="mailto:21congresoingenierias@fes.cuautitlan.unam.mx">✉ 21congresoingenierias@fes.cuautitlan.unam.mx</a>
-            <p>Para mayores informes comunicarse a los siguientes teléfonos:</p>
-            <ul><li>55 56 23 18 86</li><li>55 56 23 18 90</li></ul>
             <a className="gold btn" href={MAPLINK} target="_blank" rel="noreferrer">Abrir en Maps</a>
           </div>
-          <iframe title="Mapa FES Cuautitlán Campo 4" src={MAP} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
+          <iframe title="Mapa FES Cuautitlán" src={MAP} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
         </div>
       </section>
 
-      <section id="patrocinadores" className="sec alt">
+      <section id="patrocinadores" className="sec">
         <div className="wrap">
           <span className="eyebrow">Patrocinadores</span>
           <h2>Quienes hacen posible el congreso</h2>
         </div>
         <div className="marquee">
           <div className="track">
-            {[0, 1, 2, 3].map((i) => <img key={i} src="./images/patrocinadores.png" alt="Logos de patrocinadores: 50 aniversario FES Cuautitlán, PAPIME, DGTIC, Gecko Systems" aria-hidden={i > 0} />)}
+            {PATROCINADORES.map((val, i) => (
+              <img key={i} src="/images/patrocinadores.png" alt="Logos de patrocinadores" aria-hidden={i > 3} />
+            ))}
           </div>
         </div>
       </section>
@@ -261,8 +317,7 @@ export default function App() {
         <div className="wrap fgrid">
           <div><small>Desarrollado por:</small><p>Laboratorio de Energías Renovables</p></div>
           <div><small>Mantenimiento realizado por:</small><p>Gecko Systems</p></div>
-          <p className="legal">Esta página puede ser reproducida con fines no lucrativos, siempre y cuando no se mutile, se cite la fuente completa y su dirección electrónica. De otra forma requiere permiso previo por escrito de la institución. © 2026 Todos los derechos reservados.</p>
-          <div className="tel"><small>Teléfonos</small><p>55 56 23 18 86<br />55 56 23 18 90</p><a href="#contacto" onClick={(e) => { e.preventDefault(); go('contacto') }}>Aviso de privacidad</a></div>
+          <p className="legal">Esta página puede ser reproducida con fines no lucrativos... © 2026 Todos los derechos reservados.</p>
         </div>
       </footer>
     </>
