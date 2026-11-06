@@ -366,9 +366,60 @@ export default function HomePage() {
                   Ir a {menu.name}
                 </Button>
               </Box>
+<<<<<<< HEAD
             </Paper>
           );
         })}
+=======
+
+              <Box
+                sx={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: "12px",
+                  bgcolor: "rgba(231, 199, 125, 0.12)",
+                  border: "1px solid rgba(231, 199, 125, 0.28)",
+                  display: "grid",
+                  placeItems: "center",
+                  color: "#e7c77d",
+                  flexShrink: 0,
+                }}
+              >
+                {menu.icon === "shield" ? (
+                  <ShieldOutlinedIcon fontSize="small" />
+                ) : (
+                  <DescriptionOutlinedIcon fontSize="small" />
+                )}
+              </Box>
+            </Stack>
+
+            <Box sx={{ mt: 2.5 }}>
+              <Button
+                component={RouterLink}
+                to={menu.route}
+                variant="contained"
+                endIcon={<ArrowForwardRoundedIcon />}
+                sx={{
+                  py: 1,
+                  px: 2.2,
+                  bgcolor: "#e7c77d",
+                  color: "#102138",
+                  borderRadius: "10px",
+                  fontWeight: 800,
+                  textTransform: "none",
+                  boxShadow: "none",
+                  "&:hover": {
+                    bgcolor: "#f2d99c",
+                    boxShadow: "none",
+                  },
+                }}
+              >
+                Ir a {menu.name}
+              </Button>
+            </Box>
+          </Paper>
+        ))}
+>>>>>>> 1ff2a4bd260c0e69ca1b3ed9ed7b8a8c9b999b50
       </Box>
     </Stack>
   );
