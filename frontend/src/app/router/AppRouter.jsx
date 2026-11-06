@@ -7,8 +7,11 @@ import ProtectedRoute from "../../features/auth/components/ProtectedRoute";
 import RegisterPage from "../../features/auth/pages/RegisterPage";
 import AdminLegalDocumentsPage from "../../features/legalDocuments/pages/AdminLegalDocumentsPage";
 import AdminRolesPrivilegesPage from "../../features/rolesPrivileges/pages/AdminRolesPrivilegesPage";
-import LandingPage from "../../features/landing/pages/LandingPage"
+import LandingPage from "../../features/landing/pages/LandingPage";
 
+import EvaluatorDashboardPage from "../../features/evaluator/pages/EvaluatorDashboardPage";
+import EvaluationDetailPage from "../../features/evaluator/pages/EvaluationDetailPage";
+import { EVALUATOR_PATHS } from "../../features/evaluator/config";
 
 export default function AppRouter() {
   return (
@@ -17,7 +20,7 @@ export default function AppRouter() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
         <Route path="/landing" element={<LandingPage />} />
-        
+
         <Route
           path="/"
           element={
@@ -34,6 +37,16 @@ export default function AppRouter() {
           <Route
             path="configuraciones/roles-privilegios"
             element={<AdminRolesPrivilegesPage />}
+          />
+
+          {/* Evaluador */}
+          <Route
+            path={EVALUATOR_PATHS.list}
+            element={<EvaluatorDashboardPage />}
+          />
+          <Route
+            path={EVALUATOR_PATHS.detail}
+            element={<EvaluationDetailPage />}
           />
         </Route>
       </Routes>
