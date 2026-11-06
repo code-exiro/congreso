@@ -21,6 +21,10 @@ import {
   PersonalizacionPage,
 } from "../../features/common/pages/sectionPages";
 
+import EvaluatorDashboardPage from "../../features/evaluator/pages/EvaluatorDashboardPage";
+import EvaluationDetailPage from "../../features/evaluator/pages/EvaluationDetailPage";
+import { EVALUATOR_PATHS } from "../../features/evaluator/config";
+
 export default function AppRouter() {
   return (
     <BrowserRouter>
@@ -61,6 +65,24 @@ export default function AppRouter() {
           <Route path="configuraciones/documentos-legales" element={<AdminLegalDocumentsPage />} />
           <Route path="configuraciones/roles-privilegios" element={<AdminRolesPrivilegesPage />} />
           <Route path="configuraciones/personalizacion" element={<PersonalizacionPage />} />
+          <Route
+            path="configuraciones/documentos-legales"
+            element={<AdminLegalDocumentsPage />}
+          />
+          <Route
+            path="configuraciones/roles-privilegios"
+            element={<AdminRolesPrivilegesPage />}
+          />
+
+          {/* Evaluador */}
+          <Route
+            path={EVALUATOR_PATHS.list}
+            element={<EvaluatorDashboardPage />}
+          />
+          <Route
+            path={EVALUATOR_PATHS.detail}
+            element={<EvaluationDetailPage />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>
