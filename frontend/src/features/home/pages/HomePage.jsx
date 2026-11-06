@@ -296,7 +296,11 @@ export default function HomePage() {
                   flexShrink: 0,
                 }}
               >
-                <DescriptionOutlinedIcon fontSize="small" />
+                {menu.icon === "shield" ? (
+                  <ShieldOutlinedIcon fontSize="small" />
+                ) : (
+                  <DescriptionOutlinedIcon fontSize="small" />
+                )}
               </Box>
             </Stack>
 

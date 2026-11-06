@@ -6,6 +6,7 @@ from .models import (
     LegalDocument, Menu, MenuPrivilege, Privilege, Profile, Role,
     RolePrivilege, User, UserArea, UserLegalDocument, UserRole,
 )
+from .services import assign_default_ponente_role
 
 
 @admin.register(User)
@@ -36,6 +37,8 @@ class CustomUserAdmin(UserAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         Profile.objects.get_or_create(user=obj)
+        if not change and not obj.user_roles.exists():
+            assign_default_ponente_role(obj)
 
 
 @admin.register(Profile)

@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import LegalDocument, Profile, UserLegalDocument
+from .models import LegalDocument, Privilege, Profile, Role, User, UserLegalDocument, UserPrivilege, UserRole
 from .permissions import HasPrivilege
 from .serializers import (
     LegalDocumentSerializer, LoginSerializer, ProfileSerializer,
@@ -173,3 +173,142 @@ class OwnLegalAcceptanceView(APIView):
                 raise ValidationError("Este documento no está vigente. Actualiza los documentos legales.")
             obj, created = UserLegalDocument.objects.get_or_create(user=request.user, document=doc)
         return Response({"document_id": doc.pk, "accepted_at": obj.accepted_at, "already_accepted": not created}, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
+
+
+
+class AdminPrivilegesListView(APIView):
+    permission_classes = [IsAuthenticated, HasPrivilege]
+    required_privilege = "modificar_privilegios"
+
+    def get(self, request):
+        from .serializers import PrivilegeSerializer
+
+        privileges = Privilege.objects.all().order_by("id")
+        return Response(PrivilegeSerializer(privileges, many=True).data)
+
+
+class AdminRolesView(APIView):
+    permission_classes = [IsAuthenticated, HasPrivilege]
+    required_privilege = "modificar_privilegios"
+
+    def get(self, request):
+        from .serializers import AdminRoleSerializer
+
+        roles = Role.objects.all().order_by("name")
+        return Response(AdminRoleSerializer(roles, many=True).data)
+
+    def post(self, request):
+        from .serializers import AdminRoleSerializer
+
+        serializer = AdminRoleSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        role = serializer.save()
+        return Response(AdminRoleSerializer(role).data, status=status.HTTP_201_CREATED)
+
+
+class AdminRoleDetailView(APIView):
+    permission_classes = [IsAuthenticated, HasPrivilege]
+    required_privilege = "modificar_privilegios"
+
+    def patch(self, request, pk):
+        from .serializers import AdminRoleSerializer
+        from .services import get_user_privilege_codes
+
+        with transaction.atomic():
+            role = Role.objects.select_for_update().filter(pk=pk).first()
+            if not role:
+                raise NotFound("Rol inexistente.")
+            is_own_role = UserRole.objects.filter(user=request.user, role=role).exists()
+            previous_codes = set(get_user_privilege_codes(request.user))
+
+            serializer = AdminRoleSerializer(role, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            role = serializer.save()
+
+            remaining_codes = set(get_user_privilege_codes(request.user))
+            if (is_own_role and (not role.is_active or not previous_codes.issubset(remaining_codes))) or (
+                "modificar_privilegios" not in remaining_codes
+            ):
+                raise ValidationError(
+                    "No puedes desactivar tu propio rol ni quitarle privilegios a tu cuenta de administrador."
+                )
+
+        return Response(AdminRoleSerializer(role).data)
+
+
+class AdminUsersRolesView(APIView):
+    permission_classes = [IsAuthenticated, HasPrivilege]
+    required_privilege = "modificar_privilegios"
+
+    def get(self, request):
+        from .serializers import AdminUserRolesSerializer
+
+        users = User.objects.prefetch_related("user_roles__role", "user_privileges").order_by("email")
+        return Response(AdminUserRolesSerializer(users, many=True).data)
+
+
+class AdminUserRoleUpdateView(APIView):
+    permission_classes = [IsAuthenticated, HasPrivilege]
+    required_privilege = "modificar_privilegios"
+
+    def put(self, request, pk):
+        from .serializers import AdminUserRolesSerializer, UserRoleAssignmentUpdateSerializer
+        from .services import get_user_privilege_codes
+
+        serializer = UserRoleAssignmentUpdateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        desired_role_ids = set(serializer.validated_data["role_ids"])
+        has_revoked = "revoked_privilege_ids" in serializer.validated_data
+        has_granted = "granted_privilege_ids" in serializer.validated_data
+        revoked_ids = set(serializer.validated_data.get("revoked_privilege_ids") or [])
+        granted_ids = set(serializer.validated_data.get("granted_privilege_ids") or [])
+
+        with transaction.atomic():
+            target_user = User.objects.select_for_update().filter(pk=pk).first()
+            if not target_user:
+                raise NotFound("Usuario inexistente.")
+
+            existing_ids = set(
+                UserRole.objects.filter(user=target_user).values_list("role_id", flat=True)
+            )
+            previous_codes = set(get_user_privilege_codes(request.user))
+
+            if target_user.pk == request.user.pk:
+                if not existing_ids.issubset(desired_role_ids):
+                    raise ValidationError(
+                        "No puedes quitarte tu propio rol de administrador."
+                    )
+                if revoked_ids:
+                    raise ValidationError(
+                        "No puedes deshabilitar tus propios privilegios de administrador."
+                    )
+
+            UserRole.objects.filter(user=target_user).exclude(role_id__in=desired_role_ids).delete()
+            for role_id in desired_role_ids - existing_ids:
+                UserRole.objects.create(user=target_user, role_id=role_id)
+
+            if has_revoked or has_granted:
+                keep_ids = revoked_ids | granted_ids
+                UserPrivilege.objects.filter(user=target_user).exclude(privilege_id__in=keep_ids).delete()
+                for priv_id in revoked_ids:
+                    UserPrivilege.objects.update_or_create(
+                        user=target_user,
+                        privilege_id=priv_id,
+                        defaults={"is_enabled": False},
+                    )
+                for priv_id in granted_ids:
+                    UserPrivilege.objects.update_or_create(
+                        user=target_user,
+                        privilege_id=priv_id,
+                        defaults={"is_enabled": True},
+                    )
+
+            if target_user.pk == request.user.pk:
+                remaining_codes = set(get_user_privilege_codes(request.user))
+                if not previous_codes.issubset(remaining_codes) or "modificar_privilegios" not in remaining_codes:
+                    raise ValidationError(
+                        "No puedes quitarte tu propio rol ni deshabilitar tus propios privilegios."
+                    )
+
+        target_user.refresh_from_db()
+        return Response(AdminUserRolesSerializer(target_user).data)

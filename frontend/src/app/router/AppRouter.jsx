@@ -6,6 +6,9 @@ import LoginPage from "../../features/auth/pages/LoginPage";
 import ProtectedRoute from "../../features/auth/components/ProtectedRoute";
 import RegisterPage from "../../features/auth/pages/RegisterPage";
 import AdminLegalDocumentsPage from "../../features/legalDocuments/pages/AdminLegalDocumentsPage";
+import AdminRolesPrivilegesPage from "../../features/rolesPrivileges/pages/AdminRolesPrivilegesPage";
+import LandingPage from "../../features/landing/pages/LandingPage"
+
 
 export default function AppRouter() {
   return (
@@ -13,7 +16,8 @@ export default function AppRouter() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
-
+        <Route path="/landing" element={<LandingPage />} />
+        
         <Route
           path="/"
           element={
@@ -26,6 +30,10 @@ export default function AppRouter() {
           <Route
             path="configuraciones/documentos-legales"
             element={<AdminLegalDocumentsPage />}
+          />
+          <Route
+            path="configuraciones/roles-privilegios"
+            element={<AdminRolesPrivilegesPage />}
           />
         </Route>
       </Routes>

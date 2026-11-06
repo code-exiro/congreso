@@ -19,6 +19,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { NavLink, useLocation } from "react-router-dom";
@@ -73,6 +74,7 @@ const navButtonSx = {
 const menuIcons = {
   description: DescriptionOutlinedIcon,
   settings: SettingsOutlinedIcon,
+  shield: ShieldOutlinedIcon,
 };
 
 function MenuEntry({ menu, onClose, nested = false }) {
