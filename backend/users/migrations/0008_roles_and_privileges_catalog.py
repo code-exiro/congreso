@@ -190,7 +190,66 @@ ROLES_SPEC = {
 }
 
 
+def heal_local_database_schema(apps, schema_editor):
+    """
+    Sanea diferencias locales en la base de datos de cada desarrollador antes de poblar catálogos:
+    1. Relaja restricciones NOT NULL en columnas huérfanas (que no existen en los modelos oficiales de Django).
+    2. Sincroniza las secuencias de IDs (serial/identity) en PostgreSQL por si alguien insertó filas manuales.
+    """
+    if schema_editor.connection.vendor != "postgresql":
+        return
+
+    quote_name = schema_editor.quote_name
+    users_config = apps.get_app_config("users")
+
+    with schema_editor.connection.cursor() as cursor:
+        for model in users_config.get_models():
+            table_name = model._meta.db_table
+            official_columns = {
+                field.column for field in model._meta.local_concrete_fields
+            }
+
+            # 1. Buscar columnas en PostgreSQL para esta tabla que no estén en el modelo oficial
+            cursor.execute(
+                """
+                SELECT column_name, is_nullable
+                FROM information_schema.columns
+                WHERE table_schema = 'public' AND table_name = %s
+                """,
+                [table_name],
+            )
+            for col_name, is_nullable in cursor.fetchall():
+                if col_name not in official_columns and is_nullable == "NO":
+                    cursor.execute(
+                        f"ALTER TABLE {quote_name(table_name)} "
+                        f"ALTER COLUMN {quote_name(col_name)} DROP NOT NULL;"
+                    )
+
+            # 2. Sincronizar la secuencia del primary key si es entera/serial
+            pk_field = model._meta.pk
+            if pk_field and pk_field.get_internal_type() in (
+                "AutoField",
+                "BigAutoField",
+                "SmallAutoField",
+            ):
+                pk_col = pk_field.column
+                cursor.execute(
+                    "SELECT pg_get_serial_sequence(%s, %s);",
+                    [table_name, pk_col],
+                )
+                seq_row = cursor.fetchone()
+                if seq_row and seq_row[0]:
+                    seq_name = seq_row[0]
+                    cursor.execute(
+                        f"SELECT setval(%s, COALESCE((SELECT MAX({quote_name(pk_col)}) FROM {quote_name(table_name)}), 1), "
+                        f"(SELECT MAX({quote_name(pk_col)}) IS NOT NULL FROM {quote_name(table_name)}));",
+                        [seq_name],
+                    )
+
+
 def seed_roles_and_privileges(apps, schema_editor):
+    heal_local_database_schema(apps, schema_editor)
+
     alias = schema_editor.connection.alias
     Privilege = apps.get_model("users", "Privilege")
     Role = apps.get_model("users", "Role")
@@ -237,14 +296,22 @@ def seed_roles_and_privileges(apps, schema_editor):
             old_global_admin.delete(using=alias)
 
     for role_name, spec in ROLES_SPEC.items():
-        role = Role.objects.using(alias).filter(name__iexact=role_name).first()
-        if role is None:
+        matching_roles = list(Role.objects.using(alias).filter(name__iexact=role_name).order_by("id"))
+        if not matching_roles:
             role = Role.objects.using(alias).create(
                 name=role_name,
                 description=spec["description"],
                 is_active=True,
             )
         else:
+            role = matching_roles[0]
+            # Si había duplicados por mayúsculas/minúsculas (ej. 'Ponente' y 'ponente'), fusionarlos
+            for dup_role in matching_roles[1:]:
+                for ur in UserRole.objects.using(alias).filter(role=dup_role):
+                    UserRole.objects.using(alias).get_or_create(user_id=ur.user_id, role=role)
+                RolePrivilege.objects.using(alias).filter(role=dup_role).delete()
+                UserRole.objects.using(alias).filter(role=dup_role).delete()
+                dup_role.delete(using=alias)
             role.name = role_name
             role.description = spec["description"]
             role.save(using=alias, update_fields=["name", "description"])
