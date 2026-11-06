@@ -233,3 +233,38 @@ class UserLegalDocument(models.Model):
         verbose_name = "aceptación de documento legal"
         verbose_name_plural = "aceptaciones de documentos legales"
         constraints = [models.UniqueConstraint(fields=["user", "document"], name="unique_user_legal_document")]
+
+
+
+class UserPrivilege(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="user_privileges",
+        verbose_name="usuario",
+    )
+    privilege = models.ForeignKey(
+        Privilege,
+        on_delete=models.CASCADE,
+        related_name="user_privileges",
+        verbose_name="privilegio",
+    )
+    is_enabled = models.BooleanField(
+        default=True,
+        verbose_name="habilitado para este usuario",
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        state = "Habilitado" if self.is_enabled else "Deshabilitado"
+        return f"{self.user.email} - {self.privilege.code} ({state})"
+
+    class Meta:
+        verbose_name = "privilegio personalizado de usuario"
+        verbose_name_plural = "privilegios personalizados de usuario"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "privilege"],
+                name="unique_user_privilege",
+            )
+        ]

@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -20,6 +21,14 @@ export function AuthProvider({ children }) {
     localStorage.getItem("access_token")
   );
   const [loading, setLoading] = useState(true);
+
+  const refreshUser = useCallback(async (tokenOverride) => {
+    const token = tokenOverride ?? accessToken;
+    if (!token) return null;
+    const userData = await getMe(token);
+    setUser(userData);
+    return userData;
+  }, [accessToken]);
 
   useEffect(() => {
     const loadUser = async () => {
@@ -76,6 +85,7 @@ export function AuthProvider({ children }) {
         loading,
         login,
         logout,
+        refreshUser,
         isAuthenticated: Boolean(user),
       }}
     >

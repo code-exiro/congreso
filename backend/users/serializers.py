@@ -6,8 +6,8 @@ from django.utils import timezone
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import LegalDocument, Menu, Profile, Role, UserLegalDocument, UserRole
-from .services import effective_profile_status, get_user_menus, get_user_privilege_codes
+from .models import LegalDocument, Menu, Privilege, Profile, Role, RolePrivilege, UserLegalDocument, UserPrivilege, UserRole
+from .services import effective_profile_status, ensure_default_ponente_role, get_user_menus, get_user_privilege_codes
 
 
 User = get_user_model()
@@ -134,13 +134,10 @@ class RegisterSerializer(serializers.ModelSerializer):
                     if document.pk != document_id:
                         raise serializers.ValidationError({field: "El documento cambió. Consulta y acepta la versión vigente."})
 
-                role, _ = Role.objects.get_or_create(
-                    name="Ponente",
-                    defaults={"description": "Rol asignado automáticamente a usuarios registrados.", "is_active": True},
-                )
-                role = Role.objects.select_for_update().get(pk=role.pk)
-                if not role.is_active:
-                    raise serializers.ValidationError({"role": "El registro está temporalmente deshabilitado: el rol Ponente está inactivo."})
+                existing_ponente = Role.objects.select_for_update().filter(name__iexact="ponente").first()
+                if existing_ponente is not None and not existing_ponente.is_active:
+                    raise serializers.ValidationError({"role": "El registro está temporalmente deshabilitado: el rol ponente está inactivo."})
+                role = ensure_default_ponente_role()
 
                 user = User.objects.create_user(password=password, **data)
                 Profile.objects.create(user=user)
@@ -224,3 +221,176 @@ class AdminLegalDocumentSerializer(serializers.ModelSerializer):
 
 class OwnLegalAcceptanceSerializer(serializers.Serializer):
     document_id = serializers.IntegerField(min_value=1)
+
+
+class PrivilegeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Privilege
+        fields = ("id", "code", "name", "description")
+        read_only_fields = fields
+
+
+class AdminRoleSerializer(serializers.ModelSerializer):
+    privilege_ids = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Privilege.objects.all(),
+        write_only=True,
+        required=False,
+    )
+    privileges = serializers.SerializerMethodField(read_only=True)
+    users_count = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Role
+        fields = ("id", "name", "description", "is_active", "privilege_ids", "privileges", "users_count")
+        read_only_fields = ("id", "privileges", "users_count")
+
+    def get_privileges(self, obj):
+        privs = Privilege.objects.filter(role_privileges__role=obj).order_by("code")
+        return PrivilegeSerializer(privs, many=True).data
+
+    def get_users_count(self, obj):
+        return obj.user_roles.count()
+
+    def validate_name(self, value):
+        cleaned = value.strip().lower()
+        if not cleaned:
+            raise serializers.ValidationError("El nombre del rol es obligatorio.")
+        qs = Role.objects.filter(name__iexact=cleaned)
+        if self.instance:
+            qs = qs.exclude(pk=self.instance.pk)
+        if qs.exists():
+            raise serializers.ValidationError("Ya existe un rol con este nombre.")
+        return cleaned
+
+    def validate_description(self, value):
+        return (value or "").strip().lower()
+
+    @transaction.atomic
+    def create(self, validated_data):
+        privileges = validated_data.pop("privilege_ids", [])
+        role = Role.objects.create(**validated_data)
+        for priv in set(privileges):
+            RolePrivilege.objects.get_or_create(role=role, privilege=priv)
+        return role
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        privileges = validated_data.pop("privilege_ids", None)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        if privileges is not None:
+            desired_ids = {p.pk for p in privileges}
+            RolePrivilege.objects.filter(role=instance).exclude(privilege_id__in=desired_ids).delete()
+            existing_ids = set(
+                RolePrivilege.objects.filter(role=instance).values_list("privilege_id", flat=True)
+            )
+            for priv_id in desired_ids - existing_ids:
+                RolePrivilege.objects.create(role=instance, privilege_id=priv_id)
+        return instance
+
+
+class AdminUserRolesSerializer(serializers.ModelSerializer):
+    roles = serializers.SerializerMethodField(read_only=True)
+    role_ids = serializers.SerializerMethodField(read_only=True)
+    privileges = serializers.SerializerMethodField(read_only=True)
+    revoked_privilege_ids = serializers.SerializerMethodField(read_only=True)
+    granted_privilege_ids = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "email",
+            "first_name",
+            "last_name",
+            "maternal_last_name",
+            "is_active",
+            "date_joined",
+            "roles",
+            "role_ids",
+            "privileges",
+            "revoked_privilege_ids",
+            "granted_privilege_ids",
+        )
+        read_only_fields = fields
+
+    def get_roles(self, obj):
+        return [
+            {
+                "id": ur.role.id,
+                "name": ur.role.name,
+                "is_active": ur.role.is_active,
+            }
+            for ur in obj.user_roles.select_related("role").order_by("role__name")
+        ]
+
+    def get_role_ids(self, obj):
+        return list(
+            obj.user_roles.order_by("role__name").values_list("role_id", flat=True)
+        )
+
+    def get_privileges(self, obj):
+        return get_user_privilege_codes(obj)
+
+    def get_revoked_privilege_ids(self, obj):
+        return list(
+            obj.user_privileges.filter(is_enabled=False)
+            .order_by("privilege_id")
+            .values_list("privilege_id", flat=True)
+        )
+
+    def get_granted_privilege_ids(self, obj):
+        return list(
+            obj.user_privileges.filter(is_enabled=True)
+            .order_by("privilege_id")
+            .values_list("privilege_id", flat=True)
+        )
+
+
+class UserRoleAssignmentUpdateSerializer(serializers.Serializer):
+    role_ids = serializers.ListField(
+        child=serializers.IntegerField(min_value=1),
+        allow_empty=True,
+    )
+    revoked_privilege_ids = serializers.ListField(
+        child=serializers.IntegerField(min_value=1),
+        allow_empty=True,
+        required=False,
+    )
+    granted_privilege_ids = serializers.ListField(
+        child=serializers.IntegerField(min_value=1),
+        allow_empty=True,
+        required=False,
+    )
+
+    def validate_role_ids(self, value):
+        unique_ids = list(dict.fromkeys(value))
+        roles = list(Role.objects.filter(pk__in=unique_ids))
+        if len(roles) != len(unique_ids):
+            raise serializers.ValidationError("Uno o más roles seleccionados no existen.")
+        return unique_ids
+
+    def validate_revoked_privilege_ids(self, value):
+        unique_ids = list(dict.fromkeys(value))
+        privs = list(Privilege.objects.filter(pk__in=unique_ids))
+        if len(privs) != len(unique_ids):
+            raise serializers.ValidationError("Uno o más privilegios deshabilitados no existen.")
+        return unique_ids
+
+    def validate_granted_privilege_ids(self, value):
+        unique_ids = list(dict.fromkeys(value))
+        privs = list(Privilege.objects.filter(pk__in=unique_ids))
+        if len(privs) != len(unique_ids):
+            raise serializers.ValidationError("Uno o más privilegios habilitados no existen.")
+        return unique_ids
+
+    def validate(self, attrs):
+        revoked = set(attrs.get("revoked_privilege_ids") or [])
+        granted = set(attrs.get("granted_privilege_ids") or [])
+        if revoked & granted:
+            raise serializers.ValidationError(
+                "Un mismo privilegio no puede estar habilitado y deshabilitado simultáneamente."
+            )
+        return attrs
