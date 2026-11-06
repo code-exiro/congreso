@@ -271,6 +271,19 @@ def seed_roles_and_privileges(apps, schema_editor):
             if not UserRole.objects.using(alias).filter(user_id=user_id).exists():
                 UserRole.objects.using(alias).create(user_id=user_id, role=ponente_role)
 
+    # Si la base de datos local tiene una columna huérfana 'category' con NOT NULL en users_menu, relajarla
+    if schema_editor.connection.vendor == "postgresql":
+        with schema_editor.connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT 1 FROM information_schema.columns
+                WHERE table_name = 'users_menu' AND column_name = 'category'
+                """
+            )
+            if cursor.fetchone():
+                cursor.execute("ALTER TABLE users_menu ALTER COLUMN category DROP NOT NULL;")
+                cursor.execute("ALTER TABLE users_menu ALTER COLUMN category SET DEFAULT '';")
+
     # Registrar menú de Roles y privilegios bajo /configuraciones/
     roles_menu, _ = Menu.objects.using(alias).update_or_create(
         route="/configuraciones/roles-privilegios",
@@ -301,7 +314,7 @@ def seed_roles_and_privileges(apps, schema_editor):
             "is_active": True,
         },
     )
-    ver_legal_priv = privilege_map.get("documentos_legales.ver")
+    ver_legal_priv = privilege_map.get("ver_documentos_legales") or privilege_map.get("documentos_legales.ver")
     if ver_legal_priv:
         MenuPrivilege.objects.using(alias).get_or_create(
             menu=legal_menu,
