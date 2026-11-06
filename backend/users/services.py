@@ -1,16 +1,89 @@
 from django.utils import timezone
-from .models import LegalDocument, Menu, Privilege, UserLegalDocument
+from .models import LegalDocument, Menu, Privilege, Role, RolePrivilege, UserLegalDocument, UserRole
+
+
+PONENTE_DEFAULT_PRIVILEGES = {
+    "inicio_sesion": (
+        "inicio_sesion",
+        "permite el acceso del usuario al módulo de login, permitiéndole registrarse, crear un perfil e iniciar sesión con su correo y contraseña",
+    ),
+    "modificar_perfil": (
+        "modificar_perfil",
+        "permite el acceso del usuario al módulo de perfil, siendo capaz de modificar sus datos personales, actualizar su información, subir archivos curriculares, etc",
+    ),
+    "subir_trabajo": (
+        "subir_trabajo",
+        "permite el acceso del usuario al módulo de trabajos, siendo capaz en dicha estancia de realizar el registro de un trabajo y subir los diversos archivos correspondientes al trabajo",
+    ),
+    "ver_sus_trabajos": (
+        "ver_sus_trabajos",
+        "permite al usuario ver el listado de trabajos que haya registrado en el congreso actual",
+    ),
+    "ver_su_historial": (
+        "ver_su_historial",
+        "permite el acceso del usuario al módulo de historial de trabajos, siendo capaz de visualizar el listado de trabajos en los que participó como autor o coautor en congresos previos",
+    ),
+    "solicitud_pago": (
+        "solicitud_pago",
+        "permite el acceso del usuario al módulo de pagos, siendo capaz de realizar una solicitud para la expedición de una orden de pago por concepto de máximo 2 trabajos, así como de subir el comprobante cuando el pago ya haya sido realizado",
+    ),
+    "ver_sus_constancias": (
+        "ver_sus_constancias",
+        "permite el acceso del usuario al módulo de constancias, siendo capaz de visualizar el listado de constancias tanto del congreso actual como de congresos previos",
+    ),
+}
+
+
+def ensure_default_ponente_role():
+    role = Role.objects.filter(name__iexact="ponente").first()
+    if role is None:
+        role = Role.objects.create(
+            name="ponente",
+            description="todo académico que desee participar en el congreso con algún trabajo",
+            is_active=True,
+        )
+    elif role.name != "ponente":
+        role.name = "ponente"
+        role.description = "todo académico que desee participar en el congreso con algún trabajo"
+        role.save(update_fields=["name", "description"])
+    for code, (name, description) in PONENTE_DEFAULT_PRIVILEGES.items():
+        priv, _ = Privilege.objects.update_or_create(
+            code=code,
+            defaults={"name": name, "description": description},
+        )
+        RolePrivilege.objects.get_or_create(role=role, privilege=priv)
+    return role
+
+
+def assign_default_ponente_role(user):
+    role = ensure_default_ponente_role()
+    if role.is_active:
+        UserRole.objects.get_or_create(user=user, role=role)
+    return role
 
 
 def get_user_privilege_codes(user):
     if not user.is_authenticated or not user.is_active:
         return []
-    return list(
+    role_codes = set(
         Privilege.objects.filter(
             role_privileges__role__user_roles__user=user,
             role_privileges__role__is_active=True,
-        ).order_by("code").values_list("code", flat=True).distinct()
+        ).values_list("code", flat=True)
     )
+    granted_codes = set(
+        Privilege.objects.filter(
+            user_privileges__user=user,
+            user_privileges__is_enabled=True,
+        ).values_list("code", flat=True)
+    )
+    revoked_codes = set(
+        Privilege.objects.filter(
+            user_privileges__user=user,
+            user_privileges__is_enabled=False,
+        ).values_list("code", flat=True)
+    )
+    return sorted((role_codes | granted_codes) - revoked_codes)
 
 
 def get_user_menus(user):

@@ -67,7 +67,7 @@ class RegistrationWorkflowTests(APITestCase):
         self.assertEqual(response.status_code, 201, response.data)
         user = User.objects.get(email="irene@example.test")
         self.assertTrue(user.check_password(PASSWORD))
-        self.assertEqual(user.user_roles.get().role.name, "Ponente")
+        self.assertEqual(user.user_roles.get().role.name, "ponente")
         self.assertFalse(user.profile.is_complete)
         self.assertEqual(set(user.legal_acceptances.values_list("document_id", flat=True)), {self.terms.pk, self.privacy.pk})
         self.assertEqual(user.legal_acceptances.values("accepted_at").distinct().count(), 1)
@@ -117,12 +117,12 @@ class RegistrationWorkflowTests(APITestCase):
         self.assertFalse(User.objects.exists())
 
     def test_inactive_default_role_prevents_partial_registration(self):
-        Role.objects.update_or_create(name="Ponente", defaults={"is_active": False})
+        Role.objects.filter(name__iexact="ponente").update(is_active=False)
         response = self.register()
         self.assertEqual(response.status_code, 400)
         self.assertFalse(User.objects.exists())
         self.assertFalse(Profile.objects.exists())
-        self.assertFalse(Role.objects.get(name="Ponente").is_active)
+        self.assertFalse(Role.objects.get(name__iexact="ponente").is_active)
 
     def test_missing_current_document_prevents_registration(self):
         self.terms.is_active = False
@@ -249,7 +249,8 @@ class RegistrationWorkflowTests(APITestCase):
 class PrivilegeWorkflowTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user("roles@example.test", PASSWORD)
-        self.active_role = Role.objects.create(name="Evaluador")
+        self.active_role, _ = Role.objects.update_or_create(name="Evaluador", defaults={"is_active": True})
+        RolePrivilege.objects.filter(role=self.active_role).delete()
         self.inactive_role = Role.objects.create(name="Inactivo", is_active=False)
         self.allowed = Privilege.objects.create(code="trabajos.ver", name="Ver trabajos")
         self.denied = Privilege.objects.create(code="usuarios.gestionar", name="Gestionar usuarios")
@@ -430,3 +431,112 @@ class LegalAdministrationNewTests(APITestCase):
             1,
         )
 
+
+
+
+class RolesPrivilegesAdminTests(APITestCase):
+    def setUp(self):
+        self.admin = User.objects.create_user("admin-roles@example.test", PASSWORD, first_name="Admin", last_name="Roles")
+        self.target = User.objects.create_user("ponente-test@example.test", PASSWORD, first_name="Ana", last_name="Pérez")
+        self.admin_role, _ = Role.objects.get_or_create(name="administrador", defaults={"is_active": True})
+        self.coordinador_role, _ = Role.objects.get_or_create(name="coordinador", defaults={"is_active": True})
+        self.evaluador_role, _ = Role.objects.get_or_create(name="evaluador", defaults={"is_active": True})
+        for code in ("inicio_sesion", "modificar_perfil", "modificar_privilegios", "ver_reportes"):
+            priv, _ = Privilege.objects.get_or_create(code=code, defaults={"name": code})
+            RolePrivilege.objects.get_or_create(role=self.admin_role, privilege=priv)
+        UserRole.objects.get_or_create(user=self.admin, role=self.admin_role)
+        self.client.force_authenticate(self.admin)
+
+    def test_list_users_roles_and_privileges(self):
+        users_resp = self.client.get(reverse("admin_users"))
+        self.assertEqual(users_resp.status_code, 200)
+        self.assertGreaterEqual(len(users_resp.data), 2)
+
+        roles_resp = self.client.get(reverse("admin_roles"))
+        self.assertEqual(roles_resp.status_code, 200)
+        role_names = {r["name"] for r in roles_resp.data}
+        self.assertTrue({"coordinador", "ponente", "evaluador", "admin pagos", "administrador"}.issubset(role_names))
+        roles_by_name = {r["name"]: {p["code"] for p in r["privileges"]} for r in roles_resp.data}
+        self.assertIn("admin_pagos", roles_by_name["admin pagos"])
+        self.assertNotIn("admin_pagos", roles_by_name["coordinador"])
+
+        privs_resp = self.client.get(reverse("admin_privileges"))
+        self.assertEqual(privs_resp.status_code, 200)
+        self.assertTrue(any(p["code"] == "subir_trabajo" and p["name"] == "subir_trabajo" for p in privs_resp.data))
+        self.assertTrue(any(p["code"] == "modificar_privilegios" and p["name"] == "modificar_privilegios" for p in privs_resp.data))
+
+    def test_assign_and_remove_user_roles(self):
+        resp = self.client.put(
+            reverse("admin_user_roles", args=[self.target.pk]),
+            {"role_ids": [self.coordinador_role.pk, self.evaluador_role.pk]},
+            format="json",
+        )
+        self.assertEqual(resp.status_code, 200, resp.data)
+        assigned_names = {r["name"] for r in resp.data["roles"]}
+        self.assertEqual(assigned_names, {"coordinador", "evaluador"})
+        self.assertIn("asignar_evaluador", resp.data["privileges"])
+        self.assertIn("evaluar_trabajo", resp.data["privileges"])
+
+    def test_admin_cannot_strip_own_role_or_privileges(self):
+        resp = self.client.put(
+            reverse("admin_user_roles", args=[self.admin.pk]),
+            {"role_ids": [self.evaluador_role.pk]},
+            format="json",
+        )
+        self.assertEqual(resp.status_code, 400)
+        self.assertTrue(UserRole.objects.filter(user=self.admin, role=self.admin_role).exists())
+
+        # Admin also cannot revoke any privilege on their own account
+        ver_reportes_priv = Privilege.objects.get(code="ver_reportes")
+        revoke_self_resp = self.client.put(
+            reverse("admin_user_roles", args=[self.admin.pk]),
+            {
+                "role_ids": [self.admin_role.pk],
+                "revoked_privilege_ids": [ver_reportes_priv.pk],
+            },
+            format="json",
+        )
+        self.assertEqual(revoke_self_resp.status_code, 400)
+
+    def test_update_role_privileges_and_prevent_self_lockout(self):
+        ver_reportes_priv = Privilege.objects.get(code="ver_reportes")
+        resp = self.client.patch(
+            reverse("admin_role_detail", args=[self.evaluador_role.pk]),
+            {"privilege_ids": [ver_reportes_priv.pk]},
+            format="json",
+        )
+        self.assertEqual(resp.status_code, 200, resp.data)
+        self.assertEqual([p["code"] for p in resp.data["privileges"]], ["ver_reportes"])
+
+        # Attempting to deactivate own admin role should fail
+        lockout_resp = self.client.patch(
+            reverse("admin_role_detail", args=[self.admin_role.pk]),
+            {"is_active": False},
+            format="json",
+        )
+        self.assertEqual(lockout_resp.status_code, 400)
+        self.admin_role.refresh_from_db()
+        self.assertTrue(self.admin_role.is_active)
+
+    def test_per_user_privilege_revocation_and_grant(self):
+        ponente_role = Role.objects.get(name="ponente")
+        subir_trabajo = Privilege.objects.get(code="subir_trabajo")
+        solicitud_pago = Privilege.objects.get(code="solicitud_pago")
+        ver_reportes = Privilege.objects.get(code="ver_reportes")
+
+        resp = self.client.put(
+            reverse("admin_user_roles", args=[self.target.pk]),
+            {
+                "role_ids": [ponente_role.pk],
+                "revoked_privilege_ids": [subir_trabajo.pk, solicitud_pago.pk],
+                "granted_privilege_ids": [ver_reportes.pk],
+            },
+            format="json",
+        )
+        self.assertEqual(resp.status_code, 200, resp.data)
+        self.assertIn("ver_sus_trabajos", resp.data["privileges"])
+        self.assertNotIn("subir_trabajo", resp.data["privileges"])
+        self.assertNotIn("solicitud_pago", resp.data["privileges"])
+        self.assertIn("ver_reportes", resp.data["privileges"])
+        self.assertEqual(set(resp.data["revoked_privilege_ids"]), {subir_trabajo.pk, solicitud_pago.pk})
+        self.assertEqual(resp.data["granted_privilege_ids"], [ver_reportes.pk])
