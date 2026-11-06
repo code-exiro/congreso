@@ -26,14 +26,17 @@ def create_roles_and_menus(apps, schema_editor):
     User = apps.get_model("users", "User")
     UserRole = apps.get_model("users", "UserRole")
 
-    # 1. Crear roles iniciales requeridos
+    # 1. Crear roles iniciales requeridos buscando insensitivo para evitar duplicados
     roles_dict = {}
     for name, description in ROLES:
-        role, _ = Role.objects.using(alias).get_or_create(
-            name=name,
-            defaults={"description": description, "is_active": True},
-        )
-        if not role.is_active:
+        role = Role.objects.using(alias).filter(name__iexact=name).first()
+        if role is None:
+            role = Role.objects.using(alias).create(
+                name=name,
+                description=description,
+                is_active=True,
+            )
+        elif not role.is_active:
             role.is_active = True
             role.save(using=alias)
         roles_dict[name] = role
@@ -74,7 +77,7 @@ def create_roles_and_menus(apps, schema_editor):
         UserRole.objects.using(alias).get_or_create(user=user, role=admin_role)
 
     for legacy_name in ("Admin", "Administrador global"):
-        legacy_role = Role.objects.using(alias).filter(name=legacy_name).first()
+        legacy_role = Role.objects.using(alias).filter(name__iexact=legacy_name).exclude(pk=admin_role.pk).first()
         if legacy_role:
             for ur in UserRole.objects.using(alias).filter(role=legacy_role):
                 UserRole.objects.using(alias).get_or_create(user=ur.user, role=admin_role)

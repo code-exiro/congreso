@@ -269,7 +269,7 @@ class PrivilegeWorkflowTests(APITestCase):
             MenuPrivilege.objects.create(menu=menu, privilege=privilege)
         self.assertEqual(get_user_privilege_codes(self.user), ["trabajos.ver"])
         self.assertEqual(list(get_user_menus(self.user)), [visible])
-        self.assertEqual(UserSerializer(self.user).data["roles"], ["Evaluador"])
+        self.assertEqual(UserSerializer(self.user).data["roles"], [self.active_role.name])
         self.active_role.is_active = False
         self.active_role.save()
         self.assertEqual(get_user_privilege_codes(self.user), [])
