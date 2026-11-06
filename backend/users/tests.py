@@ -511,6 +511,7 @@ class RolesPrivilegesAdminTests(APITestCase):
         self.assertIn("evaluar_trabajo", resp.data["privileges"])
 
     def test_admin_cannot_strip_own_role_or_privileges(self):
+        # 1. El administrador jamás puede quitarse el rol de administrador
         resp = self.client.put(
             reverse("admin_user_roles", args=[self.admin.pk]),
             {"role_ids": [self.evaluador_role.pk]},
@@ -519,17 +520,45 @@ class RolesPrivilegesAdminTests(APITestCase):
         self.assertEqual(resp.status_code, 400)
         self.assertTrue(UserRole.objects.filter(user=self.admin, role=self.admin_role).exists())
 
-        # Admin also cannot revoke any privilege on their own account
-        ver_reportes_priv = Privilege.objects.get(code="ver_reportes")
+        # 2. Tampoco puede deshabilitar privilegios propios del rol de administrador
+        mod_priv = Privilege.objects.get(code="modificar_privilegios")
         revoke_self_resp = self.client.put(
             reverse("admin_user_roles", args=[self.admin.pk]),
             {
                 "role_ids": [self.admin_role.pk],
-                "revoked_privilege_ids": [ver_reportes_priv.pk],
+                "revoked_privilege_ids": [mod_priv.pk],
             },
             format="json",
         )
         self.assertEqual(revoke_self_resp.status_code, 400)
+
+        # 3. Si el administrador se asigna otro rol diferente (ej. evaluador) y privilegios extra (ej. ver_reportes),
+        # sí puede agregárselos y después quitárselos manteniendo su rol de administrador.
+        ver_reportes_priv = Privilege.objects.get(code="ver_reportes")
+        add_extra_resp = self.client.put(
+            reverse("admin_user_roles", args=[self.admin.pk]),
+            {
+                "role_ids": [self.admin_role.pk, self.evaluador_role.pk],
+                "granted_privilege_ids": [ver_reportes_priv.pk],
+            },
+            format="json",
+        )
+        self.assertEqual(add_extra_resp.status_code, 200, add_extra_resp.data)
+        self.assertIn(self.evaluador_role.pk, add_extra_resp.data["role_ids"])
+        self.assertIn(ver_reportes_priv.pk, add_extra_resp.data["granted_privilege_ids"])
+
+        remove_extra_resp = self.client.put(
+            reverse("admin_user_roles", args=[self.admin.pk]),
+            {
+                "role_ids": [self.admin_role.pk],
+                "granted_privilege_ids": [],
+                "revoked_privilege_ids": [],
+            },
+            format="json",
+        )
+        self.assertEqual(remove_extra_resp.status_code, 200, remove_extra_resp.data)
+        self.assertEqual(remove_extra_resp.data["role_ids"], [self.admin_role.pk])
+        self.assertEqual(remove_extra_resp.data["granted_privilege_ids"], [])
 
     def test_update_role_privileges_and_prevent_self_lockout(self):
         ver_reportes_priv = Privilege.objects.get(code="ver_reportes")

@@ -251,6 +251,19 @@ function UserRolesDialog({
     setShowAllCatalog(false);
   }, [open, targetUser]);
 
+  // Rol 'administrador' y sus privilegios base (protegidos cuando el admin se edita a sí mismo)
+  const adminRole = useMemo(
+    () =>
+      roles.find(
+        (r) => String(r.name || "").trim().toLowerCase() === "administrador",
+      ) || null,
+    [roles],
+  );
+  const adminRolePrivIds = useMemo(
+    () => new Set((adminRole?.privileges || []).map((p) => p.id)),
+    [adminRole],
+  );
+
   // Privilegios que otorgan por defecto los roles seleccionados activos
   const roleDefaultPrivIds = useMemo(() => {
     const selectedSet = new Set(selectedRoleIds);
@@ -265,9 +278,16 @@ function UserRolesDialog({
     return ids;
   }, [roles, selectedRoleIds]);
 
+  // El administrador jamás puede quitarse el rol de administrador, pero sí cualquier otro rol diferente
   const isRoleLockedForSelf = useCallback(
-    (roleId) => isEditingSelf && initialRoleIds.includes(roleId),
-    [isEditingSelf, initialRoleIds],
+    (roleId) =>
+      Boolean(
+        isEditingSelf &&
+          adminRole &&
+          roleId === adminRole.id &&
+          (initialRoleIds.includes(roleId) || selectedRoleIds.includes(roleId)),
+      ),
+    [isEditingSelf, adminRole, initialRoleIds, selectedRoleIds],
   );
 
   const toggleRole = (roleId) => {
@@ -289,12 +309,10 @@ function UserRolesDialog({
     [revokedPrivIds, grantedPrivIds, roleDefaultPrivIds],
   );
 
-  // El administrador no puede deshabilitarse privilegios propios que ya tiene activos por su rol o asignación inicial
+  // El administrador no puede deshabilitarse los privilegios base de su rol administrador, pero sí quitarse privilegios extra o de otros roles
   const isPrivilegeLockedForSelf = useCallback(
-    (privId) =>
-      isEditingSelf &&
-      (roleDefaultPrivIds.has(privId) || initialGrantedPrivIds.includes(privId)),
-    [isEditingSelf, roleDefaultPrivIds, initialGrantedPrivIds],
+    (privId) => Boolean(isEditingSelf && adminRolePrivIds.has(privId)),
+    [isEditingSelf, adminRolePrivIds],
   );
 
   // Permite habilitar o deshabilitar un privilegio específico para este usuario
@@ -439,7 +457,7 @@ function UserRolesDialog({
                   "& .MuiAlert-icon": { color: "#e7c77d" },
                 }}
               >
-                Por seguridad, estás editando tu propia cuenta de administrador: tus roles y privilegios actuales están protegidos para evitar que te bloquees el acceso. Solo puedes asignarte roles o privilegios adicionales.
+                Por seguridad, tu rol de <strong>administrador</strong> y sus privilegios base están protegidos y no pueden quitarse jamás. Si te asignas cualquier otro rol adicional o privilegios extra, sí puedes agregártelos y quitártelos libremente.
               </Alert>
             )}
 
@@ -581,7 +599,7 @@ function UserRolesDialog({
                   </Typography>
                   <Typography sx={{ fontSize: "0.78rem", color: "#94a3b8", mt: 0.3 }}>
                     {isEditingSelf
-                      ? "Tus privilegios propios no pueden desactivarse para evitar perder acceso administrativo."
+                      ? "Los privilegios base del rol administrador están protegidos; los privilegios extra o de otros roles sí pueden quitarse."
                       : "Desmarca cualquier privilegio para restringirlo únicamente a este usuario, o usa el modo solo lectura."}
                   </Typography>
                 </Box>
@@ -609,7 +627,7 @@ function UserRolesDialog({
                     </Button>
                   )}
 
-                  {!isEditingSelf && (revokedPrivIds.length > 0 || grantedPrivIds.length > 0) && (
+                  {(revokedPrivIds.length > 0 || grantedPrivIds.length > 0) && (
                     <Button
                       size="small"
                       variant="outlined"
@@ -2051,7 +2069,11 @@ export default function AdminRolesPrivilegesPage() {
         open={roleDialogOpen}
         editingRole={editingRole}
         isCurrentUsersRole={Boolean(
-          editingRole && (user?.roles || []).includes(editingRole.name),
+          editingRole &&
+            String(editingRole.name || "").trim().toLowerCase() === "administrador" &&
+            (user?.roles || []).some(
+              (r) => String(r || "").trim().toLowerCase() === "administrador",
+            ),
         )}
         allPrivileges={allPrivileges}
         busy={working}

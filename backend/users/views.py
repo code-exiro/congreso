@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import LegalDocument, Privilege, Profile, Role, User, UserLegalDocument, UserPrivilege, UserRole
+from .models import LegalDocument, Privilege, Profile, Role, RolePrivilege, User, UserLegalDocument, UserPrivilege, UserRole
 from .permissions import HasPrivilege
 from .serializers import (
     LegalDocumentSerializer, LoginSerializer, ProfileSerializer,
@@ -218,7 +218,8 @@ class AdminRoleDetailView(APIView):
             role = Role.objects.select_for_update().filter(pk=pk).first()
             if not role:
                 raise NotFound("Rol inexistente.")
-            is_own_role = UserRole.objects.filter(user=request.user, role=role).exists()
+            is_admin_role = role.name.strip().lower() == "administrador"
+            is_own_admin_role = is_admin_role and UserRole.objects.filter(user=request.user, role=role).exists()
             previous_codes = set(get_user_privilege_codes(request.user))
 
             serializer = AdminRoleSerializer(role, data=request.data, partial=True)
@@ -226,11 +227,11 @@ class AdminRoleDetailView(APIView):
             role = serializer.save()
 
             remaining_codes = set(get_user_privilege_codes(request.user))
-            if (is_own_role and (not role.is_active or not previous_codes.issubset(remaining_codes))) or (
+            if (is_own_admin_role and (not role.is_active or not previous_codes.issubset(remaining_codes))) or (
                 "modificar_privilegios" not in remaining_codes
             ):
                 raise ValidationError(
-                    "No puedes desactivar tu propio rol ni quitarle privilegios a tu cuenta de administrador."
+                    "No puedes desactivar el rol de administrador ni quitarle sus privilegios base."
                 )
 
         return Response(AdminRoleSerializer(role).data)
@@ -271,17 +272,28 @@ class AdminUserRoleUpdateView(APIView):
             existing_ids = set(
                 UserRole.objects.filter(user=target_user).values_list("role_id", flat=True)
             )
-            previous_codes = set(get_user_privilege_codes(request.user))
 
             if target_user.pk == request.user.pk:
-                if not existing_ids.issubset(desired_role_ids):
+                admin_role_ids = set(
+                    Role.objects.filter(name__iexact="administrador").values_list("id", flat=True)
+                )
+                protected_role_ids = existing_ids & admin_role_ids
+                if not protected_role_ids.issubset(desired_role_ids):
                     raise ValidationError(
-                        "No puedes quitarte tu propio rol de administrador."
+                        "No puedes quitarte el rol de administrador jamás."
                     )
-                if revoked_ids:
+                admin_priv_ids = set(
+                    RolePrivilege.objects.filter(
+                        role_id__in=(protected_role_ids or admin_role_ids)
+                    ).values_list("privilege_id", flat=True)
+                )
+                if revoked_ids & admin_priv_ids:
                     raise ValidationError(
-                        "No puedes deshabilitar tus propios privilegios de administrador."
+                        "No puedes deshabilitar los privilegios propios del rol de administrador."
                     )
+                admin_priv_codes = set(
+                    Privilege.objects.filter(id__in=admin_priv_ids).values_list("code", flat=True)
+                )
 
             UserRole.objects.filter(user=target_user).exclude(role_id__in=desired_role_ids).delete()
             for role_id in desired_role_ids - existing_ids:
@@ -305,9 +317,12 @@ class AdminUserRoleUpdateView(APIView):
 
             if target_user.pk == request.user.pk:
                 remaining_codes = set(get_user_privilege_codes(request.user))
-                if not previous_codes.issubset(remaining_codes) or "modificar_privilegios" not in remaining_codes:
+                if (
+                    "modificar_privilegios" not in remaining_codes
+                    or (protected_role_ids and not admin_priv_codes.issubset(remaining_codes))
+                ):
                     raise ValidationError(
-                        "No puedes quitarte tu propio rol ni deshabilitar tus propios privilegios."
+                        "No puedes quitarte el rol de administrador ni deshabilitar los privilegios del rol administrador."
                     )
 
         target_user.refresh_from_db()

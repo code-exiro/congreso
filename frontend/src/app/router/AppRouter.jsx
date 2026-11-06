@@ -13,7 +13,6 @@ import {
   MisSolicitudesPage,
   ListadoSolicitudesPage,
   TrabajosActivosPage,
-  MisEvaluacionesPage,
   RegistroAsistenciaPage,
   MisConstanciasPage,
   RolesUsuariosPage,
@@ -52,8 +51,15 @@ export default function AppRouter() {
           <Route path="trabajos/solicitudes" element={<ListadoSolicitudesPage />} />
           <Route path="trabajos/activos" element={<TrabajosActivosPage />} />
 
-          {/* Evaluaciones */}
-          <Route path="evaluaciones/asignadas" element={<MisEvaluacionesPage />} />
+          {/* Evaluaciones (Módulo del Evaluador) */}
+          <Route
+            path={EVALUATOR_PATHS.list}
+            element={<EvaluatorDashboardPage />}
+          />
+          <Route
+            path={EVALUATOR_PATHS.detail}
+            element={<EvaluationDetailPage />}
+          />
 
           {/* Eventos y Constancias */}
           <Route path="eventos/asistencia" element={<RegistroAsistenciaPage />} />
@@ -65,24 +71,6 @@ export default function AppRouter() {
           <Route path="configuraciones/documentos-legales" element={<AdminLegalDocumentsPage />} />
           <Route path="configuraciones/roles-privilegios" element={<AdminRolesPrivilegesPage />} />
           <Route path="configuraciones/personalizacion" element={<PersonalizacionPage />} />
-          <Route
-            path="configuraciones/documentos-legales"
-            element={<AdminLegalDocumentsPage />}
-          />
-          <Route
-            path="configuraciones/roles-privilegios"
-            element={<AdminRolesPrivilegesPage />}
-          />
-
-          {/* Evaluador */}
-          <Route
-            path={EVALUATOR_PATHS.list}
-            element={<EvaluatorDashboardPage />}
-          />
-          <Route
-            path={EVALUATOR_PATHS.detail}
-            element={<EvaluationDetailPage />}
-          />
         </Route>
       </Routes>
     </BrowserRouter>
