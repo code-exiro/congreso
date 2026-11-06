@@ -249,7 +249,10 @@ class RegistrationWorkflowTests(APITestCase):
 class PrivilegeWorkflowTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user("roles@example.test", PASSWORD)
-        self.active_role, _ = Role.objects.update_or_create(name="Evaluador", defaults={"is_active": True})
+        self.active_role, _ = Role.objects.update_or_create(
+            name="evaluador",
+            defaults={"is_active": True},
+        )
         RolePrivilege.objects.filter(role=self.active_role).delete()
         self.inactive_role = Role.objects.create(name="Inactivo", is_active=False)
         self.allowed = Privilege.objects.create(code="trabajos.ver", name="Ver trabajos")
@@ -431,6 +434,36 @@ class LegalAdministrationNewTests(APITestCase):
             1,
         )
 
+    def test_admin_and_ponente_roles_legal_documents_visibility(self):
+        for role_name in ("administrador", "coordinador", "ponente", "evaluador"):
+            self.assertTrue(
+                Role.objects.filter(name=role_name, is_active=True).exists(),
+                f"El rol {role_name} debe existir y estar activo",
+            )
+
+        admin_role = Role.objects.get(name="administrador")
+        admin_user = User.objects.create_user("admin_role@example.test", PASSWORD)
+        UserRole.objects.create(user=admin_user, role=admin_role)
+
+        admin_data = UserSerializer(admin_user).data
+        self.assertIn("documentos_legales.ver", admin_data["privileges"])
+        self.assertTrue(any(m["route"] == "/configuraciones/documentos-legales" for m in admin_data["menus"]))
+
+        self.client.force_authenticate(admin_user)
+        response = self.client.get(reverse("admin_legal_documents"))
+        self.assertEqual(response.status_code, 200)
+
+        ponente_role = Role.objects.get(name="ponente")
+        ponente_user = User.objects.create_user("ponente_role@example.test", PASSWORD)
+        UserRole.objects.create(user=ponente_user, role=ponente_role)
+
+        ponente_data = UserSerializer(ponente_user).data
+        self.assertNotIn("documentos_legales.ver", ponente_data["privileges"])
+        self.assertFalse(any(m["route"] == "/configuraciones/documentos-legales" for m in ponente_data["menus"]))
+
+        self.client.force_authenticate(ponente_user)
+        response_ponente = self.client.get(reverse("admin_legal_documents"))
+        self.assertEqual(response_ponente.status_code, 403)
 
 
 
