@@ -28,13 +28,10 @@ import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import GavelOutlinedIcon from "@mui/icons-material/GavelOutlined";
 import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-<<<<<<< HEAD
 import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
 import FactCheckOutlinedIcon from "@mui/icons-material/FactCheckOutlined";
 import EventAvailableOutlinedIcon from "@mui/icons-material/EventAvailableOutlined";
-=======
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
->>>>>>> 1ff2a4bd260c0e69ca1b3ed9ed7b8a8c9b999b50
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { NavLink, useLocation } from "react-router-dom";

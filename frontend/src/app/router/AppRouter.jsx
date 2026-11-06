@@ -6,7 +6,8 @@ import LoginPage from "../../features/auth/pages/LoginPage";
 import ProtectedRoute from "../../features/auth/components/ProtectedRoute";
 import RegisterPage from "../../features/auth/pages/RegisterPage";
 import AdminLegalDocumentsPage from "../../features/legalDocuments/pages/AdminLegalDocumentsPage";
-<<<<<<< HEAD
+import AdminRolesPrivilegesPage from "../../features/rolesPrivileges/pages/AdminRolesPrivilegesPage";
+import LandingPage from "../../features/landing/pages/LandingPage";
 import {
   ProfilePage,
   MisSolicitudesPage,
@@ -19,11 +20,6 @@ import {
   LimiteEvaluacionesPage,
   PersonalizacionPage,
 } from "../../features/common/pages/sectionPages";
-=======
-import AdminRolesPrivilegesPage from "../../features/rolesPrivileges/pages/AdminRolesPrivilegesPage";
-import LandingPage from "../../features/landing/pages/LandingPage"
-
->>>>>>> 1ff2a4bd260c0e69ca1b3ed9ed7b8a8c9b999b50
 
 export default function AppRouter() {
   return (
@@ -32,7 +28,7 @@ export default function AppRouter() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
         <Route path="/landing" element={<LandingPage />} />
-        
+
         <Route
           path="/"
           element={
@@ -43,7 +39,6 @@ export default function AppRouter() {
         >
           {/* Inicio [Admin / Coordinador / Evaluador / Ponente] */}
           <Route index element={<HomePage />} />
-<<<<<<< HEAD
 
           {/* Mi Perfil [Ponente / Admin / Coordinador / Evaluador] */}
           <Route path="perfil" element={<ProfilePage />} />
@@ -64,17 +59,8 @@ export default function AppRouter() {
           <Route path="configuraciones/roles-usuarios" element={<RolesUsuariosPage />} />
           <Route path="configuraciones/limite-evaluaciones" element={<LimiteEvaluacionesPage />} />
           <Route path="configuraciones/documentos-legales" element={<AdminLegalDocumentsPage />} />
+          <Route path="configuraciones/roles-privilegios" element={<AdminRolesPrivilegesPage />} />
           <Route path="configuraciones/personalizacion" element={<PersonalizacionPage />} />
-=======
-          <Route
-            path="configuraciones/documentos-legales"
-            element={<AdminLegalDocumentsPage />}
-          />
-          <Route
-            path="configuraciones/roles-privilegios"
-            element={<AdminRolesPrivilegesPage />}
-          />
->>>>>>> 1ff2a4bd260c0e69ca1b3ed9ed7b8a8c9b999b50
         </Route>
       </Routes>
     </BrowserRouter>
