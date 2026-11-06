@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 
-const DRAWER_WIDTH = 260;
+const DRAWER_WIDTH = 270;
 
 export default function AppLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);

@@ -1,11 +1,37 @@
 import { Box, Button, Paper, Stack, Typography } from "@mui/material";
-import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import MailOutlineRoundedIcon from "@mui/icons-material/MailOutlineRounded";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
+import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
+import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
+import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
+import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
+import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
+import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
+import GavelOutlinedIcon from "@mui/icons-material/GavelOutlined";
+import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
 import { Link as RouterLink } from "react-router-dom";
 
 import { useAuth } from "../../auth/context/AuthContext";
+import { getRoleMeta } from "../../../shared/utils/roleConfig";
+
+const cardIcons = {
+  home: HomeOutlinedIcon,
+  person: PersonOutlineOutlinedIcon,
+  description: DescriptionOutlinedIcon,
+  list_alt: FormatListBulletedOutlinedIcon,
+  task_alt: TaskAltOutlinedIcon,
+  rate_review: RateReviewOutlinedIcon,
+  how_to_reg: HowToRegOutlinedIcon,
+  workspace_premium: WorkspacePremiumOutlinedIcon,
+  manage_accounts: ManageAccountsOutlinedIcon,
+  tune: TuneOutlinedIcon,
+  gavel: GavelOutlinedIcon,
+  palette: PaletteOutlinedIcon,
+};
 
 export default function HomePage() {
   const { user } = useAuth();
@@ -18,17 +44,17 @@ export default function HomePage() {
   const menus = Array.isArray(user?.menus) ? user.menus : [];
 
   return (
-    <Stack spacing={3}>
-      {/* Tarjeta principal de bienvenida */}
+    <Stack spacing={{ xs: 2.5, sm: 3.5 }}>
+      {/* Tarjeta principal de bienvenida - Totalmente responsiva */}
       <Paper
         elevation={0}
         sx={{
-          p: { xs: 3, sm: 4, md: 5 },
+          p: { xs: 2.5, sm: 4, md: 5 },
           color: "#ffffff",
           bgcolor: "rgba(10, 24, 42, 0.78)",
           backdropFilter: "blur(16px)",
           backgroundImage:
-            "radial-gradient(circle at top right, rgba(231, 199, 125, 0.10), transparent 55%)",
+            "radial-gradient(circle at top right, rgba(231, 199, 125, 0.12), transparent 55%)",
           border: "1px solid rgba(255, 255, 255, 0.12)",
           borderRadius: "20px",
           boxShadow: "0 24px 70px rgba(0, 0, 0, 0.25)",
@@ -58,18 +84,17 @@ export default function HomePage() {
           >
             Panel de inicio
           </Box>
-
-          
         </Stack>
 
         <Typography
           component="h1"
           sx={{
-            fontSize: { xs: "2.2rem", sm: "3rem", lg: "3.6rem" },
-            lineHeight: 1.08,
+            fontSize: { xs: "1.85rem", sm: "2.6rem", md: "3.2rem" },
+            lineHeight: 1.1,
             fontWeight: 800,
-            letterSpacing: "-0.045em",
+            letterSpacing: "-0.04em",
             color: "#ffffff",
+            wordBreak: "break-word",
           }}
         >
           Bienvenido, {name}
@@ -80,10 +105,10 @@ export default function HomePage() {
 
         <Box
           sx={{
-            width: 54,
+            width: { xs: 40, sm: 54 },
             height: 3,
             bgcolor: "#e7c77d",
-            my: 3,
+            my: { xs: 2, sm: 3 },
             borderRadius: "2px",
           }}
         />
@@ -98,37 +123,40 @@ export default function HomePage() {
           <Typography
             sx={{
               color: "#d6deeb",
-              fontSize: "0.92rem",
+              fontSize: { xs: "0.85rem", sm: "0.92rem" },
               fontWeight: 600,
             }}
           >
-            Roles:
+            Roles asignados:
           </Typography>
 
           {roles.length > 0 ? (
-            roles.map((role) => (
-              <Box
-                key={role}
-                sx={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 0.8,
-                  px: 1.6,
-                  py: 0.55,
-                  borderRadius: "10px",
-                  bgcolor: "rgba(255, 255, 255, 0.06)",
-                  border: "1px solid rgba(231, 199, 125, 0.32)",
-                  color: "#ffffff",
-                  fontSize: "0.85rem",
-                  fontWeight: 700,
-                }}
-              >
-                <ShieldOutlinedIcon
-                  sx={{ fontSize: "1rem", color: "#e7c77d" }}
-                />
-                {role}
-              </Box>
-            ))
+            roles.map((role) => {
+              const meta = getRoleMeta(role);
+              const RoleIcon = meta.icon;
+              return (
+                <Box
+                  key={role}
+                  sx={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 0.8,
+                    px: { xs: 1.3, sm: 1.6 },
+                    py: 0.55,
+                    borderRadius: "10px",
+                    bgcolor: meta.bgColor,
+                    border: `1px solid ${meta.borderColor}`,
+                    color: meta.color,
+                    fontSize: { xs: "0.78rem", sm: "0.85rem" },
+                    fontWeight: 700,
+                    transition: "all 0.2s ease",
+                  }}
+                >
+                  <RoleIcon sx={{ fontSize: { xs: "0.95rem", sm: "1.1rem" } }} />
+                  {role}
+                </Box>
+              );
+            })
           ) : (
             <Box
               sx={{
@@ -150,21 +178,23 @@ export default function HomePage() {
         </Stack>
       </Paper>
 
-      {/* Tarjetas informativas basadas únicamente en datos reales de la sesión */}
+      {/* Grid responsivo de tarjetas informativas y módulos habilitados */}
       <Box
         sx={{
           display: "grid",
           gridTemplateColumns: {
-            xs: "minmax(0, 1fr)",
-            md: menus.length > 0 ? "repeat(2, minmax(0, 1fr))" : "minmax(0, 1fr)",
+            xs: "1fr",
+            sm: "repeat(auto-fill, minmax(280px, 1fr))",
+            lg: "repeat(auto-fill, minmax(320px, 1fr))",
           },
-          gap: 3,
+          gap: { xs: 2, sm: 3 },
         }}
       >
+        {/* Tarjeta de Cuenta Activa */}
         <Paper
           elevation={0}
           sx={{
-            p: 3.5,
+            p: { xs: 2.5, sm: 3.5 },
             color: "#ffffff",
             bgcolor: "rgba(10, 24, 42, 0.78)",
             backdropFilter: "blur(16px)",
@@ -182,7 +212,7 @@ export default function HomePage() {
             alignItems="flex-start"
             spacing={2}
           >
-            <Box>
+            <Box sx={{ minWidth: 0 }}>
               <Typography
                 sx={{
                   color: "#94a3b8",
@@ -196,8 +226,9 @@ export default function HomePage() {
                 Cuenta activa
               </Typography>
               <Typography
+                noWrap
                 sx={{
-                  fontSize: "1.35rem",
+                  fontSize: { xs: "1.15rem", sm: "1.35rem" },
                   fontWeight: 750,
                   letterSpacing: "-0.02em",
                   color: "#ffffff",
@@ -225,107 +256,119 @@ export default function HomePage() {
           </Stack>
 
           <Typography
+            noWrap
             sx={{
               mt: 2.5,
               color: "#d6deeb",
-              fontSize: "0.9rem",
+              fontSize: "0.88rem",
             }}
           >
             {user?.email}
           </Typography>
         </Paper>
 
-        {menus.map((menu) => (
-          <Paper
-            key={menu.id}
-            elevation={0}
-            sx={{
-              p: 3.5,
-              color: "#ffffff",
-              bgcolor: "rgba(10, 24, 42, 0.78)",
-              backdropFilter: "blur(16px)",
-              border: "1px solid rgba(255, 255, 255, 0.12)",
-              borderRadius: "20px",
-              boxShadow: "0 20px 50px rgba(0, 0, 0, 0.20)",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              alignItems="flex-start"
-              spacing={2}
+        {/* Módulos Habilitados para el usuario según su rol */}
+        {menus.map((menu) => {
+          const Icon = cardIcons[menu.icon] || DescriptionOutlinedIcon;
+          return (
+            <Paper
+              key={menu.id || menu.route}
+              elevation={0}
+              sx={{
+                p: { xs: 2.5, sm: 3.5 },
+                color: "#ffffff",
+                bgcolor: "rgba(10, 24, 42, 0.78)",
+                backdropFilter: "blur(16px)",
+                border: "1px solid rgba(255, 255, 255, 0.12)",
+                borderRadius: "20px",
+                boxShadow: "0 20px 50px rgba(0, 0, 0, 0.20)",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                transition: "transform 0.2s ease, border-color 0.2s ease",
+                "&:hover": {
+                  borderColor: "rgba(231, 199, 125, 0.35)",
+                  transform: "translateY(-2px)",
+                },
+              }}
             >
-              <Box>
-                <Typography
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="flex-start"
+                spacing={2}
+              >
+                <Box sx={{ minWidth: 0 }}>
+                  <Typography
+                    sx={{
+                      color: "#e7c77d",
+                      fontSize: "0.70rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.16em",
+                      textTransform: "uppercase",
+                      mb: 1,
+                    }}
+                  >
+                    {menu.category || "Módulo disponible"}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "1.15rem", sm: "1.30rem" },
+                      fontWeight: 750,
+                      letterSpacing: "-0.02em",
+                      color: "#ffffff",
+                      lineHeight: 1.25,
+                    }}
+                  >
+                    {menu.name}
+                  </Typography>
+                </Box>
+
+                <Box
                   sx={{
+                    width: 42,
+                    height: 42,
+                    borderRadius: "12px",
+                    bgcolor: "rgba(231, 199, 125, 0.12)",
+                    border: "1px solid rgba(231, 199, 125, 0.28)",
+                    display: "grid",
+                    placeItems: "center",
                     color: "#e7c77d",
-                    fontSize: "0.72rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.18em",
-                    textTransform: "uppercase",
-                    mb: 1,
+                    flexShrink: 0,
                   }}
                 >
-                  Módulo habilitado
-                </Typography>
-                <Typography
+                  <Icon fontSize="small" />
+                </Box>
+              </Stack>
+
+              <Box sx={{ mt: 2.5 }}>
+                <Button
+                  component={RouterLink}
+                  to={menu.route}
+                  variant="contained"
+                  endIcon={<ArrowForwardRoundedIcon />}
                   sx={{
-                    fontSize: "1.35rem",
-                    fontWeight: 750,
-                    letterSpacing: "-0.02em",
-                    color: "#ffffff",
+                    py: 0.9,
+                    px: 2,
+                    bgcolor: "#e7c77d",
+                    color: "#102138",
+                    borderRadius: "10px",
+                    fontWeight: 800,
+                    fontSize: "0.85rem",
+                    textTransform: "none",
+                    boxShadow: "none",
+                    "&:hover": {
+                      bgcolor: "#f2d99c",
+                      boxShadow: "none",
+                    },
                   }}
                 >
-                  {menu.name}
-                </Typography>
+                  Ir a {menu.name}
+                </Button>
               </Box>
-
-              <Box
-                sx={{
-                  width: 42,
-                  height: 42,
-                  borderRadius: "12px",
-                  bgcolor: "rgba(231, 199, 125, 0.12)",
-                  border: "1px solid rgba(231, 199, 125, 0.28)",
-                  display: "grid",
-                  placeItems: "center",
-                  color: "#e7c77d",
-                  flexShrink: 0,
-                }}
-              >
-                <DescriptionOutlinedIcon fontSize="small" />
-              </Box>
-            </Stack>
-
-            <Box sx={{ mt: 2.5 }}>
-              <Button
-                component={RouterLink}
-                to={menu.route}
-                variant="contained"
-                endIcon={<ArrowForwardRoundedIcon />}
-                sx={{
-                  py: 1,
-                  px: 2.2,
-                  bgcolor: "#e7c77d",
-                  color: "#102138",
-                  borderRadius: "10px",
-                  fontWeight: 800,
-                  textTransform: "none",
-                  boxShadow: "none",
-                  "&:hover": {
-                    bgcolor: "#f2d99c",
-                    boxShadow: "none",
-                  },
-                }}
-              >
-                Ir a {menu.name}
-              </Button>
-            </Box>
-          </Paper>
-        ))}
+            </Paper>
+          );
+        })}
       </Box>
     </Stack>
   );
