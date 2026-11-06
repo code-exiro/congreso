@@ -200,10 +200,9 @@ def heal_local_database_schema(apps, schema_editor):
         return
 
     quote_name = schema_editor.quote_name
-    users_config = apps.get_app_config("users")
 
     with schema_editor.connection.cursor() as cursor:
-        for model in users_config.get_models():
+        for model in apps.get_models():
             table_name = model._meta.db_table
             official_columns = {
                 field.column for field in model._meta.local_concrete_fields
@@ -218,7 +217,11 @@ def heal_local_database_schema(apps, schema_editor):
                 """,
                 [table_name],
             )
-            for col_name, is_nullable in cursor.fetchall():
+            rows = cursor.fetchall()
+            if not rows:
+                continue
+
+            for col_name, is_nullable in rows:
                 if col_name not in official_columns and is_nullable == "NO":
                     cursor.execute(
                         f"ALTER TABLE {quote_name(table_name)} "
