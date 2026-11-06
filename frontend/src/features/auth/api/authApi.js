@@ -1,25 +1,20 @@
-// src/features/auth/api/authApi.js
-
 import apiClient from "../../../shared/api/apiClient";
 
-export const login = async (credentials) => {
-  const response = await apiClient.post(
-    "/auth/login/",
-    credentials
-  );
+export async function login({ email, password }) {
+  const { data } = await apiClient.post("/auth/login/", {
+    email,
+    password,
+  });
 
-  return response.data;
-};
+  return data;
+}
 
-export const getMe = async (accessToken) => {
-  const response = await apiClient.get(
-    "/auth/me/",
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
+export async function getMe(accessToken) {
+  const { data } = await apiClient.get("/auth/me/", {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
-  return response.data;
-};
+  return data;
+}
