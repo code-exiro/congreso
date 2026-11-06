@@ -71,20 +71,24 @@ const REQS = [
 const DOCS = ['Convocatoria oficial 21° Congreso', 'Guía de autores', 'Plantilla oficial de extensos', 'Plantilla de videoponencia', 'Requisitos de prototipos e IA', 'Cartelera del congreso']
 
 const VIDEOS = [
-  { title: 'Conferencia Magistral 2025: La IA en la Industria Moderna', img: '/images/poster.jpeg', link: '#' },
-  { title: 'Panel de Expertos: Retos en Energías Renovables', img: '/images/banner.jpeg', link: '#' },
-  { title: 'Avances en Robótica y Sistemas Embebidos', img: '/images/poster.jpeg', link: '#' },
-  { title: 'Clausura y Premiación del 20° Congreso (2025)', img: '/images/banner.jpeg', link: '#' },
-  { title: 'Taller Práctico de Manufactura Industrial', img: '/images/poster.jpeg', link: '#' },
+  { title: 'Conferencia Magistral 2025: La IA en la Industria Moderna', img: '/images/poster.png', link: '#' },
+  { title: 'Panel de Expertos: Retos en Energías Renovables', img: '/images/banner.png', link: '#' },
+  { title: 'Avances en Robótica y Sistemas Embebidos', img: '/images/poster.png', link: '#' },
+  { title: 'Clausura y Premiación del 20° Congreso (2025)', img: '/images/banner.png', link: '#' },
+  { title: 'Taller Práctico de Manufactura Industrial', img: '/images/poster.png', link: '#' },
 ]
 
+
 const HISTORICOS = [
-  { title: 'Implementación de Redes Neuronales en Manufactura', author: 'Ing. María López', year: 2025, topic: 'Inteligencia artificial', link: '#' },
-  { title: 'Control PID Avanzado para Brazos Robóticos', author: 'Dr. Juan Pérez', year: 2024, topic: 'Robótica', link: '#' },
-  { title: 'Optimización Energética en Sistemas de Paneles Solares', author: 'Dra. Ana Gómez', year: 2025, topic: 'Energías renovables', link: '#' },
-  { title: 'Sistemas IoT de Bajo Costo para Monitoreo de Cultivos', author: 'M. en C. Carlos Ruiz', year: 2024, topic: 'Telecomunicaciones', link: '#' },
-  { title: 'Automatización de Procesos con Sistemas Embebidos', author: 'Dra. Patricia Núñez Arce', year: 2023, topic: 'Sistemas embebidos', link: '#' },
-  { title: 'Diseño de Convertidores para Vehículos Eléctricos', author: 'Dr. Alejandro Torres Vega', year: 2023, topic: 'Electrónica de potencia', link: '#' }
+  { title: 'Memorias del Congreso - Edición 1', tag: 'Año 1, No. 1', img: '/images/revista1.png', link: 'https://virtual.cuautitlan.unam.mx/CongresoCiTec/Memorias_Congreso/Anio1_No1/Inicio.pdf' },
+  { title: 'Memorias del Congreso - Edición 2', tag: 'Año 2, No. 2', img: '/images/revista2.png', link: 'https://virtual.cuautitlan.unam.mx/CongresoCiTec/Memorias_Congreso/Anio2_No2/Inicio.pdf' },
+  { title: 'Memorias del Congreso - Edición 3', tag: 'Año 3, No. 3', img: '/images/revista3.png', link: 'https://virtual.cuautitlan.unam.mx/CongresoCiTec/Memorias_Congreso/Anio3_No3/Inicio.pdf' },
+  { title: 'Memorias del Congreso - Edición 4', tag: 'Año 4, No. 4', img: '/images/revista4.png', link: 'https://virtual.cuautitlan.unam.mx/CongresoCiTec/Inicio.pdf' },
+  { title: 'Memorias del Congreso - Edición 5', tag: 'Año 5, No. 5', img: '/images/revista5.png', link: 'https://virtual.cuautitlan.unam.mx/CongresoCiTec/Memorias_Congreso/Anio5_No5/Inicio.pdf' },
+  { title: 'Memorias del Congreso - Edición 6', tag: 'Año 6, No. 6', img: '/images/revista6.png', link: 'https://virtual.cuautitlan.unam.mx/CongresoCiTec/Memorias_Congreso/Anio6_No6/Inicio.pdf' },
+  { title: 'Memorias del Congreso - Edición 7', tag: 'Año 7, No. 7', img: '/images/revista7.png', link: 'https://virtual.cuautitlan.unam.mx/CongresoCiTec/Memorias_Congreso/Anio7_No7/Inicio.pdf' },
+  { title: 'Memorias del Congreso - Edición 8', tag: 'Año 8, No. 8', img: '/images/revista8.png', link: 'https://virtual.cuautitlan.unam.mx/CongresoCiTec/Memorias_Congreso/Anio8_No8/Revista_N8.pdf' },
+  { title: 'Memorias del Congreso - Edición 9', tag: 'Año 9, No. 9', img: '/images/revista9.png', link: 'https://virtual.cuautitlan.unam.mx/CongresoCiTec/Memorias_Congreso/Anio9_No9/Revista_N9.pdf' }
 ]
 
 const PATROCINADORES = [0, 1, 2, 3, 0, 1, 2, 3]; 
@@ -124,7 +128,7 @@ function Calendar() {
   )
 }
 
-export default function LandingPage() {
+export default function App() {
   const [open, setOpen] = useState(false)
   const [com, setCom] = useState(0)
   const nav = (id) => { setOpen(false); go(id) }
@@ -132,14 +136,15 @@ export default function LandingPage() {
   return (
     <>
       <header className="hdr">
+        
         <button className="logo" onClick={() => nav('convocatoria')}>
-          <span className="crest">UNAM</span>
-          <span><b>CONING</b><small>Sistema del Congreso de las ingenierías</small></span>
+          <img src="/images/logo_congreso.jpeg" alt="Logo CONING" className="crest-img" />
+          <span><b>CONING</b><small>Sistema del Congreso de Ingenierías</small></span>
         </button>
         <button className="burger" aria-label="Menú" onClick={() => setOpen(!open)}>☰</button>
         <nav className={open ? 'open' : ''}>
           {NAV.map(([id, l]) => <button key={id} onClick={() => nav(id)}>{l}</button>)}
-          <Link to="/login" className="cta">Iniciar Sesión</Link>
+          <Link to="/login" className="cta">Registrarse / Iniciar sesión</Link>
         </nav>
       </header>
 
@@ -238,8 +243,6 @@ export default function LandingPage() {
           <div className="mini">{ACTS.map(([t, d]) => <div key={t}><h3>{t}</h3><p>{d}</p></div>)}</div>
           <div className="chips">{TOPICS.map((t) => <span key={t}>{t}</span>)}</div>
         </div>
-
-        {/* SECCIÓN DOCUMENTOS RESTAURADA AQUÍ */}
         <div className="docs">
           <div className="wrap">
             <span className="eyebrow gold">Guías y accesos oficiales</span>
@@ -272,14 +275,15 @@ export default function LandingPage() {
       <section id="historicos" className="sec">
         <div className="wrap">
           <span className="eyebrow">Repositorio Histórico</span>
-          <h2>Trabajos presentados últimamente</h2>
+          <h2>Memorias del Congreso</h2>
           <div className="history-grid">
             {HISTORICOS.map((h, i) => (
               <a key={i} href={h.link} target="_blank" rel="noreferrer" className="history-card">
-                <span className="tag">{h.year} · {h.topic}</span>
+                {/* Etiqueta HTML img para cargar las portadas de revista1.jpg hasta revista9.jpg */}
+                <img src={h.img} alt={h.title} className="history-cover" loading="lazy" />
+                <span className="tag">{h.tag}</span>
                 <h3>{h.title}</h3>
-                <p><b>Autor/a:</b> {h.author}</p>
-                <span className="action">Ver trabajo ↗</span>
+                <span className="action">Leer revista ↗</span>
               </a>
             ))}
           </div>
