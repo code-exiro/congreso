@@ -8,6 +8,8 @@ import RegisterPage from "../../features/auth/pages/RegisterPage";
 import AdminLegalDocumentsPage from "../../features/legalDocuments/pages/AdminLegalDocumentsPage";
 import AdminRolesPrivilegesPage from "../../features/rolesPrivileges/pages/AdminRolesPrivilegesPage";
 import LandingPage from "../../features/landing/pages/LandingPage";
+import RegistrarCongresoPage from "../../features/landing/pages/registrarcongreso";
+
 import {
   ProfilePage,
   MisSolicitudesPage,
@@ -31,6 +33,7 @@ export default function AppRouter() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegisterPage />} />
         <Route path="/landing" element={<LandingPage />} />
+        <Route path="/admin/nuevo-congreso" element={<RegistrarCongresoPage />} />
 
         <Route
           path="/"
