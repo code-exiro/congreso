@@ -1,26 +1,12 @@
 import SectionPlaceholderPage from "./SectionPlaceholderPage";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
 import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
-import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
-
-export function ProfilePage() {
-  return (
-    <SectionPlaceholderPage
-      title="Mi Perfil"
-      category="Principal"
-      icon={PersonOutlineOutlinedIcon}
-      description="Consulta y actualiza tu semblanza, institución, grado académico e información personal de contacto."
-      allowedRoles={["Ponente", "Administrador", "Coordinador", "Evaluador"]}
-    />
-  );
-}
 
 export function MisSolicitudesPage() {
   return (
@@ -90,18 +76,6 @@ export function MisConstanciasPage() {
       icon={WorkspacePremiumOutlinedIcon}
       description="Descarga de diplomas, constancias de participación y reconocimientos oficiales con firma digital."
       allowedRoles={["Ponente"]}
-    />
-  );
-}
-
-export function RolesUsuariosPage() {
-  return (
-    <SectionPlaceholderPage
-      title="Roles y Usuarios"
-      category="Configuraciones"
-      icon={ManageAccountsOutlinedIcon}
-      description="Administración de cuentas, asignación de roles (Administrador, Coordinador, Ponente, Evaluador) y privilegios del sistema."
-      allowedRoles={["Administrador"]}
     />
   );
 }

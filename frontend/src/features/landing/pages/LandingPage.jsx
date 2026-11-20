@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../auth/context/AuthContext'
 import './landing.css'
 
 const NAV = [
@@ -328,7 +329,18 @@ function Calendar({ events, month, onMonthChange }) {
 }
 
 export default function App() {
+  const navigate = useNavigate()
+  const { isAuthenticated } = useAuth()
   const [open, setOpen] = useState(false)
+
+  const handleGoToProfile = () => {
+    setOpen(false)
+    if (isAuthenticated) {
+      navigate('/perfil')
+    } else {
+      navigate('/login', { state: { from: { pathname: '/perfil' } } })
+    }
+  }
   const [com, setCom] = useState(0)
   const [popup, setPopup] = useState(null) // Modal de conferencias magistrales
   const [infoModal, setInfoModal] = useState(null) // Modal de tipos de actividad / áreas temáticas
@@ -586,6 +598,18 @@ export default function App() {
               <label>Color secundario <input type="color" value={secondaryColor} onChange={(event) => setSecondaryColor(event.target.value)} /></label>
             </div>
           )}
+          <button
+            type="button"
+            onClick={handleGoToProfile}
+            style={{
+              border: '1px solid var(--gold)',
+              color: 'var(--gold)',
+              fontWeight: 600,
+              marginLeft: '6px',
+            }}
+          >
+            Mi Perfil
+          </button>
           <Link to="/login" className="cta">Registrarse / Iniciar sesión</Link>
         </nav>
       </header>

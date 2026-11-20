@@ -156,7 +156,9 @@ export default function Sidebar({ drawerWidth, mobileOpen, onClose }) {
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const { pathname } = useLocation();
   const { user } = useAuth();
-  const menus = Array.isArray(user?.menus) ? user.menus : [];
+  const menus = (Array.isArray(user?.menus) ? user.menus : []).filter(
+    (m) => m.route !== "/configuraciones/roles-usuarios",
+  );
 
   // Determinar si Mi Perfil está en los menús del usuario
   const perfilMenu = menus.find((m) => m.route === "/perfil");
