@@ -207,6 +207,73 @@ class RegistrationWorkflowTests(APITestCase):
         self.assertEqual(self.client.get(reverse("profile")).status_code, 401)
         self.assertEqual(self.client.patch(reverse("profile"), {"mobile_phone": "123"}).status_code, 401)
 
+    def test_profile_resolves_temporary_catalogs_and_rejects_unknown_ids(self):
+        self.register()
+        user = User.objects.get(email="irene@example.test")
+        self.client.force_authenticate(user)
+
+        self.assertFalse(State.objects.exists())
+        self.assertFalse(Institution.objects.exists())
+        self.assertFalse(AcademicLevel.objects.exists())
+
+        response = self.client.patch(reverse("profile"), {
+            "state": 1,
+            "institution": 1,
+            "academic_level": 3,
+            "dialing_code": "+52",
+            "mobile_phone": "5512345678",
+            "phone": "5587654321",
+            "biography": "Investigador en sistemas.",
+        }, format="json")
+        self.assertEqual(response.status_code, 200, response.data)
+        self.assertTrue(response.data["is_complete"])
+        self.assertEqual(response.data["state"], 1)
+        self.assertEqual(response.data["institution"], 1)
+        self.assertEqual(response.data["academic_level"], 3)
+        self.assertTrue(State.objects.filter(pk=1, name="Estado de México").exists())
+        self.assertTrue(Institution.objects.filter(pk=1, name="FES Cuautitlán - UNAM").exists())
+        self.assertTrue(AcademicLevel.objects.filter(pk=3, degree="Licenciatura / Ingeniería").exists())
+
+        bad_response = self.client.patch(reverse("profile"), {"state": 99999}, format="json")
+        self.assertEqual(bad_response.status_code, 400)
+        self.assertIn("state", bad_response.data)
+
+    def test_profile_supports_picture_upload_and_removal(self):
+        import io
+        from PIL import Image
+
+        self.register()
+        user = User.objects.get(email="irene@example.test")
+        self.client.force_authenticate(user)
+
+        buf = io.BytesIO()
+        Image.new("RGB", (4, 4), color=(16, 33, 56)).save(buf, format="PNG")
+        photo = SimpleUploadedFile("avatar.png", buf.getvalue(), content_type="image/png")
+
+        upload_response = self.client.patch(
+            reverse("profile"),
+            {
+                "state": "2",
+                "institution": "2",
+                "academic_level": "5",
+                "dialing_code": "+52",
+                "mobile_phone": "5511223344",
+                "profile_picture": photo,
+            },
+            format="multipart",
+        )
+        self.assertEqual(upload_response.status_code, 200, upload_response.data)
+        self.assertTrue(upload_response.data["is_complete"])
+        self.assertTrue(bool(upload_response.data["profile_picture"]))
+
+        clear_response = self.client.patch(
+            reverse("profile"),
+            {"profile_picture": None},
+            format="json",
+        )
+        self.assertEqual(clear_response.status_code, 200, clear_response.data)
+        self.assertIsNone(clear_response.data["profile_picture"])
+
     def test_accepted_document_is_immutable_and_historical_rows_are_protected(self):
         self.register()
         self.terms.name = "Cambio posterior a la aceptación"
@@ -602,3 +669,99 @@ class RolesPrivilegesAdminTests(APITestCase):
         self.assertIn("ver_reportes", resp.data["privileges"])
         self.assertEqual(set(resp.data["revoked_privilege_ids"]), {subir_trabajo.pk, solicitud_pago.pk})
         self.assertEqual(resp.data["granted_privilege_ids"], [ver_reportes.pk])
+
+    def test_menus_appear_from_individual_privileges_without_requiring_role(self):
+        # Ningún código auxiliar ficticio debe seguir existiendo en Privilege
+        aux_codes = (
+            "perfil.ver",
+            "trabajos.mis_solicitudes",
+            "trabajos.listado_solicitudes",
+            "trabajos.activos",
+            "evaluaciones.mis_asignadas",
+            "eventos.asistencia",
+            "eventos.mis_constancias",
+            "configuraciones.roles_usuarios",
+            "configuraciones.limite_evaluaciones",
+            "configuraciones.personalizacion",
+        )
+        self.assertFalse(Privilege.objects.filter(code__in=aux_codes).exists())
+
+        # 1. Administrador sin rol 'evaluador' se asigna evaluar_trabajo -> aparece /evaluaciones/asignadas
+        evaluar_trabajo = Privilege.objects.get(code="evaluar_trabajo")
+        ver_sus_evaluaciones = Privilege.objects.get(code="ver_sus_evaluaciones")
+        resp = self.client.put(
+            reverse("admin_user_roles", args=[self.admin.pk]),
+            {
+                "role_ids": [self.admin_role.pk],
+                "granted_privilege_ids": [evaluar_trabajo.pk],
+            },
+            format="json",
+        )
+        self.assertEqual(resp.status_code, 200, resp.data)
+        me_routes = {m["route"] for m in self.client.get(reverse("me")).data["menus"]}
+        self.assertIn("/evaluaciones/asignadas", me_routes)
+        self.assertNotIn("/configuraciones/roles-usuarios", me_routes)
+
+        # Al quitarse el privilegio extra sin cambiar su rol, desaparece /evaluaciones/asignadas
+        remove_resp = self.client.put(
+            reverse("admin_user_roles", args=[self.admin.pk]),
+            {"role_ids": [self.admin_role.pk], "granted_privilege_ids": []},
+            format="json",
+        )
+        self.assertEqual(remove_resp.status_code, 200, remove_resp.data)
+        me_routes_after = {m["route"] for m in self.client.get(reverse("me")).data["menus"]}
+        self.assertNotIn("/evaluaciones/asignadas", me_routes_after)
+
+        # 2. Otorgar privilegios individuales de otros roles sin asignar esos roles habilita sus módulos
+        subir_trabajo = Privilege.objects.get(code="subir_trabajo")
+        ver_sus_constancias = Privilege.objects.get(code="ver_sus_constancias")
+        asignar_evaluador = Privilege.objects.get(code="asignar_evaluador")
+        diseno_pagina = Privilege.objects.get(code="diseño_pagina")
+        docs_ver = Privilege.objects.get(code="documentos_legales.ver")
+        modificar_privs = Privilege.objects.get(code="modificar_privilegios")
+
+        grant_resp = self.client.put(
+            reverse("admin_user_roles", args=[self.target.pk]),
+            {
+                "role_ids": [],
+                "granted_privilege_ids": [
+                    subir_trabajo.pk,
+                    ver_sus_constancias.pk,
+                    asignar_evaluador.pk,
+                    diseno_pagina.pk,
+                    docs_ver.pk,
+                    modificar_privs.pk,
+                ],
+            },
+            format="json",
+        )
+        self.assertEqual(grant_resp.status_code, 200, grant_resp.data)
+        target_routes = {m.route for m in get_user_menus(self.target)}
+        self.assertTrue(
+            {
+                "/trabajos/mis-solicitudes",
+                "/eventos/asistencia",
+                "/eventos/constancias",
+                "/trabajos/solicitudes",
+                "/trabajos/activos",
+                "/configuraciones/limite-evaluaciones",
+                "/configuraciones/personalizacion",
+                "/configuraciones/documentos-legales",
+                "/configuraciones/roles-privilegios",
+            }.issubset(target_routes)
+        )
+
+        # 3. Usuario con rol evaluador si tiene revocados ambos privilegios de evaluación pierde /evaluaciones/asignadas
+        RolePrivilege.objects.get_or_create(role=self.evaluador_role, privilege=evaluar_trabajo)
+        RolePrivilege.objects.get_or_create(role=self.evaluador_role, privilege=ver_sus_evaluaciones)
+        revoke_eval_resp = self.client.put(
+            reverse("admin_user_roles", args=[self.target.pk]),
+            {
+                "role_ids": [self.evaluador_role.pk],
+                "revoked_privilege_ids": [evaluar_trabajo.pk, ver_sus_evaluaciones.pk],
+                "granted_privilege_ids": [],
+            },
+            format="json",
+        )
+        self.assertEqual(revoke_eval_resp.status_code, 200, revoke_eval_resp.data)
+        self.assertNotIn("/evaluaciones/asignadas", {m.route for m in get_user_menus(self.target)})

@@ -6,10 +6,6 @@ import {
   Checkbox,
   Chip,
   CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Divider,
   FormControlLabel,
   InputAdornment,
@@ -400,46 +396,40 @@ function UserRolesDialog({
     });
   };
 
-  if (!targetUser) return null;
+  if (!open || !targetUser) return null;
 
   return (
-    <Dialog
-      open={open}
-      onClose={busy ? undefined : onClose}
-      fullWidth
-      maxWidth="md"
-      slotProps={{
-        paper: {
-          sx: {
-            bgcolor: "#0d1c2d",
-            color: "#ffffff",
-            backgroundImage: "none",
-            border: "1px solid rgba(255, 255, 255, 0.16)",
-            borderRadius: "20px",
-            boxShadow: "0 24px 70px rgba(0, 0, 0, 0.45)",
-          },
-        },
-      }}
-    >
-      <Box component="form" onSubmit={handleSubmit}>
-        <DialogTitle
+    <Box sx={{ width: "100%", flexGrow: 1, display: "flex", flexDirection: "column" }}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}
+      >
+        <Box
           sx={{
-            pt: 3,
-            px: 3.5,
-            fontWeight: 800,
-            fontSize: "1.35rem",
-            letterSpacing: "-0.02em",
-            color: "#ffffff",
+            px: { xs: 2.5, sm: 3.5, md: 4 },
+            py: 2.5,
+            borderBottom: "1px solid rgba(255, 255, 255, 0.10)",
+            bgcolor: "rgba(7, 18, 33, 0.35)",
           }}
         >
-          Modificar roles y privilegios del usuario
+          <Typography
+            sx={{
+              fontWeight: 800,
+              fontSize: "1.35rem",
+              letterSpacing: "-0.02em",
+              color: "#ffffff",
+            }}
+          >
+            Modificar roles y privilegios del usuario
+          </Typography>
           <Typography sx={{ mt: 0.5, color: "#e7c77d", fontSize: "0.88rem", fontWeight: 600 }}>
             {fullNameOf(targetUser)} · {targetUser.email}
           </Typography>
-        </DialogTitle>
+        </Box>
 
-        <DialogContent sx={{ px: 3.5 }}>
-          <Stack spacing={2.5} sx={{ pt: 1 }}>
+        <Box sx={{ px: { xs: 2.5, sm: 3.5, md: 4 }, py: 3, flexGrow: 1 }}>
+          <Stack spacing={2.5}>
             {error && (
               <Alert severity="error" sx={{ borderRadius: "12px" }}>
                 {error}
@@ -479,7 +469,7 @@ function UserRolesDialog({
               <Box
                 sx={{
                   display: "grid",
-                  gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)" },
+                  gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" },
                   gap: 1.5,
                 }}
               >
@@ -679,20 +669,13 @@ function UserRolesDialog({
                   </Typography>
                 </Paper>
               ) : (
-                <Stack
-                  spacing={1.5}
-                  sx={{
-                    maxHeight: 280,
-                    overflowY: "auto",
-                    pr: 0.5,
-                  }}
-                >
+                <Stack spacing={1.5}>
                   {groupedDisplayedPrivileges.map(([categoryLabel, items]) => (
                     <Paper
                       key={categoryLabel}
                       elevation={0}
                       sx={{
-                        p: 1.75,
+                        p: 2,
                         borderRadius: "14px",
                         bgcolor: "rgba(7, 18, 33, 0.65)",
                         border: "1px solid rgba(255, 255, 255, 0.08)",
@@ -709,7 +692,13 @@ function UserRolesDialog({
                         {categoryLabel}
                       </Typography>
 
-                      <Stack spacing={0.8}>
+                      <Box
+                        sx={{
+                          display: "grid",
+                          gridTemplateColumns: { xs: "1fr", lg: "repeat(2, 1fr)" },
+                          gap: 1,
+                        }}
+                      >
                         {items.map((priv) => {
                           const enabled = isPrivilegeEnabled(priv.id);
                           const fromRole = roleDefaultPrivIds.has(priv.id);
@@ -847,16 +836,27 @@ function UserRolesDialog({
                             </Box>
                           );
                         })}
-                      </Stack>
+                      </Box>
                     </Paper>
                   ))}
                 </Stack>
               )}
             </Box>
           </Stack>
-        </DialogContent>
+        </Box>
 
-        <DialogActions sx={{ px: 3.5, pb: 3, pt: 2 }}>
+        <Stack
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="center"
+          spacing={1.5}
+          sx={{
+            px: { xs: 2.5, sm: 3.5, md: 4 },
+            py: 2.5,
+            borderTop: "1px solid rgba(255, 255, 255, 0.10)",
+            bgcolor: "rgba(7, 18, 33, 0.35)",
+          }}
+        >
           <Button
             onClick={onClose}
             disabled={busy}
@@ -867,9 +867,9 @@ function UserRolesDialog({
           <Button type="submit" variant="contained" disabled={busy} sx={goldButtonSx}>
             {busy ? "Guardando…" : "Guardar cambios del usuario"}
           </Button>
-        </DialogActions>
+        </Stack>
       </Box>
-    </Dialog>
+    </Box>
   );
 }
 
@@ -951,41 +951,37 @@ function RoleFormDialog({
     });
   };
 
+  if (!open) return null;
+
   return (
-    <Dialog
-      open={open}
-      onClose={busy ? undefined : onClose}
-      fullWidth
-      maxWidth="md"
-      slotProps={{
-        paper: {
-          sx: {
-            bgcolor: "#0d1c2d",
-            color: "#ffffff",
-            backgroundImage: "none",
-            border: "1px solid rgba(255, 255, 255, 0.16)",
-            borderRadius: "20px",
-            boxShadow: "0 24px 70px rgba(0, 0, 0, 0.45)",
-          },
-        },
-      }}
-    >
-      <Box component="form" onSubmit={handleSubmit}>
-        <DialogTitle
+    <Box sx={{ width: "100%", flexGrow: 1, display: "flex", flexDirection: "column" }}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}
+      >
+        <Box
           sx={{
-            pt: 3,
-            px: 3.5,
-            fontWeight: 800,
-            fontSize: "1.35rem",
-            letterSpacing: "-0.02em",
-            color: "#ffffff",
+            px: { xs: 2.5, sm: 3.5, md: 4 },
+            py: 2.5,
+            borderBottom: "1px solid rgba(255, 255, 255, 0.10)",
+            bgcolor: "rgba(7, 18, 33, 0.35)",
           }}
         >
-          {editingRole ? `Configurar rol: ${editingRole.name}` : "Crear nuevo rol"}
-        </DialogTitle>
+          <Typography
+            sx={{
+              fontWeight: 800,
+              fontSize: "1.35rem",
+              letterSpacing: "-0.02em",
+              color: "#ffffff",
+            }}
+          >
+            {editingRole ? `Configurar rol: ${editingRole.name}` : "Crear nuevo rol"}
+          </Typography>
+        </Box>
 
-        <DialogContent sx={{ px: 3.5 }}>
-          <Stack spacing={2.5} sx={{ pt: 1 }}>
+        <Box sx={{ px: { xs: 2.5, sm: 3.5, md: 4 }, py: 3, flexGrow: 1 }}>
+          <Stack spacing={2.5}>
             {error && (
               <Alert severity="error" sx={{ borderRadius: "12px" }}>
                 {error}
@@ -1103,14 +1099,7 @@ function RoleFormDialog({
                 </Typography>
               </Stack>
 
-              <Stack
-                spacing={2}
-                sx={{
-                  maxHeight: 340,
-                  overflowY: "auto",
-                  pr: 0.5,
-                }}
-              >
+              <Stack spacing={2}>
                 {groupedPrivileges.map(([categoryLabel, items]) => {
                   const allChecked = items.every((p) => selectedPrivIds.includes(p.id));
                   const allLocked = items.every((p) => isPrivLockedOnOwnRole(p.id) && selectedPrivIds.includes(p.id));
@@ -1156,7 +1145,13 @@ function RoleFormDialog({
                         </Button>
                       </Stack>
 
-                      <Stack spacing={1}>
+                      <Box
+                        sx={{
+                          display: "grid",
+                          gridTemplateColumns: { xs: "1fr", lg: "repeat(2, 1fr)" },
+                          gap: 1,
+                        }}
+                      >
                         {items.map((priv) => {
                           const checked = selectedPrivIds.includes(priv.id);
                           const locked = checked && isPrivLockedOnOwnRole(priv.id);
@@ -1251,16 +1246,27 @@ function RoleFormDialog({
                             </Box>
                           );
                         })}
-                      </Stack>
+                      </Box>
                     </Paper>
                   );
                 })}
               </Stack>
             </Box>
           </Stack>
-        </DialogContent>
+        </Box>
 
-        <DialogActions sx={{ px: 3.5, pb: 3, pt: 2 }}>
+        <Stack
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="center"
+          spacing={1.5}
+          sx={{
+            px: { xs: 2.5, sm: 3.5, md: 4 },
+            py: 2.5,
+            borderTop: "1px solid rgba(255, 255, 255, 0.10)",
+            bgcolor: "rgba(7, 18, 33, 0.35)",
+          }}
+        >
           <Button
             onClick={onClose}
             disabled={busy}
@@ -1271,9 +1277,9 @@ function RoleFormDialog({
           <Button type="submit" variant="contained" disabled={busy} sx={goldButtonSx}>
             {busy ? "Guardando…" : editingRole ? "Guardar cambios del rol" : "Crear rol"}
           </Button>
-        </DialogActions>
+        </Stack>
       </Box>
-    </Dialog>
+    </Box>
   );
 }
 
@@ -1401,13 +1407,23 @@ export default function AdminRolesPrivilegesPage() {
   }
 
   return (
-    <Box sx={{ width: "100%", textAlign: "left" }}>
-      {/* Encabezado Principal */}
+    <Box
+      sx={{
+        width: "100%",
+        minHeight: "calc(100dvh - 128px)",
+        display: "flex",
+        flexDirection: "column",
+        textAlign: "left",
+      }}
+    >
       <Paper
         elevation={0}
         sx={{
-          p: { xs: 3, sm: 4 },
-          mb: 3,
+          width: "100%",
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
           color: "#ffffff",
           bgcolor: "rgba(10, 24, 42, 0.78)",
           backdropFilter: "blur(16px)",
@@ -1418,184 +1434,215 @@ export default function AdminRolesPrivilegesPage() {
           boxShadow: "0 24px 70px rgba(0, 0, 0, 0.25)",
         }}
       >
-        <Stack
-          direction={{ xs: "column", md: "row" }}
-          spacing={2.5}
-          justifyContent="space-between"
-          alignItems={{ xs: "stretch", md: "center" }}
+        {/* Encabezado Principal Integrado */}
+        <Box
+          sx={{
+            px: { xs: 2.5, sm: 3.5, md: 4 },
+            pt: { xs: 2.5, sm: 3.5 },
+            pb: 2.5,
+            borderBottom: "1px solid rgba(255, 255, 255, 0.10)",
+          }}
         >
-          <Box>
-            <Typography
-              sx={{
-                color: "#e7c77d",
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                letterSpacing: "0.20em",
-                textTransform: "uppercase",
-                mb: 1,
-              }}
-            >
-              Configuraciones · Control de Acceso
-            </Typography>
-            <Typography
-              component="h1"
-              sx={{
-                fontSize: { xs: "1.8rem", sm: "2.35rem" },
-                fontWeight: 800,
-                letterSpacing: "-0.035em",
-                color: "#ffffff",
-              }}
-            >
-              Roles y privilegios
-            </Typography>
-            <Typography sx={{ mt: 0.75, color: "#d6deeb", fontSize: "0.95rem" }}>
-              Gestiona los roles y personaliza los privilegios específicos de cada usuario dado de alta en el sistema.
-            </Typography>
-          </Box>
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            spacing={2.5}
+            justifyContent="space-between"
+            alignItems={{ xs: "stretch", md: "center" }}
+          >
+            <Box>
+              <Typography
+                sx={{
+                  color: "#e7c77d",
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.20em",
+                  textTransform: "uppercase",
+                  mb: 1,
+                }}
+              >
+                Configuraciones · Control de Acceso
+              </Typography>
+              <Typography
+                component="h1"
+                sx={{
+                  fontSize: { xs: "1.8rem", sm: "2.35rem" },
+                  fontWeight: 800,
+                  letterSpacing: "-0.035em",
+                  color: "#ffffff",
+                }}
+              >
+                Roles y privilegios
+              </Typography>
+              <Typography sx={{ mt: 0.75, color: "#d6deeb", fontSize: "0.95rem" }}>
+                Gestiona los roles y personaliza los privilegios específicos de cada usuario dado de alta en el sistema.
+              </Typography>
+            </Box>
 
-          <Stack direction="row" spacing={1.5} sx={{ flexShrink: 0 }} flexWrap="wrap" useFlexGap>
+            <Stack direction="row" spacing={1.5} sx={{ flexShrink: 0 }} flexWrap="wrap" useFlexGap>
+              <Button
+                variant="outlined"
+                startIcon={<RefreshOutlinedIcon />}
+                onClick={loadData}
+                disabled={loading || working}
+                sx={outlineGoldButtonSx}
+              >
+                Actualizar
+              </Button>
+
+              {can("gestionar_roles") && (
+                <Button
+                  variant="contained"
+                  startIcon={<AddOutlinedIcon />}
+                  onClick={() => {
+                    setEditingRole(null);
+                    setDialogError("");
+                    setRoleDialogOpen(true);
+                  }}
+                  sx={goldButtonSx}
+                >
+                  Nuevo rol
+                </Button>
+              )}
+            </Stack>
+          </Stack>
+
+          {/* Selector de Pestañas (Usuarios vs Roles y Privilegios) */}
+          <Stack
+            direction="row"
+            spacing={1.5}
+            sx={{
+              mt: 3,
+              pt: 2.5,
+              borderTop: "1px solid rgba(255, 255, 255, 0.10)",
+            }}
+            flexWrap="wrap"
+            useFlexGap
+          >
             <Button
-              variant="outlined"
-              startIcon={<RefreshOutlinedIcon />}
-              onClick={loadData}
-              disabled={loading || working}
-              sx={outlineGoldButtonSx}
+              startIcon={<PeopleOutlineRoundedIcon />}
+              onClick={() => setActiveTab("users")}
+              sx={{
+                px: 2.5,
+                py: 1,
+                borderRadius: "12px",
+                textTransform: "none",
+                fontWeight: 750,
+                fontSize: "0.92rem",
+                color: activeTab === "users" ? "#102138" : "#d6deeb",
+                bgcolor:
+                  activeTab === "users" ? "#e7c77d" : "rgba(255, 255, 255, 0.05)",
+                border:
+                  activeTab === "users"
+                    ? "1px solid #e7c77d"
+                    : "1px solid rgba(255, 255, 255, 0.10)",
+                "&:hover": {
+                  bgcolor:
+                    activeTab === "users"
+                      ? "#f2d99c"
+                      : "rgba(255, 255, 255, 0.10)",
+                },
+              }}
             >
-              Actualizar
+              Usuarios registrados ({users.length})
             </Button>
 
-            {can("gestionar_roles") && (
-              <Button
-                variant="contained"
-                startIcon={<AddOutlinedIcon />}
-                onClick={() => {
-                  setEditingRole(null);
-                  setDialogError("");
-                  setRoleDialogOpen(true);
-                }}
-                sx={goldButtonSx}
-              >
-                Nuevo rol
-              </Button>
-            )}
-          </Stack>
-        </Stack>
-
-        {/* Selector de Pestañas (Usuarios vs Roles y Privilegios) */}
-        <Stack
-          direction="row"
-          spacing={1.5}
-          sx={{
-            mt: 3.5,
-            pt: 2.5,
-            borderTop: "1px solid rgba(255, 255, 255, 0.10)",
-          }}
-          flexWrap="wrap"
-          useFlexGap
-        >
-          <Button
-            startIcon={<PeopleOutlineRoundedIcon />}
-            onClick={() => setActiveTab("users")}
-            sx={{
-              px: 2.5,
-              py: 1,
-              borderRadius: "12px",
-              textTransform: "none",
-              fontWeight: 750,
-              fontSize: "0.92rem",
-              color: activeTab === "users" ? "#102138" : "#d6deeb",
-              bgcolor:
-                activeTab === "users" ? "#e7c77d" : "rgba(255, 255, 255, 0.05)",
-              border:
-                activeTab === "users"
-                  ? "1px solid #e7c77d"
-                  : "1px solid rgba(255, 255, 255, 0.10)",
-              "&:hover": {
+            <Button
+              startIcon={<ShieldOutlinedIcon />}
+              onClick={() => setActiveTab("roles")}
+              sx={{
+                px: 2.5,
+                py: 1,
+                borderRadius: "12px",
+                textTransform: "none",
+                fontWeight: 750,
+                fontSize: "0.92rem",
+                color: activeTab === "roles" ? "#102138" : "#d6deeb",
                 bgcolor:
-                  activeTab === "users"
-                    ? "#f2d99c"
-                    : "rgba(255, 255, 255, 0.10)",
-              },
-            }}
-          >
-            Usuarios registrados ({users.length})
-          </Button>
-
-          <Button
-            startIcon={<ShieldOutlinedIcon />}
-            onClick={() => setActiveTab("roles")}
-            sx={{
-              px: 2.5,
-              py: 1,
-              borderRadius: "12px",
-              textTransform: "none",
-              fontWeight: 750,
-              fontSize: "0.92rem",
-              color: activeTab === "roles" ? "#102138" : "#d6deeb",
-              bgcolor:
-                activeTab === "roles" ? "#e7c77d" : "rgba(255, 255, 255, 0.05)",
-              border:
-                activeTab === "roles"
-                  ? "1px solid #e7c77d"
-                  : "1px solid rgba(255, 255, 255, 0.10)",
-              "&:hover": {
-                bgcolor:
+                  activeTab === "roles" ? "#e7c77d" : "rgba(255, 255, 255, 0.05)",
+                border:
                   activeTab === "roles"
-                    ? "#f2d99c"
-                    : "rgba(255, 255, 255, 0.10)",
-              },
-            }}
-          >
-            Roles y privilegios del sistema ({roles.length})
-          </Button>
-        </Stack>
-      </Paper>
+                    ? "1px solid #e7c77d"
+                    : "1px solid rgba(255, 255, 255, 0.10)",
+                "&:hover": {
+                  bgcolor:
+                    activeTab === "roles"
+                      ? "#f2d99c"
+                      : "rgba(255, 255, 255, 0.10)",
+                },
+              }}
+            >
+              Roles y privilegios del sistema ({roles.length})
+            </Button>
+          </Stack>
+        </Box>
 
-      {loadError && (
-        <Alert severity="error" sx={{ mb: 2.5, borderRadius: "14px" }}>
-          {loadError}
-        </Alert>
-      )}
+        {/* Cuerpo Principal Integrado */}
+        <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column", width: "100%" }}>
+          {loadError && (
+            <Alert
+              severity="error"
+              sx={{ mx: { xs: 2.5, sm: 3.5, md: 4 }, mt: 2.5, borderRadius: "14px" }}
+            >
+              {loadError}
+            </Alert>
+          )}
 
-      {loading ? (
-        <Paper
-          elevation={0}
-          sx={{
-            p: 7,
-            display: "grid",
-            placeItems: "center",
-            bgcolor: "rgba(10, 24, 42, 0.78)",
-            backdropFilter: "blur(16px)",
-            border: "1px solid rgba(255, 255, 255, 0.12)",
-            borderRadius: "20px",
-          }}
-        >
-          <CircularProgress sx={{ color: "#e7c77d" }} />
-        </Paper>
-      ) : activeTab === "users" ? (
-        /* PESTAÑA 1: LISTADO DE USUARIOS Y ASIGNACIÓN DE ROLES + PRIVILEGIOS */
-        <Paper
-          elevation={0}
-          sx={{
-            overflow: "hidden",
-            color: "#ffffff",
-            bgcolor: "rgba(10, 24, 42, 0.78)",
-            backdropFilter: "blur(16px)",
-            border: "1px solid rgba(255, 255, 255, 0.12)",
-            borderRadius: "20px",
-            boxShadow: "0 24px 70px rgba(0, 0, 0, 0.25)",
-          }}
-        >
-          {/* Barra de búsqueda y filtro por rol */}
-          <Box
-            sx={{
-              p: { xs: 2.5, sm: 3 },
-              borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-              display: "grid",
-              gridTemplateColumns: { xs: "1fr", md: "1.6fr 1fr" },
-              gap: 2,
-            }}
-          >
+          {loading ? (
+            <Box sx={{ p: 7, flexGrow: 1, display: "grid", placeItems: "center" }}>
+              <CircularProgress sx={{ color: "#e7c77d" }} />
+            </Box>
+          ) : editingUser ? (
+            /* Vista integrada para asignar/quitar roles y personalizar privilegios de un usuario */
+            <UserRolesDialog
+              open={Boolean(editingUser)}
+              targetUser={editingUser}
+              currentUserId={user?.id}
+              roles={roles}
+              allPrivileges={allPrivileges}
+              busy={working}
+              error={dialogError}
+              onClose={() => {
+                setEditingUser(null);
+                setDialogError("");
+              }}
+              onSave={handleSaveUserRoles}
+            />
+          ) : roleDialogOpen ? (
+            /* Vista integrada para crear/editar un rol y sus privilegios */
+            <RoleFormDialog
+              open={roleDialogOpen}
+              editingRole={editingRole}
+              isCurrentUsersRole={Boolean(
+                editingRole &&
+                  String(editingRole.name || "").trim().toLowerCase() === "administrador" &&
+                  (user?.roles || []).some(
+                    (r) => String(r || "").trim().toLowerCase() === "administrador",
+                  ),
+              )}
+              allPrivileges={allPrivileges}
+              busy={working}
+              error={dialogError}
+              onClose={() => {
+                setRoleDialogOpen(false);
+                setEditingRole(null);
+                setDialogError("");
+              }}
+              onSave={handleSaveRole}
+            />
+          ) : activeTab === "users" ? (
+            /* PESTAÑA 1: LISTADO DE USUARIOS Y ASIGNACIÓN DE ROLES + PRIVILEGIOS */
+            <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
+              {/* Barra de búsqueda y filtro por rol */}
+              <Box
+                sx={{
+                  px: { xs: 2.5, sm: 3.5, md: 4 },
+                  py: 2.5,
+                  borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+                  display: "grid",
+                  gridTemplateColumns: { xs: "1fr", md: "1.6fr 1fr" },
+                  gap: 2,
+                }}
+              >
             <TextField
               fullWidth
               placeholder="Buscar usuario por nombre o correo electrónico…"
@@ -1640,13 +1687,13 @@ export default function AdminRolesPrivilegesPage() {
           </Box>
 
           {filteredUsers.length === 0 ? (
-            <Box sx={{ p: 6, textAlign: "center" }}>
+            <Box sx={{ p: 6, flexGrow: 1, display: "grid", placeItems: "center", textAlign: "center" }}>
               <Typography sx={{ color: "#d6deeb", fontSize: "0.95rem" }}>
                 No se encontraron usuarios con los criterios seleccionados.
               </Typography>
             </Box>
           ) : (
-            <TableContainer>
+            <TableContainer sx={{ flexGrow: 1 }}>
               <Table
                 size="medium"
                 aria-label="Usuarios dados de alta y sus roles"
@@ -1839,14 +1886,18 @@ export default function AdminRolesPrivilegesPage() {
               </Table>
             </TableContainer>
           )}
-        </Paper>
+        </Box>
       ) : (
         /* PESTAÑA 2: ROLES DEL SISTEMA Y SUS PRIVILEGIOS */
         <Box
           sx={{
+            px: { xs: 2.5, sm: 3.5, md: 4 },
+            py: 3,
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", lg: "repeat(2, 1fr)" },
-            gap: 3,
+            gridTemplateColumns: { xs: "1fr", xl: "repeat(2, 1fr)" },
+            gap: 2.5,
+            flexGrow: 1,
+            alignContent: "start",
           }}
         >
           {roles.map((role) => (
@@ -1854,13 +1905,11 @@ export default function AdminRolesPrivilegesPage() {
               key={role.id}
               elevation={0}
               sx={{
-                p: { xs: 3, sm: 3.5 },
+                p: { xs: 2.5, sm: 3 },
                 color: "#ffffff",
-                bgcolor: "rgba(10, 24, 42, 0.78)",
-                backdropFilter: "blur(16px)",
-                border: "1px solid rgba(255, 255, 255, 0.12)",
-                borderRadius: "20px",
-                boxShadow: "0 20px 50px rgba(0, 0, 0, 0.22)",
+                bgcolor: "rgba(7, 18, 33, 0.55)",
+                border: "1px solid rgba(255, 255, 255, 0.10)",
+                borderRadius: "16px",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -1962,12 +2011,11 @@ export default function AdminRolesPrivilegesPage() {
                     Este rol no tiene privilegios asignados actualmente.
                   </Typography>
                 ) : (
-                  <Stack
-                    spacing={1}
+                  <Box
                     sx={{
-                      maxHeight: 260,
-                      overflowY: "auto",
-                      pr: 0.5,
+                      display: "grid",
+                      gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)" },
+                      gap: 1,
                     }}
                   >
                     {role.privileges.map((priv) => (
@@ -1976,8 +2024,8 @@ export default function AdminRolesPrivilegesPage() {
                         sx={{
                           p: 1.25,
                           borderRadius: "10px",
-                          bgcolor: "rgba(7, 18, 33, 0.55)",
-                          border: "1px solid rgba(255, 255, 255, 0.06)",
+                          bgcolor: "rgba(10, 24, 42, 0.78)",
+                          border: "1px solid rgba(255, 255, 255, 0.08)",
                         }}
                       >
                         <Stack
@@ -2022,7 +2070,7 @@ export default function AdminRolesPrivilegesPage() {
                         )}
                       </Box>
                     ))}
-                  </Stack>
+                  </Box>
                 )}
               </Box>
 
@@ -2047,44 +2095,8 @@ export default function AdminRolesPrivilegesPage() {
           ))}
         </Box>
       )}
-
-      {/* Modal para asignar/quitar roles y personalizar privilegios de un usuario */}
-      <UserRolesDialog
-        open={Boolean(editingUser)}
-        targetUser={editingUser}
-        currentUserId={user?.id}
-        roles={roles}
-        allPrivileges={allPrivileges}
-        busy={working}
-        error={dialogError}
-        onClose={() => {
-          setEditingUser(null);
-          setDialogError("");
-        }}
-        onSave={handleSaveUserRoles}
-      />
-
-      {/* Modal para crear/editar un rol y sus privilegios */}
-      <RoleFormDialog
-        open={roleDialogOpen}
-        editingRole={editingRole}
-        isCurrentUsersRole={Boolean(
-          editingRole &&
-            String(editingRole.name || "").trim().toLowerCase() === "administrador" &&
-            (user?.roles || []).some(
-              (r) => String(r || "").trim().toLowerCase() === "administrador",
-            ),
-        )}
-        allPrivileges={allPrivileges}
-        busy={working}
-        error={dialogError}
-        onClose={() => {
-          setRoleDialogOpen(false);
-          setEditingRole(null);
-          setDialogError("");
-        }}
-        onSave={handleSaveRole}
-      />
+        </Box>
+      </Paper>
 
       <Snackbar
         open={Boolean(toast)}
