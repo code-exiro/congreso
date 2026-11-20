@@ -8,16 +8,18 @@ import RegisterPage from "../../features/auth/pages/RegisterPage";
 import AdminLegalDocumentsPage from "../../features/legalDocuments/pages/AdminLegalDocumentsPage";
 import AdminRolesPrivilegesPage from "../../features/rolesPrivileges/pages/AdminRolesPrivilegesPage";
 import LandingPage from "../../features/landing/pages/LandingPage";
+
 import RegistrarCongresoPage from "../../features/landing/pages/registrarcongreso";
 
+
+import ProfilePage from "../../features/profile/pages/ProfilePage";
+
 import {
-  ProfilePage,
   MisSolicitudesPage,
   ListadoSolicitudesPage,
   TrabajosActivosPage,
   RegistroAsistenciaPage,
   MisConstanciasPage,
-  RolesUsuariosPage,
   LimiteEvaluacionesPage,
   PersonalizacionPage,
 } from "../../features/common/pages/sectionPages";
@@ -69,7 +71,6 @@ export default function AppRouter() {
           <Route path="eventos/constancias" element={<MisConstanciasPage />} />
 
           {/* Configuraciones */}
-          <Route path="configuraciones/roles-usuarios" element={<RolesUsuariosPage />} />
           <Route path="configuraciones/limite-evaluaciones" element={<LimiteEvaluacionesPage />} />
           <Route path="configuraciones/documentos-legales" element={<AdminLegalDocumentsPage />} />
           <Route path="configuraciones/roles-privilegios" element={<AdminRolesPrivilegesPage />} />
