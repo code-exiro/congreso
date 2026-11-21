@@ -1,6 +1,9 @@
-import { useState } from 'react'
+
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../auth/context/AuthContext'
+import apiClient from '../../../shared/api/apiClient'
+
 import './landing.css'
 
 const NAV = [
@@ -362,6 +365,8 @@ export default function App() {
   const [bannerImage, setBannerImage] = useState('/images/banner.png')
   const [posterImage, setPosterImage] = useState('/images/poster.jpeg')
   const [programImage, setProgramImage] = useState('/images/programaGeneral.png')
+  const [logoImage, setLogoImage] = useState('/images/logo_congreso.jpeg')
+  const [programLink, setProgramLink] = useState('https://drive.google.com/file/d/102ty8mj66WZt_9K38OAIrLCboKtBrAdU/view?usp=drive_link')
 
   // Estado de Fechas y Plazos Importantes (inicio, fin, color)
   const [timeline, setTimeline] = useState(INITIAL_TIMELINE)
@@ -395,6 +400,93 @@ export default function App() {
   // Estado de Patrocinadores
   const [sponsors, setSponsors] = useState(INITIAL_SPONSORS)
   const [newSponsor, setNewSponsor] = useState({ name: '', src: '' })
+
+  useEffect(() => {
+    let active = true
+
+    apiClient.get('/landing/')
+      .then(({ data }) => {
+        if (!active) return
+
+        const congress = data.congress
+        if (congress) {
+          const modalities = {
+            PRESENCIAL: 'Presencial',
+            'EN LINEA': 'En línea',
+            MIXTO: 'Mixto',
+          }
+          setConvocatoria((current) => ({
+            ...current,
+            edition: congress.edition ? `${congress.edition}°` : current.edition,
+            title: congress.name || current.title,
+            description: congress.description || current.description,
+            registrationDate: congress.registrationDate || current.registrationDate,
+            venue: congress.venue || current.venue,
+            modality: modalities[congress.modality] || congress.modality || current.modality,
+          }))
+          setContactInfo((current) => ({
+            ...current,
+            address: congress.address || current.address,
+            email: congress.contactEmail || current.email,
+            mapQuery: congress.mapQuery || congress.venue || current.mapQuery,
+          }))
+        }
+
+        if (data.page?.banner) setBannerImage(data.page.banner)
+        if (data.page?.poster) setPosterImage(data.page.poster)
+        if (data.page?.program) setProgramImage(data.page.program)
+        if (data.page?.programUrl) setProgramLink(data.page.programUrl)
+        if (data.page?.logo) setLogoImage(data.page.logo)
+        if (data.page?.color) setSecondaryColor(data.page.color)
+
+        const colors = ['#e2c275', '#2563eb', '#059669', '#d97706', '#7c3aed', '#dc2626']
+        const dates = (data.dates || []).filter((item) => item.startDate).map((item, index) => ({
+          id: item.id,
+          startDate: item.startDate,
+          endDate: item.endDate || item.startDate,
+          title: item.title,
+          color: colors[index % colors.length],
+        }))
+        if (dates.length) {
+          setTimeline(dates)
+          setCalendarMonth(dates[0].startDate.slice(0, 7))
+          const opening = dates.find((item) => item.title.toLowerCase().includes('inauguración'))
+          const closing = dates.find((item) => item.title.toLowerCase().includes('cierre'))
+          if (opening && closing) {
+            const formatPeriodDate = (value, includeYear = false) => new Intl.DateTimeFormat('es-MX', {
+              day: 'numeric',
+              month: 'long',
+              ...(includeYear ? { year: 'numeric' } : {}),
+              timeZone: 'UTC',
+            }).format(new Date(`${value}T12:00:00Z`))
+            setConvocatoria((current) => ({
+              ...current,
+              period: `del ${formatPeriodDate(opening.startDate)} al ${formatPeriodDate(closing.endDate, true)}.`,
+            }))
+          }
+        }
+
+        const loadedSponsors = (data.sponsors || [])
+          .filter((item) => item.src)
+          .map(({ id, name, src }) => ({ id, name, src }))
+        if (loadedSponsors.length) setSponsors(loadedSponsors)
+
+        console.info('[Landing] Datos cargados desde PostgreSQL vía Django', {
+          endpoint: '/api/landing/',
+          congress: congress?.name ?? null,
+          banner: data.page?.banner ?? null,
+          dates,
+          sponsors: loadedSponsors,
+        })
+      })
+      .catch((error) => {
+        console.error('No se pudieron cargar los datos de la landing desde Django.', error)
+      })
+
+    return () => {
+      active = false
+    }
+  }, [])
 
   const nav = (id) => {
     setOpen(false)
@@ -557,7 +649,7 @@ export default function App() {
     >
       <header className="hdr">
         <button className="logo" onClick={() => nav('convocatoria')}>
-          <img src="/images/logo_congreso.jpeg" alt="Logo CONING" className="crest-img" />
+          <img src={logoImage} alt="Logo CONING" className="crest-img" />
           <span><b>CONING</b><small>Sistema del Congreso de Ingenierías</small></span>
         </button>
         <button className="burger" aria-label="Menú" onClick={() => setOpen(!open)}>☰</button>
@@ -639,7 +731,7 @@ export default function App() {
                 <li><small>Modalidad</small>{convocatoria.modality}</li>
               </ul>
               <div className="btns">
-                <button className="gold" onClick={() => window.open('https://drive.google.com/file/d/102ty8mj66WZt_9K38OAIrLCboKtBrAdU/view?usp=drive_link', '_blank', 'noopener,noreferrer')}>Ver programa →</button>
+                <button className="gold" onClick={() => window.open(programLink, '_blank', 'noopener,noreferrer')}>Ver programa →</button>
                 <button className="ghost" onClick={() => nav('organizacion')}>Más información ↓</button>
               </div>
 
