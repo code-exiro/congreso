@@ -12,10 +12,11 @@ import {
   IconButton,
 } from "@mui/material";
 
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const fieldSx = {
@@ -43,12 +44,27 @@ export default function LoginPage() {
     return `${import.meta.env.BASE_URL}images/login-background${imageNumber}.jpg`;
   });
 
+  const location = useLocation();
   const navigate = useNavigate();
   const { login } = useAuth();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const fromLocation = location.state?.from;
+  const rawFromPath =
+    typeof fromLocation === "string"
+      ? fromLocation
+      : fromLocation?.pathname
+        ? `${fromLocation.pathname}${fromLocation.search || ""}${fromLocation.hash || ""}`
+        : "";
+  const redirectTo =
+    rawFromPath.startsWith("/") &&
+    !rawFromPath.startsWith("//") &&
+    rawFromPath !== "/login"
+      ? rawFromPath
+      : "/";
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -63,7 +79,7 @@ export default function LoginPage() {
 
     try {
       await login(form.email, form.password);
-      navigate("/", { replace: true });
+      navigate(redirectTo, { replace: true });
     } catch (requestError) {
       const data = requestError.response?.data;
       setError(
@@ -140,15 +156,54 @@ export default function LoginPage() {
           },
         }}
       >
-        <Box component="header" sx={{ width: "100%", maxWidth: 1320, mx: "auto" }}>
-          <Typography
-            sx={{ fontSize: { xs: "0.72rem", sm: "0.82rem" }, fontWeight: 700, letterSpacing: "0.08em" }}
+        <Box
+          component="header"
+          sx={{
+            width: "100%",
+            maxWidth: 1320,
+            mx: "auto",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 2,
+          }}
+        >
+          <Box>
+            <Typography
+              sx={{ fontSize: { xs: "0.72rem", sm: "0.82rem" }, fontWeight: 700, letterSpacing: "0.08em" }}
+            >
+              UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO
+            </Typography>
+            <Typography sx={{ mt: 0.75, fontSize: "0.78rem", color: "#d6deeb" }}>
+              Facultad de Estudios Superiores Cuautitlán
+            </Typography>
+          </Box>
+
+          <Button
+            component={RouterLink}
+            to="/landing"
+            variant="outlined"
+            startIcon={<ArrowBackRoundedIcon />}
+            sx={{
+              textTransform: "none",
+              fontWeight: 700,
+              fontSize: "0.85rem",
+              px: 2,
+              py: 0.85,
+              borderRadius: "10px",
+              color: "#e7c77d",
+              borderColor: "rgba(231, 199, 125, 0.45)",
+              bgcolor: "rgba(10, 24, 42, 0.55)",
+              "&:hover": {
+                borderColor: "#e7c77d",
+                bgcolor: "rgba(231, 199, 125, 0.14)",
+                color: "#f2d99c",
+              },
+            }}
           >
-            UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO
-          </Typography>
-          <Typography sx={{ mt: 0.75, fontSize: "0.78rem", color: "#d6deeb" }}>
-            Facultad de Estudios Superiores Cuautitlán
-          </Typography>
+            Volver a la página principal
+          </Button>
         </Box>
 
         <Box

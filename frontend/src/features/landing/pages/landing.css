@@ -127,8 +127,7 @@ section {
    HEADER & NAVEGACIÓN
 ======================================================== */
 .hdr {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 50;
   display: flex;
   align-items: center;
@@ -1319,6 +1318,34 @@ section {
   width: 100%;
 }
 
+.header-logo-picker {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 76px;
+}
+
+.image-picker.header-logo-picker > img {
+  width: 48px;
+  height: 48px;
+  border: 2px solid #ffffff80;
+  border-radius: 8px;
+  background: #fff;
+  object-fit: contain;
+}
+
+.header-logo-picker.image-picker.editing .image-picker-button {
+  position: static;
+  inset: auto;
+  transform: none;
+  opacity: 1;
+  padding: 3px 6px;
+  font-size: 0.65rem;
+  white-space: nowrap;
+}
+
 .image-picker > img.banner {
   margin-bottom: 36px;
 }
@@ -1635,4 +1662,20 @@ footer {
   .fgrid {
     grid-template-columns: 1fr;
   }
+}
+
+.landing-save-message {
+  max-width: 1160px;
+  margin: 12px auto;
+  padding: 10px 16px;
+  border: 1px solid #86efac;
+  border-radius: 8px;
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.landing-save-message.error {
+  border-color: #fca5a5;
+  background: #fef2f2;
+  color: #991b1b;
 }

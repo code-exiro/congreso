@@ -11,7 +11,7 @@ import {
 
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../features/auth/context/AuthContext";
 
 export default function Topbar({ menuOpen, onOpenMenu }) {
@@ -73,12 +73,20 @@ export default function Topbar({ menuOpen, onOpenMenu }) {
           <Typography
             variant="h6"
             noWrap
+            component={RouterLink}
+            to="/landing"
+            aria-label="Ir a la página principal de CONING"
             sx={{
               fontWeight: 800,
               letterSpacing: "-0.03em",
               fontSize: { xs: "1.1rem", sm: "1.25rem", md: "1.35rem" },
               color: "#ffffff",
               flexShrink: 0,
+              textDecoration: "none",
+              transition: "color 0.2s ease",
+              "&:hover": {
+                color: "#e7c77d",
+              },
             }}
           >
             CONING

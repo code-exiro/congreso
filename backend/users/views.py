@@ -7,6 +7,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from catalogs.temporary_catalogs import resolve_temporary_catalog_data
 from .models import LegalDocument, Privilege, Profile, Role, RolePrivilege, User, UserLegalDocument, UserPrivilege, UserRole
 from .permissions import HasPrivilege
 from .serializers import (
@@ -53,6 +54,7 @@ class MeView(APIView):
 
 class ProfileView(APIView):
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def get(self, request):
         profile, _ = Profile.objects.get_or_create(user=request.user)
@@ -60,9 +62,11 @@ class ProfileView(APIView):
 
     def patch(self, request):
         profile, _ = Profile.objects.get_or_create(user=request.user)
-        serializer = ProfileSerializer(profile, data=request.data, partial=True, context={"request": request})
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+        with transaction.atomic():
+            payload = resolve_temporary_catalog_data(request.data)
+            serializer = ProfileSerializer(profile, data=payload, partial=True, context={"request": request})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
         return Response(serializer.data)
 
 

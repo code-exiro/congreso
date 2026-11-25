@@ -43,7 +43,9 @@ export default function HomePage() {
     .filter(Boolean)
     .join(" ");
   const roles = user?.roles ?? [];
-  const menus = Array.isArray(user?.menus) ? user.menus : [];
+  const menus = (Array.isArray(user?.menus) ? user.menus : []).filter(
+    (m) => m.route !== "/configuraciones/roles-usuarios",
+  );
 
   return (
     <Stack spacing={{ xs: 2.5, sm: 3.5 }}>
