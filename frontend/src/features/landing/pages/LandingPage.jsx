@@ -1,6 +1,9 @@
-import { useState } from 'react'
+
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../auth/context/AuthContext'
+import apiClient from '../../../shared/api/apiClient'
+
 import './landing.css'
 
 const NAV = [
@@ -234,6 +237,27 @@ function readFileAsDataUrl(file, onSuccess, onError) {
   reader.readAsDataURL(file)
 }
 
+async function toLandingFormData(payload) {
+  const hasImages = Object.values(payload).some(
+    (value) => typeof value === 'string' && value.startsWith('data:image/')
+  )
+  if (!hasImages) return payload
+
+  const formData = new FormData()
+  await Promise.all(Object.entries(payload).map(async ([key, value]) => {
+    if (typeof value === 'string' && value.startsWith('data:image/')) {
+      const response = await fetch(value)
+      if (!response.ok) throw new Error('No se pudo preparar la imagen seleccionada.')
+      const image = await response.blob()
+      const extension = image.type.split('/')[1] || 'png'
+      formData.append(key, image, `${key}.${extension}`)
+      return
+    }
+    formData.append(key, value == null ? '' : String(value))
+  }))
+  return formData
+}
+
 function ImagePicker({ src, alt, label, enabled, className = '', imageClassName = '', onChange }) {
   const [error, setError] = useState('')
 
@@ -330,8 +354,12 @@ function Calendar({ events, month, onMonthChange }) {
 
 export default function App() {
   const navigate = useNavigate()
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user, accessToken } = useAuth()
   const [open, setOpen] = useState(false)
+  const [landingLoaded, setLandingLoaded] = useState(false)
+  const [saveError, setSaveError] = useState('')
+  const [saveSuccess, setSaveSuccess] = useState('')
+  const canEditLanding = user?.privileges?.includes('diseño_pagina') ?? false
 
   const handleGoToProfile = () => {
     setOpen(false)
@@ -344,8 +372,9 @@ export default function App() {
   const [com, setCom] = useState(0)
   const [popup, setPopup] = useState(null) // Modal de conferencias magistrales
   const [infoModal, setInfoModal] = useState(null) // Modal de tipos de actividad / áreas temáticas
-  const [adminEnabled, setAdminEnabled] = useState(false)
-  const [primaryColor, setPrimaryColor] = useState('#151b29')
+  const [adminRequested, setAdminRequested] = useState(false)
+  const adminEnabled = adminRequested && canEditLanding && landingLoaded
+  const primaryColor = '#151b29'
   const [secondaryColor, setSecondaryColor] = useState('#e2c275')
 
   // Estado editable de Convocatoria
@@ -362,11 +391,13 @@ export default function App() {
   const [bannerImage, setBannerImage] = useState('/images/banner.png')
   const [posterImage, setPosterImage] = useState('/images/poster.jpeg')
   const [programImage, setProgramImage] = useState('/images/programaGeneral.png')
+  const [logoImage, setLogoImage] = useState('/images/logo_congreso.jpeg')
+  const [programLink, setProgramLink] = useState('https://drive.google.com/file/d/102ty8mj66WZt_9K38OAIrLCboKtBrAdU/view?usp=drive_link')
 
   // Estado de Fechas y Plazos Importantes (inicio, fin, color)
   const [timeline, setTimeline] = useState(INITIAL_TIMELINE)
   const [calendarMonth, setCalendarMonth] = useState('2026-09')
-  const [eventForm, setEventForm] = useState({ startDate: '', endDate: '', title: '', color: '#2563eb' })
+  const [eventForm, setEventForm] = useState({ startDate: '', endDate: '', title: '' })
   const [editingEventId, setEditingEventId] = useState(null)
 
   // Estado de Documentos Oficiales y Plantillas (PDFs)
@@ -396,6 +427,129 @@ export default function App() {
   const [sponsors, setSponsors] = useState(INITIAL_SPONSORS)
   const [newSponsor, setNewSponsor] = useState({ name: '', src: '' })
 
+  const runLandingSave = async (operation, onSuccess, successMessage = 'Cambios guardados.') => {
+    setSaveError('')
+    setSaveSuccess('')
+    try {
+      const result = await operation()
+      onSuccess?.(result)
+      setSaveSuccess(successMessage)
+      return true
+    } catch (error) {
+      console.error('No se pudieron guardar los cambios de la landing.', error)
+      setSaveError(
+        error.response?.data?.detail
+        || Object.values(error.response?.data || {}).flat().join(' ')
+        || 'No se pudieron guardar los cambios. Inténtalo de nuevo.'
+      )
+      return false
+    }
+  }
+
+  const patchLanding = async (path, payload) => {
+    const body = await toLandingFormData(payload)
+    const { data } = await apiClient.patch(path, body, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+    return data
+  }
+
+  const postLanding = async (path, payload) => {
+    const body = await toLandingFormData(payload)
+    const { data } = await apiClient.post(path, body, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+    return data
+  }
+
+  useEffect(() => {
+    let active = true
+
+    apiClient.get('/landing/')
+      .then(({ data }) => {
+        if (!active) return
+
+        const congress = data.congress
+        if (congress) {
+          const modalities = {
+            PRESENCIAL: 'Presencial',
+            'EN LINEA': 'En línea',
+            MIXTO: 'Mixto',
+          }
+          setConvocatoria((current) => ({
+            ...current,
+            edition: congress.edition ? `${congress.edition}°` : current.edition,
+            title: congress.name || current.title,
+            description: congress.description || current.description,
+            registrationDate: congress.registrationDate || current.registrationDate,
+            venue: congress.venue || current.venue,
+            modality: modalities[congress.modality] || congress.modality || current.modality,
+          }))
+          setContactInfo((current) => ({
+            ...current,
+            institution: congress.venue || current.institution,
+            address: congress.address || current.address,
+            email: congress.contactEmail || current.email,
+            mapQuery: congress.mapQuery || congress.venue || current.mapQuery,
+          }))
+        }
+
+        if (data.page?.banner) setBannerImage(data.page.banner)
+        if (data.page?.poster) setPosterImage(data.page.poster)
+        if (data.page?.program) setProgramImage(data.page.program)
+        if (data.page?.programUrl) setProgramLink(data.page.programUrl)
+        if (data.page?.logo) setLogoImage(data.page.logo)
+        if (data.page?.color) setSecondaryColor(data.page.color)
+
+        const colors = ['#e2c275', '#2563eb', '#059669', '#d97706', '#7c3aed', '#dc2626']
+        const dates = (data.dates || []).filter((item) => item.startDate).map((item, index) => ({
+          id: item.id,
+          startDate: item.startDate,
+          endDate: item.endDate || item.startDate,
+          title: item.title,
+          color: colors[index % colors.length],
+        }))
+        setTimeline(dates)
+        if (dates.length) {
+          setCalendarMonth(dates[0].startDate.slice(0, 7))
+          const opening = dates.find((item) => item.title.toLowerCase().includes('inauguración'))
+          const closing = dates.find((item) => item.title.toLowerCase().includes('cierre'))
+          if (opening && closing) {
+            const formatPeriodDate = (value, includeYear = false) => new Intl.DateTimeFormat('es-MX', {
+              day: 'numeric',
+              month: 'long',
+              ...(includeYear ? { year: 'numeric' } : {}),
+              timeZone: 'UTC',
+            }).format(new Date(`${value}T12:00:00Z`))
+            setConvocatoria((current) => ({
+              ...current,
+              period: `del ${formatPeriodDate(opening.startDate)} al ${formatPeriodDate(closing.endDate, true)}.`,
+            }))
+          }
+        }
+
+        const loadedSponsors = (data.sponsors || [])
+          .map(({ id, name, src }) => ({ id, name, src }))
+        setSponsors(loadedSponsors)
+        setLandingLoaded(true)
+
+        console.info('[Landing] Datos cargados desde PostgreSQL vía Django', {
+          endpoint: '/api/landing/',
+          congress: congress?.name ?? null,
+          banner: data.page?.banner ?? null,
+          dates,
+          sponsors: loadedSponsors,
+        })
+      })
+      .catch((error) => {
+        console.error('No se pudieron cargar los datos de la landing desde Django.', error)
+      })
+
+    return () => {
+      active = false
+    }
+  }, [])
+
   const nav = (id) => {
     setOpen(false)
     go(id)
@@ -403,24 +557,34 @@ export default function App() {
 
   // --- Handlers de Fechas Importantes ---
   const updateEventForm = (field, value) => setEventForm((current) => ({ ...current, [field]: value }))
-  const saveEvent = (event) => {
+  const saveEvent = async (event) => {
     event.preventDefault()
     const normalizedEnd = eventForm.endDate && eventForm.endDate >= eventForm.startDate
       ? eventForm.endDate
       : eventForm.startDate
-    const savedEvent = {
-      ...eventForm,
+    const payload = {
+      title: eventForm.title,
+      startDate: eventForm.startDate,
       endDate: normalizedEnd,
-      id: editingEventId ?? Date.now(),
     }
-    setTimeline((current) =>
-      editingEventId
-        ? current.map((item) => (item.id === editingEventId ? savedEvent : item))
-        : [...current, savedEvent]
-    )
-    setCalendarMonth(eventForm.startDate.slice(0, 7))
-    setEventForm({ startDate: '', endDate: '', title: '', color: '#2563eb' })
-    setEditingEventId(null)
+    const path = editingEventId === null
+      ? '/landing/admin/dates/'
+      : `/landing/admin/dates/${editingEventId}/`
+    const operation = editingEventId === null
+      ? () => postLanding(path, payload)
+      : () => patchLanding(path, payload)
+
+    await runLandingSave(operation, (data) => {
+      const savedEvent = { ...data.date, color: '#2563eb' }
+      setTimeline((current) =>
+        editingEventId === null
+          ? [...current, savedEvent]
+          : current.map((item) => (item.id === editingEventId ? savedEvent : item))
+      )
+      setCalendarMonth(eventForm.startDate.slice(0, 7))
+      setEventForm({ startDate: '', endDate: '', title: '' })
+      setEditingEventId(null)
+    })
   }
 
   const editEvent = (item) => {
@@ -428,10 +592,89 @@ export default function App() {
       startDate: item.startDate,
       endDate: item.endDate || item.startDate,
       title: item.title,
-      color: item.color || '#2563eb',
     })
     setEditingEventId(item.id)
     setCalendarMonth(item.startDate.slice(0, 7))
+  }
+
+  const deleteEvent = async (id) => {
+    await runLandingSave(
+      () => apiClient.delete(`/landing/admin/dates/${id}/`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }),
+      () => setTimeline((current) => current.filter((item) => item.id !== id)),
+      'Fecha eliminada.'
+    )
+  }
+
+  const saveCongress = async (event) => {
+    event.preventDefault()
+    const edition = Number.parseInt(convocatoria.edition, 10)
+    if (!Number.isInteger(edition)) {
+      setSaveError('El número de edición debe ser un entero.')
+      return
+    }
+    const modalities = {
+      Presencial: 'PRESENCIAL',
+      'En línea': 'EN LINEA',
+      Mixto: 'MIXTO',
+    }
+    await runLandingSave(
+      () => patchLanding('/landing/admin/congress/', {
+        edition,
+        name: convocatoria.title,
+        description: convocatoria.description,
+        registrationDate: convocatoria.registrationDate,
+        venue: convocatoria.venue,
+        modality: modalities[convocatoria.modality] || convocatoria.modality,
+      }),
+      ({ congress }) => {
+        setConvocatoria((current) => ({
+          ...current,
+          edition: congress.edition ? `${congress.edition}°` : current.edition,
+          title: congress.name,
+          description: congress.description,
+          registrationDate: congress.registrationDate,
+          venue: congress.venue,
+          modality: {
+            PRESENCIAL: 'Presencial',
+            'EN LINEA': 'En línea',
+            MIXTO: 'Mixto',
+          }[congress.modality] || congress.modality,
+        }))
+        setContactInfo((current) => ({ ...current, institution: congress.venue }))
+      }
+    )
+  }
+
+  const saveContact = async (event) => {
+    event.preventDefault()
+    await runLandingSave(
+      () => patchLanding('/landing/admin/congress/', {
+        venue: contactInfo.institution,
+        address: contactInfo.address,
+        contactEmail: contactInfo.email,
+        mapQuery: contactInfo.mapQuery,
+      }),
+      ({ congress }) => {
+        setContactInfo((current) => ({
+          ...current,
+          institution: congress.venue,
+          address: congress.address,
+          email: congress.contactEmail,
+          mapQuery: congress.mapQuery,
+        }))
+        setConvocatoria((current) => ({ ...current, venue: congress.venue }))
+      }
+    )
+  }
+
+  const savePageField = async (field, value, setValue) => {
+    await runLandingSave(
+      () => patchLanding('/landing/admin/page/', { [field]: value }),
+      ({ page }) => setValue(page[field]),
+      'Elemento actualizado.'
+    )
   }
 
   // --- Handlers de Documentos y Plantillas (PDF) ---
@@ -529,11 +772,39 @@ export default function App() {
     setSponsors((current) => current.map((sponsor) => (sponsor.id === id ? { ...sponsor, ...updates } : sponsor)))
   }
 
-  const addSponsor = (event) => {
+  const saveSponsor = async (id, updates) => {
+    await runLandingSave(
+      () => patchLanding(`/landing/admin/sponsors/${id}/`, updates),
+      ({ sponsor }) => setSponsors((current) => current.map((item) => (
+        item.id === id ? { ...item, ...sponsor } : item
+      )))
+    )
+  }
+
+  const deleteSponsor = async (id) => {
+    await runLandingSave(
+      () => apiClient.delete(`/landing/admin/sponsors/${id}/`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }),
+      () => setSponsors((current) => current.filter((item) => item.id !== id)),
+      'Patrocinador eliminado.'
+    )
+  }
+
+  const addSponsor = async (event) => {
     event.preventDefault()
     if (!newSponsor.name.trim() || !newSponsor.src) return
-    setSponsors((current) => [...current, { id: Date.now(), name: newSponsor.name.trim(), src: newSponsor.src }])
-    setNewSponsor({ name: '', src: '' })
+    await runLandingSave(
+      () => postLanding('/landing/admin/sponsors/', {
+        name: newSponsor.name.trim(),
+        src: newSponsor.src,
+      }),
+      ({ sponsor }) => {
+        setSponsors((current) => [...current, sponsor])
+        setNewSponsor({ name: '', src: '' })
+      },
+      'Patrocinador agregado.'
+    )
   }
 
   const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(
@@ -557,9 +828,19 @@ export default function App() {
     >
       <header className="hdr">
         <button className="logo" onClick={() => nav('convocatoria')}>
-          <img src="/images/logo_congreso.jpeg" alt="Logo CONING" className="crest-img" />
+          <img src={logoImage} alt="Logo CONING" className="crest-img" />
           <span><b>CONING</b><small>Sistema del Congreso de Ingenierías</small></span>
         </button>
+        {adminEnabled && (
+          <ImagePicker
+            src={logoImage}
+            alt="Logo del congreso"
+            label="Cambiar logo"
+            enabled
+            className="header-logo-picker"
+            onChange={(value) => savePageField('logo', value, setLogoImage)}
+          />
+        )}
         <button className="burger" aria-label="Menú" onClick={() => setOpen(!open)}>☰</button>
         <nav className={open ? 'open' : ''}>
           {NAV.map(([id, l]) => <button key={id} onClick={() => nav(id)}>{l}</button>)}
@@ -583,19 +864,27 @@ export default function App() {
             </div>
           </div>
 
-          <label className="admin-toggle">
-            <input
-              type="checkbox"
-              checked={adminEnabled}
-              onChange={(event) => setAdminEnabled(event.target.checked)}
-            />
-            <span className="admin-switch" aria-hidden="true" />
-            <span>Modo administrador</span>
-          </label>
+          {canEditLanding && landingLoaded && (
+            <label className="admin-toggle">
+              <input
+                type="checkbox"
+                checked={adminEnabled}
+                onChange={(event) => setAdminRequested(event.target.checked)}
+              />
+              <span className="admin-switch" aria-hidden="true" />
+              <span>Modo administrador</span>
+            </label>
+          )}
           {adminEnabled && (
             <div className="admin-colors">
-              <label>Color principal <input type="color" value={primaryColor} onChange={(event) => setPrimaryColor(event.target.value)} /></label>
-              <label>Color secundario <input type="color" value={secondaryColor} onChange={(event) => setSecondaryColor(event.target.value)} /></label>
+              <label>
+                Color secundario
+                <input
+                  type="color"
+                  value={secondaryColor}
+                  onChange={(event) => savePageField('color', event.target.value, setSecondaryColor)}
+                />
+              </label>
             </div>
           )}
           <button
@@ -613,6 +902,11 @@ export default function App() {
           <Link to="/login" className="cta">Registrarse / Iniciar sesión</Link>
         </nav>
       </header>
+      {(saveError || saveSuccess) && (
+        <p className={saveError ? 'landing-save-message error' : 'landing-save-message'} role={saveError ? 'alert' : 'status'}>
+          {saveError || saveSuccess}
+        </p>
+      )}
 
       {/* ========================================================
           1. CONVOCATORIA
@@ -625,7 +919,7 @@ export default function App() {
             label="Cambiar banner"
             enabled={adminEnabled}
             imageClassName="banner"
-            onChange={setBannerImage}
+            onChange={(value) => savePageField('banner', value, setBannerImage)}
           />
           <div className="herogrid">
             <div>
@@ -639,12 +933,12 @@ export default function App() {
                 <li><small>Modalidad</small>{convocatoria.modality}</li>
               </ul>
               <div className="btns">
-                <button className="gold" onClick={() => window.open('https://drive.google.com/file/d/102ty8mj66WZt_9K38OAIrLCboKtBrAdU/view?usp=drive_link', '_blank', 'noopener,noreferrer')}>Ver programa →</button>
+                <button className="gold" onClick={() => window.open(programLink, '_blank', 'noopener,noreferrer')}>Ver programa →</button>
                 <button className="ghost" onClick={() => nav('organizacion')}>Más información ↓</button>
               </div>
 
               {adminEnabled && (
-                <form className="admin-form hero-admin-form" onSubmit={(e) => e.preventDefault()}>
+                <form className="admin-form hero-admin-form" onSubmit={saveCongress}>
                   <h3>Editar información de la convocatoria</h3>
                   <label>
                     Número de edición
@@ -670,14 +964,7 @@ export default function App() {
                       onChange={(e) => setConvocatoria({ ...convocatoria, description: e.target.value })}
                     />
                   </label>
-                  <label>
-                    Periodo de la edición
-                    <input
-                      type="text"
-                      value={convocatoria.period}
-                      onChange={(e) => setConvocatoria({ ...convocatoria, period: e.target.value })}
-                    />
-                  </label>
+                  <p className="full-width">El periodo se calcula a partir de las fechas de inauguración y cierre.</p>
                   <label>
                     Fecha de registro
                     <input
@@ -696,12 +983,16 @@ export default function App() {
                   </label>
                   <label>
                     Modalidad
-                    <input
-                      type="text"
+                    <select
                       value={convocatoria.modality}
                       onChange={(e) => setConvocatoria({ ...convocatoria, modality: e.target.value })}
-                    />
+                    >
+                      <option>Presencial</option>
+                      <option>En línea</option>
+                      <option>Mixto</option>
+                    </select>
                   </label>
+                  <button className="admin-submit" type="submit">Guardar convocatoria</button>
                 </form>
               )}
             </div>
@@ -712,7 +1003,7 @@ export default function App() {
                 label="Cambiar póster"
                 enabled={adminEnabled}
                 className="poster-image"
-                onChange={setPosterImage}
+                onChange={(value) => savePageField('poster', value, setPosterImage)}
               />
               <a className="gold dl" href={posterImage} download="poster-convocatoria">Descargar póster</a>
             </figure>
@@ -741,7 +1032,7 @@ export default function App() {
                   {adminEnabled && (
                     <div className="timeline-actions">
                       <button type="button" onClick={() => editEvent(item)}>Editar</button>
-                      <button type="button" onClick={() => setTimeline((current) => current.filter((entry) => entry.id !== item.id))}>Eliminar</button>
+                      <button type="button" onClick={() => deleteEvent(item.id)}>Eliminar</button>
                     </div>
                   )}
                 </li>
@@ -781,14 +1072,6 @@ export default function App() {
                   required
                 />
               </label>
-              <label>
-                Color del evento
-                <input
-                  type="color"
-                  value={eventForm.color}
-                  onChange={(event) => updateEventForm('color', event.target.value)}
-                />
-              </label>
               <button className="admin-submit" type="submit">{editingEventId === null ? 'Agregar fecha' : 'Guardar cambios'}</button>
               {editingEventId !== null && (
                 <button
@@ -796,7 +1079,7 @@ export default function App() {
                   type="button"
                   onClick={() => {
                     setEditingEventId(null)
-                    setEventForm({ startDate: '', endDate: '', title: '', color: '#2563eb' })
+                    setEventForm({ startDate: '', endDate: '', title: '' })
                   }}
                 >
                   Cancelar
@@ -835,9 +1118,28 @@ export default function App() {
               label="Cambiar programa general"
               enabled={adminEnabled}
               imageClassName="banner"
-              onChange={setProgramImage}
+              onChange={(value) => savePageField('program', value, setProgramImage)}
             />
           </div>
+          {adminEnabled && (
+            <form
+              className="admin-form"
+              onSubmit={(event) => {
+                event.preventDefault()
+                savePageField('programUrl', programLink, setProgramLink)
+              }}
+            >
+              <label>
+                Enlace del programa
+                <input
+                  type="url"
+                  value={programLink}
+                  onChange={(event) => setProgramLink(event.target.value)}
+                />
+              </label>
+              <button className="admin-submit" type="submit">Guardar enlace del programa</button>
+            </form>
+          )}
         </div>
       </section>
 
@@ -1210,7 +1512,7 @@ export default function App() {
             </a>
 
             {adminEnabled && (
-              <form className="admin-form" style={{ marginTop: '24px' }} onSubmit={(e) => e.preventDefault()}>
+              <form className="admin-form" style={{ marginTop: '24px' }} onSubmit={saveContact}>
                 <h3>Editar información de contacto</h3>
                 <label className="full-width">
                   Sede / Institución
@@ -1220,6 +1522,7 @@ export default function App() {
                     onChange={(e) => setContactInfo({ ...contactInfo, institution: e.target.value })}
                   />
                 </label>
+                <button className="admin-submit" type="submit">Guardar información de contacto</button>
                 <label className="full-width">
                   Dirección
                   <input
@@ -1282,7 +1585,7 @@ export default function App() {
                     label="Cambiar imagen"
                     enabled
                     className="sponsor-image"
-                    onChange={(src) => updateSponsor(sponsor.id, { src })}
+                    onChange={(src) => saveSponsor(sponsor.id, { src })}
                   />
                   <label>
                     Nombre
@@ -1290,12 +1593,13 @@ export default function App() {
                       type="text"
                       value={sponsor.name}
                       onChange={(event) => updateSponsor(sponsor.id, { name: event.target.value })}
+                      onBlur={(event) => saveSponsor(sponsor.id, { name: event.target.value })}
                     />
                   </label>
                   <button
                     className="admin-delete"
                     type="button"
-                    onClick={() => setSponsors((current) => current.filter((item) => item.id !== sponsor.id))}
+                    onClick={() => deleteSponsor(sponsor.id)}
                   >
                     Eliminar patrocinador
                   </button>

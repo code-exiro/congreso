@@ -269,6 +269,16 @@ Todas estas rutas incluyen el prefijo `/api/`. Django Admin usa `/admin/`, que e
 | PATCH | `/api/admin/legal-documents/<id>/` | JWT + `documentos_legales.editar` |
 | POST | `/api/admin/legal-documents/<id>/publish/` | JWT + `documentos_legales.publicar` |
 | POST | `/api/admin/legal-documents/<id>/deactivate/` | JWT + `documentos_legales.desactivar` |
+| PATCH | `/api/landing/admin/congress/` | JWT + `diseño_pagina`; actualiza los campos de convocatoria/contacto del congreso vigente |
+| PATCH | `/api/landing/admin/page/` | JWT + `diseño_pagina`; actualiza imágenes, enlace del programa y color |
+| POST | `/api/landing/admin/dates/` | JWT + `diseño_pagina`; agrega una fecha al congreso vigente |
+| PATCH, DELETE | `/api/landing/admin/dates/<id>/` | JWT + `diseño_pagina`; modifica o elimina una fecha asociada al congreso vigente |
+| POST | `/api/landing/admin/sponsors/` | JWT + `diseño_pagina`; agrega un patrocinador al congreso vigente |
+| PATCH, DELETE | `/api/landing/admin/sponsors/<id>/` | JWT + `diseño_pagina`; modifica o elimina la relación con el congreso vigente |
+
+Las rutas de edición seleccionan el congreso con mayor edición y, como desempate, mayor ID; no reciben `id_congreso` del cliente. Las fechas y patrocinadores se verifican contra esa relación. Si una fecha o patrocinador también pertenece a otro congreso, se separa su registro antes de editar para conservar intactos los datos compartidos. Las imágenes se reciben como multipart, se guardan bajo `MEDIA_ROOT/landing/` y la base almacena su ruta. El formulario debe autenticarse con un usuario que tenga el privilegio `diseño_pagina`.
+
+El alcance de estas rutas se limita a campos que ya tienen tablas: convocatoria, contacto, imágenes/enlace/color de página, fechas y patrocinadores. Los formularios de documentos, videos y publicaciones de la landing no tienen almacenamiento asociado en el esquema actual y no se guardan con estas rutas.
 
 Login devuelve `{ message, access, refresh, user }`; registro devuelve `{ message, user }`. El listado administrativo es un array sin paginación en esta versión. Su serializer añade `is_active` y `has_acceptances` a los datos del documento.
 
@@ -368,4 +378,3 @@ Cuando una tarea pendiente se implemente, mover su descripción a la sección de
 | Fecha | Versión | Cambio |
 | --- | --- | --- |
 | 2026-10-28 | 1.0 | Primera documentación del ZIP actualizado: estructura, entidades, rutas, autenticación, administración legal y reglas de evolución. |
-
