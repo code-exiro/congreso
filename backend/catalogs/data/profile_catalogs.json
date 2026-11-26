@@ -1,0 +1,7552 @@
+{
+  "countries": [
+    "Afganistán",
+    "Albania",
+    "Alemania",
+    "Andorra",
+    "Angola",
+    "Anguila",
+    "Antigua y Barbuda",
+    "Arabia Saudita",
+    "Argelia",
+    "Argentina",
+    "Armenia",
+    "Aruba",
+    "Australia",
+    "Austria",
+    "Azerbaiyán",
+    "Bahamas",
+    "Bangladés",
+    "Barbados",
+    "Baréin",
+    "Bélgica",
+    "Belice",
+    "Benín",
+    "Bermudas",
+    "Bielorrusia",
+    "Birmania (Myanmar)",
+    "Bolivia",
+    "Bosnia y Herzegovina",
+    "Botsuana",
+    "Brasil",
+    "Brunéi",
+    "Bulgaria",
+    "Burkina Faso",
+    "Burundi",
+    "Bután",
+    "Cabo Verde",
+    "Camboya",
+    "Camerún",
+    "Canadá",
+    "Catar",
+    "Chad",
+    "Chile",
+    "China",
+    "Chipre",
+    "Colombia",
+    "Comoras",
+    "Congo (Brazzaville)",
+    "Congo (Rep. Democrática)",
+    "Corea del Norte",
+    "Corea del Sur",
+    "Costa de Marfil",
+    "Costa Rica",
+    "Croacia",
+    "Cuba",
+    "Curazao",
+    "Dinamarca",
+    "Dominica",
+    "Ecuador",
+    "Egipto",
+    "El Salvador",
+    "Emiratos Árabes Unidos",
+    "Eritrea",
+    "Eslovaquia",
+    "Eslovenia",
+    "España",
+    "Estados Unidos",
+    "Estonia",
+    "Esuatini",
+    "Esuatini (Suazilandia)",
+    "Etiopía",
+    "Filipinas",
+    "Finlandia",
+    "Fiyi",
+    "Francia",
+    "Gabón",
+    "Gambia",
+    "Georgia",
+    "Ghana",
+    "Gibraltar",
+    "Granada",
+    "Grecia",
+    "Groenlandia",
+    "Guadalupe",
+    "Guam",
+    "Guatemala",
+    "Guernsey",
+    "Guinea",
+    "Guinea Ecuatorial",
+    "Guinea-Bisáu",
+    "Guyana",
+    "Haití",
+    "Honduras",
+    "Hong Kong",
+    "Hungría",
+    "India",
+    "Indonesia",
+    "Irak",
+    "Irán",
+    "Irlanda",
+    "Isla de Man",
+    "Islandia",
+    "Islas Caimán",
+    "Islas Cook",
+    "Islas Feroe",
+    "Islas Malvinas",
+    "Islas Marianas del Norte",
+    "Islas Marshall",
+    "Islas Pitcairn",
+    "Islas Salomón",
+    "Islas Turcas y Caicos",
+    "Islas Vírgenes Británicas",
+    "Islas Vírgenes de EE. UU.",
+    "Israel",
+    "Italia",
+    "Jamaica",
+    "Japón",
+    "Jersey",
+    "Jordania",
+    "Kazajistán",
+    "Kenia",
+    "Kirguistán",
+    "Kiribati",
+    "Kuwait",
+    "Laos",
+    "Lesoto",
+    "Letonia",
+    "Líbano",
+    "Liberia",
+    "Libia",
+    "Liechtenstein",
+    "Lituania",
+    "Luxemburgo",
+    "Macao",
+    "Macedonia del Norte",
+    "Madagascar",
+    "Malasia",
+    "Malaui",
+    "Maldivas",
+    "Malí",
+    "Malta",
+    "Marruecos",
+    "Martinica",
+    "Mauricio",
+    "Mauritania",
+    "México",
+    "Micronesia",
+    "Moldavia",
+    "Mónaco",
+    "Mongolia",
+    "Montenegro",
+    "Montserrat",
+    "Mozambique",
+    "Myanmar",
+    "Namibia",
+    "Nauru",
+    "Nepal",
+    "Nicaragua",
+    "Níger",
+    "Nigeria",
+    "Niue",
+    "Noruega",
+    "Nueva Caledonia",
+    "Nueva Zelanda",
+    "Omán",
+    "Países Bajos",
+    "Pakistán",
+    "Palaos",
+    "Palestina",
+    "Panamá",
+    "Papúa Nueva Guinea",
+    "Paraguay",
+    "Perú",
+    "Polinesia Francesa",
+    "Polonia",
+    "Portugal",
+    "Puerto Rico",
+    "Reino Unido",
+    "República Centroafricana",
+    "República Checa",
+    "República del Congo",
+    "República Democrática del Congo",
+    "República Dominicana",
+    "Reunión",
+    "Reunión / Mayotte",
+    "Ruanda",
+    "Rumanía",
+    "Rusia",
+    "Sahara Occidental",
+    "Samoa",
+    "Samoa Americana",
+    "San Cristóbal y Nieves",
+    "San Marino",
+    "San Pedro y Miquelón",
+    "San Vicente y las Granadinas",
+    "Santa Elena",
+    "Santa Lucía",
+    "Santo Tomé y Príncipe",
+    "Senegal",
+    "Serbia",
+    "Seychelles",
+    "Sierra Leona",
+    "Singapur",
+    "Siria",
+    "Somalia",
+    "Sri Lanka",
+    "Sudáfrica",
+    "Sudán",
+    "Sudán del Sur",
+    "Suecia",
+    "Suiza",
+    "Surinam",
+    "Tailandia",
+    "Taiwán",
+    "Tanzania",
+    "Tayikistán",
+    "Timor Oriental",
+    "Togo",
+    "Tokelau",
+    "Tonga",
+    "Trinidad y Tobago",
+    "Túnez",
+    "Turkmenistán",
+    "Turquía",
+    "Tuvalu",
+    "Ucrania",
+    "Uganda",
+    "Uruguay",
+    "Uzbekistán",
+    "Vanuatu",
+    "Vaticano",
+    "Venezuela",
+    "Vietnam",
+    "Wallis y Futuna",
+    "Yemen",
+    "Yibuti",
+    "Zambia",
+    "Zimbabue"
+  ],
+  "states_by_country": {
+    "Afganistán": [
+      "Afghanistan"
+    ],
+    "Albania": [
+      "Berat",
+      "Diber",
+      "Durres",
+      "Elbasan",
+      "Fier",
+      "Gjirokaster",
+      "Korce",
+      "Kukes",
+      "Lezhe",
+      "Shkoder",
+      "Tirane",
+      "Vlore"
+    ],
+    "Alemania": [
+      "Baden-württemberg",
+      "Bayern",
+      "Berlin",
+      "Brandenburg",
+      "Bremen",
+      "Hamburg",
+      "Hessen",
+      "Mecklenburg-vorpommern",
+      "Niedersachsen",
+      "Nordrhein-westfalen",
+      "Rheinland-pfalz",
+      "Saarland",
+      "Sachsen",
+      "Sachsen-anhalt",
+      "Schleswig-holstein",
+      "Thüringen"
+    ],
+    "Andorra": [
+      "Andorra la Vella",
+      "Canillo",
+      "Encamp",
+      "Escaldes-engordany",
+      "La Massana",
+      "Ordino",
+      "Sant Julia de Loria"
+    ],
+    "Angola": [
+      "Angola"
+    ],
+    "Anguila": [
+      "Anguilla"
+    ],
+    "Antigua y Barbuda": [
+      "Antigua and Barbuda"
+    ],
+    "Arabia Saudita": [
+      "Saudi Arabia"
+    ],
+    "Argelia": [
+      "Algeria"
+    ],
+    "Argentina": [
+      "Buenos Aires",
+      "Catamarca",
+      "Chaco",
+      "Chubut",
+      "Córdoba",
+      "Corrientes",
+      "Distrito Federal",
+      "Entre Ríos",
+      "Formosa",
+      "Jujuy",
+      "La Pampa",
+      "La Rioja",
+      "Mendoza",
+      "Misiones",
+      "Neuquén",
+      "Río Negro",
+      "Salta",
+      "San Juan",
+      "San Luis",
+      "Santa Cruz",
+      "Santa Fe",
+      "Santiago del Estero",
+      "Tierra del Fuego",
+      "Tucumán"
+    ],
+    "Armenia": [
+      "Aragatsotn",
+      "Ararat",
+      "Armavir",
+      "Geghark'unik'",
+      "Kotayk'",
+      "Lorri",
+      "Shirak",
+      "Syunik'",
+      "Tavush",
+      "Vayots' Dzor",
+      "Yerevan"
+    ],
+    "Aruba": [
+      "Aruba"
+    ],
+    "Australia": [
+      "Australian Capital Territory",
+      "New South Wales",
+      "Northern Territory",
+      "Queensland",
+      "South Australia",
+      "Tasmania",
+      "Victoria",
+      "Western Australia"
+    ],
+    "Austria": [
+      "Burgenland",
+      "Kärnten",
+      "Niederösterreich",
+      "Oberösterreich",
+      "Salzburg",
+      "Steiermark",
+      "Tirol",
+      "Vorarlberg",
+      "Wien"
+    ],
+    "Azerbaiyán": [
+      "Azerbaijan",
+      "Nakhichevanskaya Region",
+      "Nargorni Karabakh"
+    ],
+    "Bahamas": [
+      "Bahamas"
+    ],
+    "Bangladés": [
+      "Bangladesh"
+    ],
+    "Barbados": [
+      "Barbados"
+    ],
+    "Baréin": [
+      "Bahrain"
+    ],
+    "Bélgica": [
+      "Antwerpen",
+      "Brabant Wallon",
+      "Bruxelles",
+      "Hainaut",
+      "Liä?ge",
+      "Limburg",
+      "Luxembourg",
+      "Namur",
+      "Oost-vlaanderen",
+      "Vlaams Brabant",
+      "West-vlaanderen"
+    ],
+    "Belice": [
+      "Belize"
+    ],
+    "Benín": [
+      "Benin"
+    ],
+    "Bermudas": [
+      "Hamilton"
+    ],
+    "Bielorrusia": [
+      "Brestskaya Obl.",
+      "Gomelskaya Obl.",
+      "Grodnenskaya Obl.",
+      "Minskaya Obl.",
+      "Mogilevskaya Obl.",
+      "Vitebskaya Obl."
+    ],
+    "Bolivia": [
+      "Chuquisaca",
+      "Cochabamba",
+      "El Beni",
+      "La Paz",
+      "Oruro",
+      "Pando",
+      "Potosí",
+      "Santa Cruz",
+      "Tarija"
+    ],
+    "Bosnia y Herzegovina": [
+      "Federation of Bosnia and Herzegovina",
+      "Republika Srpska"
+    ],
+    "Botsuana": [
+      "Botswana"
+    ],
+    "Brasil": [
+      "Acre",
+      "Alagoas",
+      "Amapa",
+      "Amazonas",
+      "Bahia",
+      "Ceara",
+      "Distrito Federal",
+      "Espirito Santo",
+      "Goias",
+      "Maranhao",
+      "Mato Grosso",
+      "Mato Grosso Do Sul",
+      "Minas Gerais",
+      "Para",
+      "Paraiba",
+      "Parana",
+      "Pernambuco",
+      "Piaui",
+      "Rio de Janeiro",
+      "Rio Grande Do Norte",
+      "Rio Grande Do Sul",
+      "Rondonia",
+      "Roraima",
+      "Santa Catarina",
+      "Sao Paulo",
+      "Sergipe",
+      "Tocantins"
+    ],
+    "Brunéi": [
+      "Brunei"
+    ],
+    "Bulgaria": [
+      "Blagoevgrad",
+      "Burgas",
+      "Dobrich",
+      "Gabrovo",
+      "Grad Sofiya",
+      "Khaskovo",
+      "Kurdzhali",
+      "Kyustendil",
+      "Lovech",
+      "Mikhaylovgrad",
+      "Montana",
+      "Pazardzhik",
+      "Pernik",
+      "Pleven",
+      "Plovdiv",
+      "Razgrad",
+      "Ruse",
+      "Shumen",
+      "Silistra",
+      "Sliven",
+      "Smolyan",
+      "Sofiya",
+      "Stara Zagora",
+      "Turgovishte",
+      "Varna",
+      "Veliko Turnovo",
+      "Vidin",
+      "Vratsa",
+      "Yambol"
+    ],
+    "Burkina Faso": [
+      "Burkina Faso"
+    ],
+    "Burundi": [
+      "Burundi"
+    ],
+    "Bután": [
+      "Bhutan"
+    ],
+    "Cabo Verde": [
+      "Cape Verde"
+    ],
+    "Camboya": [
+      "Cambodia"
+    ],
+    "Camerún": [
+      "Central",
+      "Littoral",
+      "North",
+      "Southwest Region"
+    ],
+    "Canadá": [
+      "Alberta",
+      "British Columbia",
+      "Manitoba",
+      "New Brunswick",
+      "Newfoundland",
+      "Northwest Territories",
+      "Nova Scotia",
+      "Nunavut",
+      "Ontario",
+      "Prince Edward Island",
+      "Quebec",
+      "Saskatchewan",
+      "Yukon Territory"
+    ],
+    "Catar": [
+      "Doha"
+    ],
+    "Chad": [
+      "Chad"
+    ],
+    "Chile": [
+      "Región Aisén del General Carlos Ibá?ez del Campo",
+      "Región de Antofagasta",
+      "Región de Arica y Parinacota",
+      "Región de Atacama",
+      "Región de Coquimbo",
+      "Región de la Araucanía",
+      "Región de los Lagos",
+      "Región de los Ríos",
+      "Región de Magallanes y de la Antártica Chilena",
+      "Región de Tarapacá",
+      "Región de Valparaíso",
+      "Región del Bío Bío",
+      "Región del Libertador General Bernardo O'higgins",
+      "Región del Maule",
+      "Región Metropolitana de Santiago"
+    ],
+    "China": [
+      "Anhui",
+      "Aomen",
+      "Beijing",
+      "Chongqing",
+      "Fujian",
+      "Gansu",
+      "Guangdong",
+      "Guangxi",
+      "Guizhou",
+      "Hainan",
+      "Hebei",
+      "Heilongjiang",
+      "Henan",
+      "Hongkong",
+      "Hubei",
+      "Hunan",
+      "Jiangsu",
+      "Jiangxi",
+      "Jilin",
+      "Liaoning",
+      "Nei Mongol",
+      "Neimenggu",
+      "Ningxia",
+      "Qinghai",
+      "Schanghai",
+      "Shaanxi",
+      "Shandong",
+      "Shanghai",
+      "Shanxi",
+      "Sichuan",
+      "Tianjin",
+      "Xinjiang",
+      "Xizang",
+      "Yunnan",
+      "Zhejiang"
+    ],
+    "Chipre": [
+      "Government Controlled Area",
+      "Turkish Controlled Area"
+    ],
+    "Colombia": [
+      "Amazonas",
+      "Antioquia",
+      "Arauca",
+      "Atlántico",
+      "Caldas",
+      "Caquetá",
+      "Casanare",
+      "Cauca",
+      "César",
+      "Chocó",
+      "Córdoba",
+      "Cundinamarca",
+      "Distrito Especial",
+      "Guainía",
+      "Guaviare",
+      "Huila",
+      "La Guajira",
+      "Magdalena",
+      "Meta",
+      "Narino",
+      "Norte de Santander",
+      "Putumayo",
+      "Quindío",
+      "Risaralda",
+      "San Andrés y Providencia",
+      "Santander",
+      "Sucre",
+      "Tolima",
+      "Valle del Cauca",
+      "Vaupés",
+      "Vichada"
+    ],
+    "Comoras": [
+      "Comoros"
+    ],
+    "Corea del Norte": [
+      "Korea"
+    ],
+    "Corea del Sur": [
+      "Busan",
+      "Cheju",
+      "Chollabuk",
+      "Chollanam",
+      "Chungcheongbuk",
+      "Chungcheongnam",
+      "Daegu",
+      "Gangwon",
+      "Gwangju",
+      "Gyeonggi",
+      "Gyeongsangbuk",
+      "Gyeongsangnam",
+      "Incheon",
+      "Jeju",
+      "Kangweon",
+      "Kwangju",
+      "Kyeonggi",
+      "Kyeongsangbuk",
+      "Kyeongsangnam",
+      "Pusan",
+      "Seoul",
+      "South Korea",
+      "Taegu",
+      "Taejeon",
+      "Ulsan"
+    ],
+    "Costa de Marfil": [
+      "Cote D'ivoire"
+    ],
+    "Costa Rica": [
+      "Alajuela",
+      "Cartago",
+      "Guanacaste",
+      "Heredia",
+      "Limón",
+      "Puntarenas",
+      "San José"
+    ],
+    "Croacia": [
+      "Bjelovarsko-bilogorska",
+      "Brodsko-posavska",
+      "Dubrovacko-neretvanska",
+      "Grad Zagreb",
+      "Istarska",
+      "Karlovacka",
+      "Koprivnicko-krizevacka",
+      "Krapinsko-zagorska",
+      "Licko-senjska",
+      "Medimurska",
+      "Osjecko-baranjska",
+      "Pozesko-slavonska",
+      "Primorsko-goranska",
+      "Sibensko-kninska",
+      "Sisacko-moslavacka",
+      "Splitsko-dalmatinska",
+      "Varazdinska",
+      "Viroviticko-podravska",
+      "Vukovarsko-srijemska",
+      "Zadarska",
+      "Zagrebacka"
+    ],
+    "Cuba": [
+      "Camaguey",
+      "Ciego de Avila",
+      "Cienfuegos",
+      "Ciudad de la Habana",
+      "Granma",
+      "Guantanamo",
+      "Holguin",
+      "Isla de la Juventud",
+      "La Habana",
+      "Las Tunas",
+      "Matanzas",
+      "Pinar del Rio",
+      "Sancti Spiritus",
+      "Santiago de Cuba",
+      "Villa Clara"
+    ],
+    "Curazao": [
+      "Willemstad"
+    ],
+    "Dinamarca": [
+      "Arhus",
+      "Bornholm",
+      "Frederiksborg",
+      "Fyn",
+      "Kobenhavn",
+      "Nordjylland",
+      "Ribe",
+      "Ringkobing",
+      "Roskilde",
+      "Sonderjylland",
+      "Staden Kobenhavn",
+      "Storstrom",
+      "Vejle",
+      "Vestsjalland",
+      "Viborg"
+    ],
+    "Ecuador": [
+      "Azuay",
+      "Bolívar",
+      "Canar",
+      "Carchi",
+      "Chimborazo",
+      "Cotopaxi",
+      "El Oro",
+      "Esmeraldas",
+      "Galápagos",
+      "Guayas",
+      "Imbabura",
+      "Loja",
+      "Los Ríos",
+      "Manabí",
+      "Morona-santiago",
+      "Napo",
+      "Orellana",
+      "Pastaza",
+      "Pichincha",
+      "Sucumbíos",
+      "Tungurahua",
+      "Zamora-chinchipe"
+    ],
+    "Egipto": [
+      "Al Qä?hira",
+      "Aswan",
+      "Asyut",
+      "Beni Suef",
+      "Damietta",
+      "Egypt",
+      "Gharbia",
+      "Sinai"
+    ],
+    "El Salvador": [
+      "Ahuachapán",
+      "Cuscatlán",
+      "La Libertad",
+      "La Paz",
+      "La Unión",
+      "San Miguel",
+      "San Salvador",
+      "Santa Ana",
+      "Sonsonate"
+    ],
+    "Emiratos Árabes Unidos": [
+      "Abu Dhabi",
+      "Dubai",
+      "Sharjah"
+    ],
+    "Eritrea": [
+      "Eritrea"
+    ],
+    "Eslovaquia": [
+      "Banska Bystrica",
+      "Bratislava",
+      "Kosice",
+      "Nitra",
+      "Presov",
+      "Trencin",
+      "Trnava",
+      "Zilina"
+    ],
+    "Eslovenia": [
+      "Beltinci",
+      "Bohinj",
+      "Borovnica",
+      "Bovec",
+      "Brda",
+      "Brezice",
+      "Brezovica",
+      "Cerklje Na Gorenjskem",
+      "Cerkno",
+      "Crna Na Koroskem",
+      "Crnomelj",
+      "Divaca",
+      "Dobrepolje",
+      "Dol Pri Ljubljani",
+      "Domzale",
+      "Duplek",
+      "Gornji Grad",
+      "Hrastnik",
+      "Hrpelje-kozina",
+      "Idrija",
+      "Ig",
+      "Ilirska Bistrica",
+      "Ivancna Gorica",
+      "Jesenice",
+      "Kamnik",
+      "Kocevje",
+      "Komen",
+      "Koper-capodistria",
+      "Kozje",
+      "Kranj",
+      "Kranjska Gora",
+      "Krsko",
+      "Lasko",
+      "Lenart",
+      "Litija",
+      "Ljubljana",
+      "Ljubno",
+      "Ljutomer",
+      "Logatec",
+      "Maribor",
+      "Medvode",
+      "Menges",
+      "Mezica",
+      "Moravce",
+      "Mozirje",
+      "Murska Sobota",
+      "Nova Gorica",
+      "Novo Mesto",
+      "Ormoz",
+      "Pesnica",
+      "Piran",
+      "Postojna",
+      "Preddvor",
+      "Ptuj",
+      "Radece",
+      "Radenci",
+      "Radovljica",
+      "Ribnica",
+      "Rogaska Slatina",
+      "Sencur",
+      "Sentilj",
+      "Sentjur Pri Celju",
+      "Sevnica",
+      "Sezana",
+      "Skofja Loka",
+      "Slovenj Gradec",
+      "Slovenska Bistrica",
+      "Slovenske Konjice",
+      "Smarje Pri Jelsah",
+      "Tolmin",
+      "Trbovlje",
+      "Trzic",
+      "Velenje",
+      "Videm",
+      "Vipava",
+      "Vrhnika",
+      "Vuzenica",
+      "Zagorje Ob Savi",
+      "Zalec",
+      "Zelezniki",
+      "Ziri",
+      "Zrece"
+    ],
+    "España": [
+      "A Coru?a",
+      "Alacant",
+      "Álava",
+      "Albacete",
+      "Almería",
+      "Asturias",
+      "Ávila",
+      "Badajoz",
+      "Barcelona",
+      "Burgos",
+      "Cáceres",
+      "Cádiz",
+      "Cantabria",
+      "Castellón",
+      "Ceuta",
+      "Ciudad Real",
+      "Córdoba",
+      "Cuenca",
+      "Girona",
+      "Granada",
+      "Guadalajara",
+      "Guip&uacute;zcoa",
+      "Huelva",
+      "Huesca",
+      "Illes Balears",
+      "Jaén",
+      "La Rioja",
+      "Las Palmas",
+      "León",
+      "Lleida",
+      "Lugo",
+      "Madrid",
+      "Málaga",
+      "Melilla",
+      "Murcia",
+      "Navarra",
+      "Ourense",
+      "Palencia",
+      "Pontevedra",
+      "Salamanca",
+      "Santa Cruz de Tenerife",
+      "Segovia",
+      "Sevilla",
+      "Soria",
+      "Tarragona",
+      "Teruel",
+      "Toledo",
+      "Val&egrave;ncia",
+      "Valladolid",
+      "Vizcaya",
+      "Zamora",
+      "Zaragoza"
+    ],
+    "Estados Unidos": [
+      "Alabama",
+      "Alaska",
+      "American Samoa",
+      "Arizona",
+      "Arkansas",
+      "Armed Forces Americas",
+      "Armed Forces Europe",
+      "Armed Forces Pacific",
+      "California",
+      "Colorado",
+      "Connecticut",
+      "Delaware",
+      "District of Columbia",
+      "Federated States of Micronesia",
+      "Florida",
+      "Georgia",
+      "Hawaii",
+      "Idaho",
+      "Illinois",
+      "Indiana",
+      "Iowa",
+      "Kansas",
+      "Kentucky",
+      "Louisiana",
+      "Maine",
+      "Marshall Islands",
+      "Maryland",
+      "Massachusetts",
+      "Michigan",
+      "Minnesota",
+      "Mississippi",
+      "Missouri",
+      "Montana",
+      "Nebraska",
+      "Nevada",
+      "New Hampshire",
+      "New Jersey",
+      "New Mexico",
+      "New York",
+      "North Carolina",
+      "North Dakota",
+      "Northern Mariana Islands",
+      "Ohio",
+      "Oklahoma",
+      "Oregon",
+      "Palau",
+      "Pennsylvania",
+      "Rhode Island",
+      "South Carolina",
+      "South Dakota",
+      "Tennessee",
+      "Texas",
+      "Utah",
+      "Vermont",
+      "Virgin Islands",
+      "Virginia",
+      "Washington",
+      "West Virginia",
+      "Wisconsin",
+      "Wyoming"
+    ],
+    "Estonia": [
+      "Estoniya"
+    ],
+    "Esuatini": [
+      "Swaziland"
+    ],
+    "Etiopía": [
+      "Ethiopia"
+    ],
+    "Filipinas": [
+      "Philippines"
+    ],
+    "Finlandia": [
+      "Eastern Finland",
+      "Lapland",
+      "Oulu",
+      "Southern Finland",
+      "Western Finland",
+      "Ð&bull;land"
+    ],
+    "Fiyi": [
+      "Fiji"
+    ],
+    "Francia": [
+      "Ain",
+      "Aisne",
+      "Allier",
+      "Alpes-de-haute-provence",
+      "Alpes-maritimes",
+      "Ard&egrave;che",
+      "Ardennes",
+      "Ari&egrave;ge",
+      "Aube",
+      "Aude",
+      "Aveyron",
+      "Bas Rhin",
+      "Bouches-du-rh&ocirc;ne",
+      "C&ocirc;te D'or",
+      "C&ocirc;tes D'armor",
+      "Calvados",
+      "Cantal",
+      "Charente",
+      "Charente Maritime",
+      "Cher",
+      "Corr&egrave;ze",
+      "Corse",
+      "Creuse",
+      "Deux-s&egrave;vres",
+      "Dordogne",
+      "Doubs",
+      "Dr&ocirc;me",
+      "Essonne",
+      "Eure",
+      "Eure-et-loire",
+      "Finist&egrave;re",
+      "Gard",
+      "Gers",
+      "Gironde",
+      "Haut Rhin",
+      "Haute-garonne",
+      "Haute-loire",
+      "Haute-marne",
+      "Haute-sa&ocirc;ne",
+      "Haute-savoie",
+      "Haute-vienne",
+      "Hautes-alpes",
+      "Hautes-pyrénées",
+      "Hauts-de-seine",
+      "Hérault",
+      "Ille Et Vilaine",
+      "Indre",
+      "Indre-et-loire",
+      "Is?re",
+      "Jura",
+      "Landes",
+      "Loir-et-cher",
+      "Loire",
+      "Loire Atlantique",
+      "Loiret",
+      "Lot",
+      "Lot-et-garonne",
+      "Loz&egrave;re",
+      "Maine Et Loire",
+      "Manche",
+      "Marne",
+      "Mayenne",
+      "Meurthe-et-moselle",
+      "Meuse",
+      "Morbihan",
+      "Moselle",
+      "Ni&egrave;vre",
+      "Nord",
+      "Oise",
+      "Orne",
+      "Paris",
+      "Pas-de-calais",
+      "Puy-de-d&ocirc;me",
+      "Pyrénées-atlantiques",
+      "Pyrénées-orientales",
+      "Rh&ocirc;ne",
+      "Sa&ocirc;ne Et Loire",
+      "Sarthe",
+      "Savoie",
+      "Seine-et-marne",
+      "Seine-maritime",
+      "Seine-saint-denis",
+      "Somme",
+      "Tarn",
+      "Tarn-et-garonne",
+      "Territoire de Belfort",
+      "Val-d'oise",
+      "Val-de-marne",
+      "Var",
+      "Vaucluse",
+      "Vendée",
+      "Vienne",
+      "Vosges",
+      "Yonne",
+      "Yvelines"
+    ],
+    "Gabón": [
+      "Gabon"
+    ],
+    "Gambia": [
+      "Gambia"
+    ],
+    "Georgia": [
+      "Abkhazia",
+      "Ajaria",
+      "Georgia",
+      "South Ossetia"
+    ],
+    "Ghana": [
+      "Ghana"
+    ],
+    "Gibraltar": [
+      "Gibraltar"
+    ],
+    "Granada": [
+      "St George's"
+    ],
+    "Grecia": [
+      "Aitolia Kai Akarnania",
+      "Akhaia",
+      "Argolis",
+      "Arkadhia",
+      "Arta",
+      "Attiki",
+      "Dhodhekanisos",
+      "Drama",
+      "Evritania",
+      "Evros",
+      "Evvoia",
+      "Florina",
+      "Fokis",
+      "Fthiotis",
+      "Grevena",
+      "Ilia",
+      "Imathia",
+      "Ioannina",
+      "Iraklion",
+      "Kardhitsa",
+      "Kastoria",
+      "Kavala",
+      "Kefallinia",
+      "Kerkira",
+      "Khalkidhiki",
+      "Khania",
+      "Khios",
+      "Kikladhes",
+      "Kilkis",
+      "Korinthia",
+      "Kozani",
+      "Lakonia",
+      "Larisa",
+      "Lasithi",
+      "Lesvos",
+      "Levkas",
+      "Magnisia",
+      "Messinia",
+      "Pella",
+      "Pieria",
+      "Preveza",
+      "Rethimni",
+      "Rodhopi",
+      "Samos",
+      "Serrai",
+      "Thesprotia",
+      "Thessaloniki",
+      "Trikala",
+      "Voiotia",
+      "Xanthi",
+      "Zakinthos"
+    ],
+    "Groenlandia": [
+      "Greenland"
+    ],
+    "Guadalupe": [
+      "Basse-terre",
+      "Grande-terre"
+    ],
+    "Guatemala": [
+      "Alta Verapaz",
+      "Baja Verapaz",
+      "Chimaltenango",
+      "Chiquimula",
+      "El Progreso",
+      "Escuintla",
+      "Guatemala",
+      "Huehuetenango",
+      "Izabal",
+      "Jalapa",
+      "Jutiapa",
+      "Petén",
+      "Quetzaltenango",
+      "Quiché",
+      "Retalhuleu",
+      "Sacatepéquez",
+      "San Marcos",
+      "Santa Rosa",
+      "Sololá",
+      "Suchitepequez",
+      "Totonicapán",
+      "Zacapa"
+    ],
+    "Guernsey": [
+      "St Peter Port"
+    ],
+    "Guinea": [
+      "Guinea"
+    ],
+    "Guinea Ecuatorial": [
+      "Malabo"
+    ],
+    "Guinea-Bisáu": [
+      "Bissau"
+    ],
+    "Guyana": [
+      "Guyana"
+    ],
+    "Haití": [
+      "Artibonite",
+      "Grand'anse",
+      "North West",
+      "South",
+      "South East",
+      "West"
+    ],
+    "Honduras": [
+      "Tegucigalpa"
+    ],
+    "Hong Kong": [
+      "Hong Kong"
+    ],
+    "Hungría": [
+      "Bacs-kiskun",
+      "Baranya",
+      "Bekes",
+      "Borsod-abauj-zemplen",
+      "Budapest",
+      "Csongrad",
+      "Debrecen",
+      "Fejer",
+      "Gyor",
+      "Gyor-moson-sopron",
+      "Hajdu-bihar",
+      "Heves",
+      "Jasz-nagykun-szolnok",
+      "Komarom-esztergom",
+      "Miskolc",
+      "Nograd",
+      "Pecs",
+      "Pest",
+      "Somogy",
+      "Szabolcs-szatmar-bereg",
+      "Szeged",
+      "Tolna",
+      "Vas",
+      "Veszprem",
+      "Zala"
+    ],
+    "India": [
+      "Andhara Pradesh",
+      "Assam",
+      "Bangala",
+      "Bihar",
+      "Chandigarh",
+      "Chhattisgarh",
+      "Delhi",
+      "Gujarat",
+      "Haryana",
+      "India",
+      "Jammu and Kashmir",
+      "Karnataka",
+      "Kerala",
+      "Madhya Pradesh",
+      "Maharashtra",
+      "Manipur",
+      "Megahalaya",
+      "Orissa",
+      "Pondisheri",
+      "Punjab",
+      "Rajasthan",
+      "Tamil Nadu",
+      "Tripura",
+      "Uttar Pradesh",
+      "Uttaranchal"
+    ],
+    "Indonesia": [
+      "Indonesia"
+    ],
+    "Irak": [
+      "Baghdad",
+      "Basra",
+      "Mosul"
+    ],
+    "Irán": [
+      "Azarbayjan-e Khavari",
+      "Esfahan",
+      "Fars",
+      "Hamadan",
+      "Horasan",
+      "Husistan",
+      "Kerman",
+      "Kermanshakhan",
+      "Kordestan",
+      "Markazi",
+      "Mazenderan",
+      "Sistan-e Baluches",
+      "Tehran",
+      "Yazd"
+    ],
+    "Irlanda": [
+      "Carlow",
+      "Cavan",
+      "Clare",
+      "Cork",
+      "Donegal",
+      "Dublin",
+      "Galway",
+      "Kerry",
+      "Kildare",
+      "Kilkenny",
+      "Laois",
+      "Leitrim",
+      "Limerick",
+      "Longford",
+      "Louth",
+      "Mayo",
+      "Meath",
+      "Monaghan",
+      "Offaly",
+      "Roscommon",
+      "Sligo",
+      "Tipperary",
+      "Waterford",
+      "Westmeath",
+      "Wexford",
+      "Wicklow"
+    ],
+    "Isla de Man": [
+      "Isle of Man"
+    ],
+    "Islandia": [
+      "Akureyri",
+      "Arnessysla",
+      "Austur-bardastrandarsysla",
+      "Austur-hunavatnssysla",
+      "Austur-skaftafellssysla",
+      "Borgarfjardarsysla",
+      "Dalasysla",
+      "Eyjafjardarsysla",
+      "Gullbringusysla",
+      "Hafnarfjordur",
+      "Kjosarsysla",
+      "Kopavogur",
+      "Myrasysla",
+      "Neskaupstadur",
+      "Nordur-isafjardarsysla",
+      "Nordur-mulasysla",
+      "Nordur-tingeyjarsysla",
+      "Olafsfjordur",
+      "Rangarvallasysla",
+      "Reykjavik",
+      "Saudarkrokur",
+      "Seydisfjordur",
+      "Skagafjardarsysla",
+      "Snafellsnes- Og Hnappadalssysla",
+      "Strandasysla",
+      "Sudur-mulasysla",
+      "Sudur-tingeyjarsysla",
+      "Vestmannaeyjar",
+      "Vestur-bardastrandarsysla",
+      "Vestur-isafjardarsysla",
+      "Vestur-skaftafellssysla"
+    ],
+    "Islas Cook": [
+      "Avarua"
+    ],
+    "Islas Feroe": [
+      "Torshavn"
+    ],
+    "Islas Pitcairn": [
+      "Adamstown"
+    ],
+    "Islas Salomón": [
+      "Solomon Islands"
+    ],
+    "Islas Turcas y Caicos": [
+      "Grand Turk"
+    ],
+    "Islas Vírgenes Británicas": [
+      "Road Town"
+    ],
+    "Israel": [
+      "Central District",
+      "Haifa",
+      "Jerusalem",
+      "Northern District",
+      "Ramat Hagolan",
+      "Southern District",
+      "Tel Aviv"
+    ],
+    "Italia": [
+      "Abruzzo - Chieti",
+      "Abruzzo - L´aquila",
+      "Abruzzo - Pescara",
+      "Abruzzo - Teramo",
+      "Basilicata - Matera",
+      "Basilicata - Potenza",
+      "Calabria - Catanzaro",
+      "Calabria - Cosenza",
+      "Calabria - Crotone",
+      "Calabria - Reggio Calabria",
+      "Calabria - Vibo Valentia",
+      "Campania - Avellino",
+      "Campania - Benevento",
+      "Campania - Caserta",
+      "Campania - Napoli",
+      "Campania - Salerno",
+      "Emilia Romagna - Bologna",
+      "Emilia Romagna - Ferrara",
+      "Emilia Romagna - Forl?-cesena",
+      "Emilia Romagna - Modena",
+      "Emilia Romagna - Parma",
+      "Emilia Romagna - Piacenza",
+      "Emilia Romagna - Ravenna",
+      "Emilia Romagna - Reggio Emilia",
+      "Emilia Romagna - Rimini",
+      "Friuli Venezia Giulia - Gorizia",
+      "Friuli Venezia Giulia - Pordenone",
+      "Friuli Venezia Giulia - Trieste",
+      "Friuli Venezia Giulia - Udine",
+      "Lazio - Frosinone",
+      "Lazio - Latina",
+      "Lazio - Rieti",
+      "Lazio - Roma",
+      "Lazio - Viterbo",
+      "Liguria - Genova",
+      "Liguria - Imperia",
+      "Liguria - la Spezia",
+      "Liguria - Savona",
+      "Lombardia - Bergamo",
+      "Lombardia - Brescia",
+      "Lombardia - Como",
+      "Lombardia - Cremona",
+      "Lombardia - Lecco",
+      "Lombardia - Lodi",
+      "Lombardia - Mantova",
+      "Lombardia - Milano",
+      "Lombardia - Pavia",
+      "Lombardia - Sondrio",
+      "Lombardia - Varese",
+      "Marche - Ancona",
+      "Marche - Ascoli Piceno",
+      "Marche - Macerata",
+      "Marche - Pesaro - Urbino",
+      "Molise - Campobasso",
+      "Molise - Isernia",
+      "Piemonte - Alessandria",
+      "Piemonte - Asti",
+      "Piemonte - Biella",
+      "Piemonte - Cuneo",
+      "Piemonte - Novara",
+      "Piemonte - Torino",
+      "Piemonte - Verbania",
+      "Piemonte - Vercelli",
+      "Puglia - Bari",
+      "Puglia - Brindisi",
+      "Puglia - Foggia",
+      "Puglia - Lecce",
+      "Puglia - Taranto",
+      "Sardegna - Cagliari",
+      "Sardegna - Nuoro",
+      "Sardegna - Oristano",
+      "Sardegna - Sassari",
+      "Sicilia - Agrigento",
+      "Sicilia - Caltanissetta",
+      "Sicilia - Catania",
+      "Sicilia - Enna",
+      "Sicilia - Messina",
+      "Sicilia - Palermo",
+      "Sicilia - Ragusa",
+      "Sicilia - Siracusa",
+      "Sicilia - Trapani",
+      "Toscana - Arezzo",
+      "Toscana - Firenze",
+      "Toscana - Grosseto",
+      "Toscana - Livorno",
+      "Toscana - Lucca",
+      "Toscana - Massa Carrara",
+      "Toscana - Pisa",
+      "Toscana - Pistoia",
+      "Toscana - Prato",
+      "Toscana - Siena",
+      "Trentino Alto Adige - Bolzano",
+      "Trentino Alto Adige - Trento",
+      "Umbria - Perugia",
+      "Umbria - Terni",
+      "Valle D'aosta - Aosta",
+      "Veneto - Belluno",
+      "Veneto - Padova",
+      "Veneto - Rovigo",
+      "Veneto - Treviso",
+      "Veneto - Venezia",
+      "Veneto - Verona",
+      "Veneto - Vicenza"
+    ],
+    "Jamaica": [
+      "Jamaica",
+      "Kingston"
+    ],
+    "Japón": [
+      "Aichi",
+      "Akita",
+      "Aomori",
+      "Chiba",
+      "Ehime",
+      "Fukui",
+      "Fukuoka",
+      "Fukushima",
+      "Gifu",
+      "Gunma",
+      "Hiroshima",
+      "Hokkaido",
+      "Hyogo",
+      "Ibaraki",
+      "Ishikawa",
+      "Iwate",
+      "Kagawa",
+      "Kagoshima",
+      "Kanagawa",
+      "Kochi",
+      "Kumamoto",
+      "Kyoto",
+      "Mie",
+      "Miyagi",
+      "Miyazaki",
+      "Nagano",
+      "Nagasaki",
+      "Nara",
+      "Niigata",
+      "Oita",
+      "Okayama",
+      "Okinawa",
+      "Osaka",
+      "Saga",
+      "Saitama",
+      "Shiga",
+      "Shimane",
+      "Shizuoka",
+      "Tiba",
+      "Tochigi",
+      "Tokushima",
+      "Tokyo",
+      "Tottori",
+      "Toyama",
+      "Wakayama",
+      "Yamagata",
+      "Yamaguchi",
+      "Yamanashi",
+      "Yoshimi"
+    ],
+    "Jersey": [
+      "Saint Helier"
+    ],
+    "Jordania": [
+      "Jordan"
+    ],
+    "Kazajistán": [
+      "Akmolinskaya Obl. (tselinogradskaya Obl.)",
+      "Aktyubinskaya Obl.",
+      "Alma-atinskaya Obl.",
+      "Chimkentskaya Obl.",
+      "Dzhezkazganskaya Obl.",
+      "Gurevskaya Obl.",
+      "Karagandinskaya Obl.",
+      "Kazahstan",
+      "Kokchetavskaya Obl.",
+      "Kustanaiskaya Obl.",
+      "Kzyl-ordinskaya Obl.",
+      "Mangystauskaya (mangyshlakskaya Obl.)",
+      "Pavlodarskaya Obl.",
+      "Severo-kazahstanskaya Obl.",
+      "Taldy-kurganskaya Obl.",
+      "Turgaiskaya Obl.",
+      "Vostochno-kazahstanskaya Obl.",
+      "Zapadno-kazahstanskaya Obl.",
+      "Zhambylskaya Obl. (dzhambulskaya Obl.)"
+    ],
+    "Kenia": [
+      "Central",
+      "Coast",
+      "Eastern",
+      "Nairobi Area",
+      "North-eastern",
+      "Nyanza",
+      "Rift Valley",
+      "Western"
+    ],
+    "Kirguistán": [
+      "Issik Kulskaya Region",
+      "Kyrgyzstan",
+      "Narinskaya Region",
+      "Oshskaya Region",
+      "Tallaskaya Region"
+    ],
+    "Kiribati": [
+      "Gilbert Islands",
+      "Line Islands",
+      "Phoenix Islands"
+    ],
+    "Kuwait": [
+      "Al-jahra",
+      "Al-kuwait"
+    ],
+    "Laos": [
+      "Laos"
+    ],
+    "Lesoto": [
+      "Lesotho"
+    ],
+    "Letonia": [
+      "Latviya"
+    ],
+    "Líbano": [
+      "Beirut"
+    ],
+    "Liberia": [
+      "Liberia"
+    ],
+    "Libia": [
+      "Bengasi",
+      "Tarabulus"
+    ],
+    "Liechtenstein": [
+      "Balzers",
+      "Eschen",
+      "Gamprin",
+      "Mauren",
+      "Planken",
+      "Ruggell",
+      "Schaan",
+      "Schellenberg",
+      "Triesen",
+      "Triesenberg",
+      "Vaduz"
+    ],
+    "Lituania": [
+      "Litva"
+    ],
+    "Luxemburgo": [
+      "Diekirch",
+      "Grevenmacher",
+      "Luxembourg"
+    ],
+    "Macedonia del Norte": [
+      "Aracinovo",
+      "Bac",
+      "Belcista",
+      "Berovo",
+      "Bistrica",
+      "Bitola",
+      "Blatec",
+      "Bogdanci",
+      "Bogomila",
+      "Bogovinje",
+      "Bosilovo",
+      "Cair",
+      "Capari",
+      "Caska",
+      "Cegrane",
+      "Centar Zupa",
+      "Debar",
+      "Delcevo",
+      "Demir Hisar",
+      "Demir Kapija",
+      "Dorce Petrov",
+      "Gazi Baba",
+      "Gevgelija",
+      "Gostivar",
+      "Gradsko",
+      "Jegunovce",
+      "Kamenjane",
+      "Karpos",
+      "Kavadarci",
+      "Kicevo",
+      "Kisela Voda",
+      "Klecevce",
+      "Kocani",
+      "Kondovo",
+      "Kratovo",
+      "Krivogastani",
+      "Krusevo",
+      "Kumanovo",
+      "Labunista",
+      "Lipkovo",
+      "Makedonska Kamenica",
+      "Makedonski Brod",
+      "Murtino",
+      "Negotino",
+      "Novo Selo",
+      "Ohrid",
+      "Orizari",
+      "Petrovec",
+      "Prilep",
+      "Probistip",
+      "Radovis",
+      "Resen",
+      "Rosoman",
+      "Saraj",
+      "Skopje",
+      "Srbinovo",
+      "Star Dojran",
+      "Stip",
+      "Struga",
+      "Strumica",
+      "Studenicani",
+      "Suto Orizari",
+      "Sveti Nikole",
+      "Tearce",
+      "Tetovo",
+      "Valandovo",
+      "Veles",
+      "Vevcani",
+      "Vinica",
+      "Vrapciste",
+      "Zelino",
+      "Zrnovci"
+    ],
+    "Madagascar": [
+      "Madagascar"
+    ],
+    "Malasia": [
+      "Malaysia"
+    ],
+    "Malaui": [
+      "Malawi"
+    ],
+    "Maldivas": [
+      "Maldives"
+    ],
+    "Malí": [
+      "Mali"
+    ],
+    "Malta": [
+      "Malta"
+    ],
+    "Marruecos": [
+      "Morocco",
+      "Tangier"
+    ],
+    "Martinica": [
+      "Fort-de-france"
+    ],
+    "Mauricio": [
+      "Mauritius"
+    ],
+    "Mauritania": [
+      "Mauritania"
+    ],
+    "México": [
+      "Aguascalientes",
+      "Baja California",
+      "Baja California Sur",
+      "Campeche",
+      "Chiapas",
+      "Chihuahua",
+      "Coahuila de Zaragoza",
+      "Colima",
+      "Distrito Federal",
+      "Durango",
+      "Guanajuato",
+      "Guerrero",
+      "Hidalgo",
+      "Jalisco",
+      "México",
+      "Michoacán de Ocampo",
+      "Morelos",
+      "Nayarit",
+      "Nuevo León",
+      "Oaxaca",
+      "Puebla",
+      "Querétaro de Arteaga",
+      "Quintana Roo",
+      "San Luis Potosí",
+      "Sinaloa",
+      "Sonora",
+      "Tabasco",
+      "Tamaulipas",
+      "Tlaxcala",
+      "Veracruz-llave",
+      "Yucatán",
+      "Zacatecas"
+    ],
+    "Moldavia": [
+      "Moldova"
+    ],
+    "Mónaco": [
+      "La Condamine",
+      "Monaco",
+      "Monte-carlo"
+    ],
+    "Mongolia": [
+      "Ulan Bator"
+    ],
+    "Mozambique": [
+      "Mozambique"
+    ],
+    "Myanmar": [
+      "Myanmar (burma)"
+    ],
+    "Namibia": [
+      "Namibia"
+    ],
+    "Nauru": [
+      "Nauru"
+    ],
+    "Nepal": [
+      "Nepal"
+    ],
+    "Nicaragua": [
+      "Boaco",
+      "Carazo",
+      "Chinandega",
+      "Chontales",
+      "Estelí",
+      "Granada",
+      "Jinotega",
+      "León",
+      "Madriz",
+      "Managua",
+      "Masaya",
+      "Matagalpa",
+      "Nueva Segovia",
+      "Rio San Juan",
+      "Rivas",
+      "Zelaya"
+    ],
+    "Níger": [
+      "Niger"
+    ],
+    "Nigeria": [
+      "Nigeria"
+    ],
+    "Noruega": [
+      "Akershus",
+      "Aust-agder",
+      "Buskerud",
+      "Finnmark",
+      "Hedmark",
+      "Hordaland",
+      "More Og Romsdal",
+      "Nord-trondelag",
+      "Nordland",
+      "Oppland",
+      "Oslo",
+      "Ostfold",
+      "Rogaland",
+      "Sogn Og Fjordane",
+      "Sor-trondelag",
+      "Telemark",
+      "Troms",
+      "Vest-agder",
+      "Vestfold"
+    ],
+    "Nueva Caledonia": [
+      "Noumea"
+    ],
+    "Nueva Zelanda": [
+      "Auckland",
+      "Bay of Plenty",
+      "Canterbury",
+      "Gisborne",
+      "Hawke's Bay",
+      "Manawatu-wanganui",
+      "Marlborough",
+      "Nelson",
+      "Northland",
+      "Otago",
+      "Southland",
+      "Taranaki",
+      "Tasman",
+      "Waikato",
+      "Wellington",
+      "West Coast"
+    ],
+    "Omán": [
+      "Oman"
+    ],
+    "Países Bajos": [
+      "Drenthe",
+      "Flevoland",
+      "Friesland",
+      "Gelderland",
+      "Groningen",
+      "Limburg",
+      "Noord-brabant",
+      "Noord-holland",
+      "Overijssel",
+      "Utrecht",
+      "Zeeland",
+      "Zuid-holland"
+    ],
+    "Pakistán": [
+      "Pakistan"
+    ],
+    "Panamá": [
+      "Bocas del Toro",
+      "Chiriquí",
+      "Coclé",
+      "Colón",
+      "Darién",
+      "Herrera",
+      "Los Santos",
+      "Panamá",
+      "San Blas",
+      "Veraguas"
+    ],
+    "Papúa Nueva Guinea": [
+      "Papua New Guinea"
+    ],
+    "Paraguay": [
+      "Alto Paraguay",
+      "Alto Paraná",
+      "Amambay",
+      "Boquerón",
+      "Caaguaz&uacute;",
+      "Caazapá",
+      "Canindey&uacute;",
+      "Central",
+      "Chaco",
+      "Concepción",
+      "Cordillera",
+      "Guairá",
+      "Itap&uacute;a",
+      "Misiones",
+      "Neembuc&uacute;",
+      "Paraguarí",
+      "Presidente Hayes",
+      "San Pedro"
+    ],
+    "Perú": [
+      "Amazonas",
+      "Ancash",
+      "Apurímac",
+      "Arequipa",
+      "Ayacucho",
+      "Cajamarca",
+      "Callao",
+      "Cusco",
+      "Huancavelica",
+      "Huánuco",
+      "Ica",
+      "Junín",
+      "La Libertad",
+      "Lambayeque",
+      "Lima",
+      "Loreto",
+      "Madre de Dios",
+      "Moquegua",
+      "Pasco",
+      "Piura",
+      "Puno",
+      "San Martín",
+      "Tacna",
+      "Tumbes",
+      "Ucayali"
+    ],
+    "Polinesia Francesa": [
+      "Papeete"
+    ],
+    "Polonia": [
+      "Biala Podlaska",
+      "Bialystok",
+      "Bielsko",
+      "Bydgoszcz",
+      "Chelm",
+      "Ciechanow",
+      "Czestochowa",
+      "Dolnoslaskie",
+      "Elblag",
+      "Gdansk",
+      "Gorzow",
+      "Jelenia Gora",
+      "Kalisz",
+      "Katowice",
+      "Kielce",
+      "Konin",
+      "Koszalin",
+      "Krakow",
+      "Krosno",
+      "Kujawsko-pomorskie",
+      "Legnica",
+      "Leszno",
+      "Lodz",
+      "Lodzkie",
+      "Lomza",
+      "Lubelskie",
+      "Lublin",
+      "Lubuskie",
+      "Malopolskie",
+      "Mazowieckie",
+      "Nowy Sacz",
+      "Olsztyn",
+      "Opole",
+      "Opolskie",
+      "Ostroleka",
+      "Pila",
+      "Piotrkow",
+      "Plock",
+      "Podkarpackie",
+      "Podlaskie",
+      "Pomorskie",
+      "Poznan",
+      "Przemysl",
+      "Radom",
+      "Rzeszow",
+      "Siedlce",
+      "Sieradz",
+      "Skierniewice",
+      "Slaskie",
+      "Slupsk",
+      "Suwalki",
+      "Swietokrzyskie",
+      "Tarnobrzeg",
+      "Tarnow",
+      "Torun",
+      "Walbrzych",
+      "Warminsko-mazurskie",
+      "Warszawa",
+      "Wielkopolskie",
+      "Wloclawek",
+      "Wroclaw",
+      "Zachodniopomorskie",
+      "Zamosc",
+      "Zielona Gora"
+    ],
+    "Portugal": [
+      "Aveiro",
+      "Azores",
+      "Beja",
+      "Braga",
+      "Braganca",
+      "Castelo Branco",
+      "Coimbra",
+      "Evora",
+      "Faro",
+      "Guarda",
+      "Leiria",
+      "Lisboa",
+      "Madeira",
+      "Portalegre",
+      "Porto",
+      "Santarem",
+      "Setubal",
+      "Viana Do Castelo",
+      "Vila Real",
+      "Viseu"
+    ],
+    "Puerto Rico": [
+      "Puerto Rico"
+    ],
+    "Reino Unido": [
+      "Channel Islands",
+      "England - East",
+      "England - East Midlands",
+      "England - London",
+      "England - North East",
+      "England - North West",
+      "England - South East",
+      "England - South West",
+      "England - West Midlands",
+      "England - Yorks & Humber",
+      "Isle of Man",
+      "Northern Ireland",
+      "Scotland Central",
+      "Scotland North",
+      "Scotland South",
+      "Wales North",
+      "Wales South"
+    ],
+    "República Checa": [
+      "Hlavni Mesto Praha",
+      "Jihocesky Kraj",
+      "Jihomoravsky Kraj",
+      "Karlovarsky Kraj",
+      "Kralovehradecky Kraj",
+      "Liberecky Kraj",
+      "Moravskoslezsky Kraj",
+      "Olomoucky Kraj",
+      "Pardubicky Kraj",
+      "Plzensky Kraj",
+      "Stredocesky Kraj",
+      "Ustecky Kraj",
+      "Vysocina",
+      "Zlinsky Kraj"
+    ],
+    "República del Congo": [
+      "Congo (brazzaville)"
+    ],
+    "República Democrática del Congo": [
+      "Congo"
+    ],
+    "República Dominicana": [
+      "Azua",
+      "Baoruco",
+      "Barahona",
+      "Dajabón",
+      "Duarte",
+      "El Seibo",
+      "Elías Pi?a",
+      "Espaillat",
+      "Hato Mayor",
+      "Independencia",
+      "La Altagracia",
+      "La Romana",
+      "La Vega",
+      "María Trinidad Sánchez",
+      "Monse?or Nouel",
+      "Monte Cristi",
+      "Monte Plata",
+      "Pedernales",
+      "Peravia",
+      "Puerto Plata",
+      "Salcedo",
+      "Samaná",
+      "San Cristóbal",
+      "San José de Ocoa",
+      "San Juan",
+      "San Pedro de Macorís",
+      "Sánchez Ramírez",
+      "Santiago",
+      "Santiago Rodríguez",
+      "Santo Domingo",
+      "Valverde"
+    ],
+    "Reunión": [
+      "Saint-denis"
+    ],
+    "Ruanda": [
+      "Rwanda"
+    ],
+    "Rumanía": [
+      "Alba",
+      "Arad",
+      "Arges",
+      "Bacau",
+      "Bihor",
+      "Bistrita-nasaud",
+      "Botosani",
+      "Braila",
+      "Brasov",
+      "Bucuresti",
+      "Buzau",
+      "Calarasi",
+      "Caras-severin",
+      "Cluj",
+      "Constanta",
+      "Covasna",
+      "Dambovita",
+      "Dolj",
+      "Galati",
+      "Giurgiu",
+      "Gorj",
+      "Harghita",
+      "Hunedoara",
+      "Ialomita",
+      "Iasi",
+      "Maramures",
+      "Mehedinti",
+      "Mures",
+      "Neamt",
+      "Olt",
+      "Prahova",
+      "Salaj",
+      "Satu Mare",
+      "Sibiu",
+      "Suceava",
+      "Teleorman",
+      "Timis",
+      "Tulcea",
+      "Valcea",
+      "Vaslui",
+      "Vrancea"
+    ],
+    "Rusia": [
+      "Adygeya",
+      "Altaiskii Krai",
+      "Amurskaya Obl.",
+      "Arhangelskaya Obl.",
+      "Astrahanskaya Obl.",
+      "Bashkiriya Obl.",
+      "Belgorodskaya Obl.",
+      "Bryanskaya Obl.",
+      "Buryatiya",
+      "Checheno-ingushetiya",
+      "Chelyabinskaya Obl.",
+      "Chitinskaya Obl.",
+      "Chukotskii Ao",
+      "Chuvashiya",
+      "Dagestan",
+      "Evreiskaya Obl.",
+      "Habarovskii Krai",
+      "Hakasiya",
+      "Irkutskaya Obl.",
+      "Ivanovskaya Obl.",
+      "Kabardino-balkariya",
+      "Kaliningradskaya Obl.",
+      "Kalmykiya",
+      "Kaluzhskaya Obl.",
+      "Kamchatskaya Obl.",
+      "Karachaeva-cherkesskaya Respublica",
+      "Kareliya",
+      "Kemerovskaya Obl.",
+      "Kirovskaya Obl.",
+      "Komi",
+      "Kostromskaya Obl.",
+      "Krasnodarskii Krai",
+      "Krasnoyarskii Krai",
+      "Kurganskaya Obl.",
+      "Kurskaya Obl.",
+      "Lipetskaya Obl.",
+      "Magadanskaya Obl.",
+      "Marii El",
+      "Mordoviya",
+      "Moscow & Moscow Region",
+      "Murmanskaya Obl.",
+      "Nizhegorodskaya Obl.",
+      "Novgorodskaya Obl.",
+      "Novosibirskaya Obl.",
+      "Omskaya Obl.",
+      "Orenburgskaya Obl.",
+      "Orlovskaya Obl.",
+      "Penzenskaya Obl.",
+      "Permskiy Krai",
+      "Primorskii Krai",
+      "Pskovskaya Obl.",
+      "Raimirskii (dolgano-nenetskii) Ao",
+      "Respublica Tiva",
+      "Rostovskaya Obl.",
+      "Ryazanskaya Obl.",
+      "Saha (yakutiya)",
+      "Sahalin",
+      "Saint-petersburg and Region",
+      "Samarskaya Obl.",
+      "Saratovskaya Obl.",
+      "Severnaya Osetiya",
+      "Smolenskaya Obl.",
+      "Stavropolskii Krai",
+      "Sverdlovskaya Obl.",
+      "Tambovskaya Obl.",
+      "Tatarstan",
+      "Tomskaya Obl.",
+      "Tulskaya Obl.",
+      "Tverskaya Obl.",
+      "Tyumenskaya Obl. I Hanty-mansiiskii Ao",
+      "Udmurtiya",
+      "Ulyanovskaya Obl.",
+      "Uralskaya Obl.",
+      "Vladimirskaya Obl.",
+      "Volgogradskaya Obl.",
+      "Vologodskaya Obl.",
+      "Voronezhskaya Obl.",
+      "Yamalo-nenetskii Ao",
+      "Yaroslavskaya Obl."
+    ],
+    "Sahara Occidental": [
+      "Western Sahara"
+    ],
+    "Samoa": [
+      "Samoa"
+    ],
+    "San Cristóbal y Nieves": [
+      "Basseterre"
+    ],
+    "San Marino": [
+      "Acquaviva",
+      "Borgo Maggiore",
+      "Chiesanuova",
+      "Domagnano",
+      "Faetano",
+      "Fiorentino",
+      "Monte Giardino",
+      "San Marino",
+      "Serravalle"
+    ],
+    "San Pedro y Miquelón": [
+      "Saint Pierre"
+    ],
+    "San Vicente y las Granadinas": [
+      "Kingstown"
+    ],
+    "Santa Elena": [
+      "Jamestown"
+    ],
+    "Santa Lucía": [
+      "Castries"
+    ],
+    "Santo Tomé y Príncipe": [
+      "San Tome"
+    ],
+    "Senegal": [
+      "Senegal"
+    ],
+    "Serbia": [
+      "Belgrade"
+    ],
+    "Seychelles": [
+      "Seychelles"
+    ],
+    "Sierra Leona": [
+      "Freetown"
+    ],
+    "Singapur": [
+      "Singapore"
+    ],
+    "Siria": [
+      "Damascus"
+    ],
+    "Somalia": [
+      "Mogadishu"
+    ],
+    "Sri Lanka": [
+      "Sri Lanka"
+    ],
+    "Sudáfrica": [
+      "Johannesburg"
+    ],
+    "Sudán": [
+      "Sudan"
+    ],
+    "Suecia": [
+      "Blekinge Lan",
+      "Dalarnas Lan",
+      "Gavleborgs Lan",
+      "Gotlands Lan",
+      "Hallands Lan",
+      "Jamtlands Lan",
+      "Jonkopings Lan",
+      "Kalmar Lan",
+      "Kronobergs Lan",
+      "Norrbottens Lan",
+      "Orebro Lan",
+      "Ostergotlands Lan",
+      "Skane Lan",
+      "Sodermanlands Lan",
+      "Stockholms Lan",
+      "Uppsala Lan",
+      "Varmlands Lan",
+      "Vasterbottens Lan",
+      "Vasternorrlands Lan",
+      "Vastmanlands Lan",
+      "Vastra Gotaland"
+    ],
+    "Suiza": [
+      "Aargau",
+      "Appenzell Ausserrhoden",
+      "Appenzell Innerrhoden",
+      "Basel-landschaft",
+      "Basel-stadt",
+      "Bern",
+      "Fribourg",
+      "Gen&egrave;ve",
+      "Glarus",
+      "Graubünden",
+      "Jura",
+      "Luzern",
+      "Neuch&acirc;tel",
+      "Nidwalden",
+      "Obwalden",
+      "Sankt Gallen",
+      "Schaffhausen",
+      "Schwyz",
+      "Solothurn",
+      "Thurgau",
+      "Ticino",
+      "Uri",
+      "Valais",
+      "Vaud",
+      "Zug",
+      "Zürich"
+    ],
+    "Surinam": [
+      "Paramaribo"
+    ],
+    "Tailandia": [
+      "Amnat Charoen",
+      "Ang Thong",
+      "Bangkok",
+      "Buri Ram",
+      "Chachoengsao",
+      "Chai Nat",
+      "Chaiyaphum",
+      "Chanthaburi",
+      "Chiang Mai",
+      "Chiang Rai",
+      "Chon Buri",
+      "Kalasin",
+      "Kanchanaburi",
+      "Khon Kaen",
+      "Krabi",
+      "Lampang",
+      "Loei",
+      "Lop Buri",
+      "Mae Hong Son",
+      "Maha Sarakham",
+      "Nakhon Pathom",
+      "Nakhon Ratchasima",
+      "Nakhon Sawan",
+      "Nakhon Si Thammarat",
+      "Narathiwat",
+      "Nong Bua Lam Phu",
+      "Nong Khai",
+      "Nonthaburi",
+      "Pathum Thani",
+      "Pattani",
+      "Phangnga",
+      "Phatthalung",
+      "Phichit",
+      "Phitsanulok",
+      "Phra Nakhon Si Ayutthaya",
+      "Phrae",
+      "Phuket",
+      "Prachin Buri",
+      "Prachuap Khiri Khan",
+      "Ratchaburi",
+      "Rayong",
+      "Roi Et",
+      "Sa Kaeo",
+      "Sakon Nakhon",
+      "Samut Prakan",
+      "Samut Sakhon",
+      "Samut Songkhran",
+      "Saraburi",
+      "Si Sa Ket",
+      "Sing Buri",
+      "Songkhla",
+      "Sukhothai",
+      "Suphan Buri",
+      "Surat Thani",
+      "Surin",
+      "Thailand",
+      "Trang",
+      "Ubon Ratchathani",
+      "Udon Thani",
+      "Uthai Thani",
+      "Uttaradit",
+      "Yala",
+      "Yasothon"
+    ],
+    "Taiwán": [
+      "Taiwan"
+    ],
+    "Tanzania": [
+      "Tanzania"
+    ],
+    "Tayikistán": [
+      "Gorno-badakhshan Region",
+      "Kuljabsk Region",
+      "Kurgan-tjube Region",
+      "Sughd Region",
+      "Tajikistan"
+    ],
+    "Timor Oriental": [
+      "East Timor"
+    ],
+    "Togo": [
+      "Togo"
+    ],
+    "Tokelau": [
+      "Fakaofo"
+    ],
+    "Tonga": [
+      "Tonga"
+    ],
+    "Trinidad y Tobago": [
+      "Port of Spain"
+    ],
+    "Túnez": [
+      "Tunisia"
+    ],
+    "Turkmenistán": [
+      "Ashgabat Region",
+      "Chardzhou Region",
+      "Krasnovodsk Region",
+      "Mary Region",
+      "Tashauz Region"
+    ],
+    "Turquía": [
+      "Adana",
+      "Afion",
+      "Amasya",
+      "Ankara",
+      "Antalya",
+      "Artvin",
+      "Aydin",
+      "Balikesir",
+      "Bartin",
+      "Bayburt",
+      "Bilecik",
+      "Bursa",
+      "Corum",
+      "Denizli",
+      "Edirne",
+      "Elazig",
+      "Erzincan",
+      "Erzurum",
+      "Eskisehir",
+      "Gaziantep",
+      "Icel",
+      "Isparta",
+      "Istanbul",
+      "Izmir",
+      "Karabuk",
+      "Kars",
+      "Kayseri",
+      "Kirklareli",
+      "Kodjaeli",
+      "Konya",
+      "Kutahya",
+      "Malatya",
+      "Manisa",
+      "Sakarya",
+      "Samsun",
+      "Sivas",
+      "Trabzon"
+    ],
+    "Tuvalu": [
+      "Tuvalu"
+    ],
+    "Ucrania": [
+      "Cherkasskaya Obl.",
+      "Chernigovskaya Obl.",
+      "Chernovitskaya Obl.",
+      "Dnepropetrovskaya Obl.",
+      "Donetskaya Obl.",
+      "Harkovskaya Obl.",
+      "Hersonskaya Obl.",
+      "Hmelnitskaya Obl.",
+      "Ivano-frankovskaya Obl.",
+      "Kievskaya Obl.",
+      "Kirovogradskaya Obl.",
+      "Krymskaya Obl.",
+      "Luganskaya Obl.",
+      "Lvovskaya Obl.",
+      "Nikolaevskaya Obl.",
+      "Odesskaya Obl.",
+      "Poltavskaya Obl.",
+      "Rovenskaya Obl.",
+      "Sumskaya Obl.",
+      "Ternopolskaya Obl.",
+      "Ukraina",
+      "Vinnitskaya Obl.",
+      "Volynskaya Obl.",
+      "Zakarpatskaya Obl.",
+      "Zaporozhskaya Obl.",
+      "Zhitomirskaya Obl."
+    ],
+    "Uganda": [
+      "Jinja",
+      "Kampala"
+    ],
+    "Uruguay": [
+      "Artigas",
+      "Canelones",
+      "Cerro Largo",
+      "Colonia",
+      "Durazno",
+      "Flores",
+      "Florida",
+      "Lavalleja",
+      "Maldonado",
+      "Montevideo",
+      "Paysand&uacute;",
+      "Río Negro",
+      "Rivera",
+      "Rocha",
+      "Salto",
+      "San José",
+      "Soriano",
+      "Tacuarembó",
+      "Treinta y Tres"
+    ],
+    "Uzbekistán": [
+      "Andijon Region",
+      "Buxoro Region",
+      "Fergana Region",
+      "Jizzac Region",
+      "Namangan Region",
+      "Navoiy Region",
+      "Qaraqalpaqstan",
+      "Qashqadaryo Region",
+      "Samarqand Region",
+      "Sirdaryo Region",
+      "Surxondaryo Region",
+      "Tashkent Region",
+      "Xorazm Region"
+    ],
+    "Vanuatu": [
+      "Vanuatu"
+    ],
+    "Venezuela": [
+      "Amazonas",
+      "Anzoategui",
+      "Apure",
+      "Aragua",
+      "Barinas",
+      "Bolívar",
+      "Carabobo",
+      "Cojedes",
+      "Delta Amacuro",
+      "Dependencias Federales",
+      "Distrito Capital",
+      "Falcón",
+      "Guárico",
+      "Lara",
+      "Mérida",
+      "Miranda",
+      "Monagas",
+      "Nueva Esparta",
+      "Portuguesa",
+      "Sucre",
+      "Táchira",
+      "Trujillo",
+      "Vargas",
+      "Yaracuy",
+      "Zulia"
+    ],
+    "Vietnam": [
+      "Dong Bang Song Cuu Long",
+      "Dong Bang Song Hong",
+      "Dong Nam Bo",
+      "Duyen Hai Mien Trung",
+      "Khu Bon Cu",
+      "Mien Nui Va Trung Du",
+      "Thai Nguyen"
+    ],
+    "Wallis y Futuna": [
+      "Mata-utu"
+    ],
+    "Yemen": [
+      "Yemen"
+    ],
+    "Yibuti": [
+      "Djibouti"
+    ],
+    "Zambia": [
+      "Zambia"
+    ],
+    "Zimbabue": [
+      "Zimbabwe"
+    ]
+  },
+  "areas": [
+    {
+      "code": "FE",
+      "name": "Electricidad y Magnetismo"
+    },
+    {
+      "code": "FM",
+      "name": "Mecánica"
+    },
+    {
+      "code": "FO",
+      "name": "Teoría Electromagnetica, Óptica y Ondas"
+    },
+    {
+      "code": "FT",
+      "name": "Física Teórica"
+    },
+    {
+      "code": "EF",
+      "name": "Enseñanza de la Física"
+    },
+    {
+      "code": "FA",
+      "name": "Física en otras Areas de Conocimiento"
+    },
+    {
+      "code": "MA",
+      "name": "Continuas"
+    },
+    {
+      "code": "MC",
+      "name": "Cómputo"
+    },
+    {
+      "code": "MD",
+      "name": "Matemáticas Discretas"
+    },
+    {
+      "code": "ME",
+      "name": "Estadística"
+    },
+    {
+      "code": "MP",
+      "name": "Probabilidad"
+    },
+    {
+      "code": "EM",
+      "name": "Enseñanza de las Matemáticas"
+    },
+    {
+      "code": "EI",
+      "name": "Enseñanza de la Ingeniería"
+    },
+    {
+      "code": "IA",
+      "name": "Ambiental"
+    },
+    {
+      "code": "IB",
+      "name": "Eléctrica"
+    },
+    {
+      "code": "IC",
+      "name": "Electrónica"
+    },
+    {
+      "code": "ID",
+      "name": "Materiales"
+    },
+    {
+      "code": "IE",
+      "name": "Energía"
+    },
+    {
+      "code": "IF",
+      "name": "Automatización"
+    },
+    {
+      "code": "IG",
+      "name": "Calidad"
+    },
+    {
+      "code": "IM",
+      "name": "Fluidos"
+    },
+    {
+      "code": "IP",
+      "name": "Producción"
+    },
+    {
+      "code": "IR",
+      "name": "Robotica"
+    },
+    {
+      "code": "IU",
+      "name": "Comunicaciones"
+    },
+    {
+      "code": "DE",
+      "name": "Diseño (Experimentos y Prototipos)"
+    },
+    {
+      "code": "O",
+      "name": "Otros"
+    },
+    {
+      "code": "CP",
+      "name": "Prototipos Concurso"
+    }
+  ],
+  "academic_levels": [
+    {
+      "degree": "Técnico Profesional",
+      "description": "Capacitacion técnica con formacion laboral sin necesitar propedeutico superior"
+    },
+    {
+      "degree": "Bachillerato",
+      "description": "Formación académica propedeutica suficiente para continuar con estudios Superiores"
+    },
+    {
+      "degree": "Educacion Superior",
+      "description": "Comprende a todos los grados académicos universitarios"
+    },
+    {
+      "degree": "Licenciatura",
+      "description": "Comprende a todo estudiante academico universitario que haya completado su plan de estudios y cumplido con una titulacion profesional en la licenciatura de alguna carrera"
+    },
+    {
+      "degree": "Ingenieria",
+      "description": "Comprende a todo estudiante academico universitario que haya completado su plan de estudios y cumplido con una titulacion profesional en la ingenieria de alguna carrera"
+    },
+    {
+      "degree": "Especialidad",
+      "description": "Programa poslicencuatura enfocado en el entrenamiento proactico sobre una rama de la diciplina, se obtiene el titulo de especialista"
+    },
+    {
+      "degree": "Maestria",
+      "description": "Es el dominio avanzado de un área del saber enfocado en el analisis, resolucion de problemas y la inovacion, asi como la formacion para la investigación."
+    },
+    {
+      "degree": "Doctorado",
+      "description": "Es el máximo grado académico enfocado en la generacion de conocimiento científico, tecnológico o humanistico obtenido tras la elaboracion y defensa de una tesis Doctoral"
+    },
+    {
+      "degree": "Estancia Posdoctoral",
+      "description": "periodo de investigacion que realiza un doctor(a) dentro de la facultad o centro de investigacion, con el fin de publicar articulo o colaborar con grupos de investigacion especializados"
+    }
+  ],
+  "academic_statuses": [
+    {
+      "code": "cursando",
+      "name": "Cursando"
+    },
+    {
+      "code": "terminado",
+      "name": "Terminado"
+    }
+  ],
+  "institutions": [
+    {
+      "name": "Universidad Nacional autonoma de mexico",
+      "acronym": "UNAM"
+    },
+    {
+      "name": "Instituto Politecnico Nacional",
+      "acronym": "IPN"
+    },
+    {
+      "name": "17, Instituto de Estudios Críticos",
+      "acronym": ""
+    },
+    {
+      "name": "Benemérita Universidad Autónoma de Puebla",
+      "acronym": "BUAP"
+    },
+    {
+      "name": "Centro de Diseño Cine y Televisión",
+      "acronym": "Centro"
+    },
+    {
+      "name": "Centro de Enseñanza Técnica Industrial",
+      "acronym": "CETI"
+    },
+    {
+      "name": "Centro de Enseñanza Técnica y Superior",
+      "acronym": "CETYS"
+    },
+    {
+      "name": "Centro de Estudios Superiores de Diseño de Monterrey",
+      "acronym": ""
+    },
+    {
+      "name": "Centro de Estudios Superiores de Veracruz",
+      "acronym": ""
+    },
+    {
+      "name": "Centro de Estudios Universitarios Monterrey",
+      "acronym": "CEU"
+    },
+    {
+      "name": "Centro de Investigación Científica de Yucatán, A.C",
+      "acronym": "CICY"
+    },
+    {
+      "name": "Centro de Investigación Científica y de Educación Superior de Ensenada",
+      "acronym": "CICESE"
+    },
+    {
+      "name": "Centro de Investigación y Docencia Económicas",
+      "acronym": "CIDE"
+    },
+    {
+      "name": "Centro de Investigaciones Biológicas del Noroeste",
+      "acronym": "CIBNOR"
+    },
+    {
+      "name": "Tecnológico Nacional de México",
+      "acronym": "TecNM"
+    },
+    {
+      "name": "Centro Universitario de Comunicación",
+      "acronym": "CUC"
+    },
+    {
+      "name": "Centro Universitario Incarnate Word",
+      "acronym": "CIW"
+    },
+    {
+      "name": "Centro Universitario Isidro Fabela",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Autónoma del Estado de México",
+      "acronym": "UAEMex"
+    },
+    {
+      "name": "Centro Universitario UTEG",
+      "acronym": "UTEG"
+    },
+    {
+      "name": "Colegio de Postgraduados",
+      "acronym": "COLPOS"
+    },
+    {
+      "name": "El Colegio de la Frontera Norte",
+      "acronym": "COLEF"
+    },
+    {
+      "name": "El Colegio de la Frontera Sur",
+      "acronym": "ECOSUR"
+    },
+    {
+      "name": "El Colegio de México",
+      "acronym": "COLMEX"
+    },
+    {
+      "name": "El Colegio de Michoacán",
+      "acronym": "COLMICH"
+    },
+    {
+      "name": "El Colegio de Sonora",
+      "acronym": "COLSON"
+    },
+    {
+      "name": "El Colegio de Veracruz",
+      "acronym": "COLVER"
+    },
+    {
+      "name": "Escuela Bancaria y Comercial",
+      "acronym": "EBC"
+    },
+    {
+      "name": "Escuela de Jurisprudencia y Humanidades S.C.",
+      "acronym": ""
+    },
+    {
+      "name": "Escuela Libre de Derecho",
+      "acronym": "ELD"
+    },
+    {
+      "name": "Escuela Libre de Derecho de Puebla",
+      "acronym": "ELDP"
+    },
+    {
+      "name": "Escuela Nacional de Antropología e Historia",
+      "acronym": "ENAH"
+    },
+    {
+      "name": "Escuela Nacional de Entrenadores Deportivos",
+      "acronym": "ENED"
+    },
+    {
+      "name": "Facultad Latinoamericana de Ciencias Sociales",
+      "acronym": "FLACSO"
+    },
+    {
+      "name": "Instituto Artek",
+      "acronym": ""
+    },
+    {
+      "name": "Instituto de Ecología A.C",
+      "acronym": "INECOL"
+    },
+    {
+      "name": "Instituto de Educación Digital del Estado de Puebla",
+      "acronym": ""
+    },
+    {
+      "name": "Instituto de Estudios Superiores de Chiapas",
+      "acronym": "IESCH"
+    },
+    {
+      "name": "Instituto de Estudios Superiores de Tamaulipas",
+      "acronym": "IEST"
+    },
+    {
+      "name": "Instituto de Estudios Superiores Federico Rangel Fuentes",
+      "acronym": ""
+    },
+    {
+      "name": "Instituto de Estudios Universitarios",
+      "acronym": "IEU"
+    },
+    {
+      "name": "Instituto de Investigaciones Dr. José María Luis Mora",
+      "acronym": ""
+    },
+    {
+      "name": "Instituto Nacional de Astrofísica Óptica y Electrónica",
+      "acronym": "INAEO"
+    },
+    {
+      "name": "Instituto Panamericano de Alta Dirección de Empresas",
+      "acronym": "IPADE"
+    },
+    {
+      "name": "Instituto Rosario Castellanos",
+      "acronym": "IRC"
+    },
+    {
+      "name": "Instituto Tecnológico Autónomo de México",
+      "acronym": "ITAM"
+    },
+    {
+      "name": "Instituto Tecnológico y de Estudios Superiores de Occidente",
+      "acronym": "ITESO"
+    },
+    {
+      "name": "Tecnológico de Monterrey",
+      "acronym": "ITESM"
+    },
+    {
+      "name": "Intituto Suizo",
+      "acronym": "ISU"
+    },
+    {
+      "name": "Laboratorio Nacional de Informática Avanzada",
+      "acronym": "LANIA"
+    },
+    {
+      "name": "SAE Institute",
+      "acronym": "SAE"
+    },
+    {
+      "name": "Universidad Abierta y a Distancia de México",
+      "acronym": "UnADM"
+    },
+    {
+      "name": "Universidad Aeronáutica en Querétaro",
+      "acronym": "UNAQ"
+    },
+    {
+      "name": "Universidad Anáhuac",
+      "acronym": "Anáhuac"
+    },
+    {
+      "name": "Universidad Autónoma Agraria Antonio Narro",
+      "acronym": "UAAAN"
+    },
+    {
+      "name": "Universidad Autónoma Benito Juárez de Oaxaca",
+      "acronym": "UABJO"
+    },
+    {
+      "name": "Universidad Autónoma Chapingo",
+      "acronym": "UACh"
+    },
+    {
+      "name": "Universidad Autónoma de Aguascalientes",
+      "acronym": "UAA"
+    },
+    {
+      "name": "Universidad Autónoma de Baja California",
+      "acronym": "UABC"
+    },
+    {
+      "name": "Universidad Autónoma de Baja California Sur",
+      "acronym": "UABCS"
+    },
+    {
+      "name": "Universidad Autónoma de Campeche",
+      "acronym": "UACAM"
+    },
+    {
+      "name": "Universidad Autónoma de Chiapas",
+      "acronym": "UNACH"
+    },
+    {
+      "name": "Universidad Autónoma de Chihuahua",
+      "acronym": "UACh"
+    },
+    {
+      "name": "Universidad Autónoma de Ciudad Juárez",
+      "acronym": "UACJ"
+    },
+    {
+      "name": "Universidad Autónoma de Coahuila",
+      "acronym": "UADEC"
+    },
+    {
+      "name": "Universidad Autónoma de Durango",
+      "acronym": "UAD"
+    },
+    {
+      "name": "Universidad Autónoma de Guadalajara",
+      "acronym": "UAG"
+    },
+    {
+      "name": "Universidad Autónoma de Guerrero",
+      "acronym": "UAGRO"
+    },
+    {
+      "name": "Universidad Autónoma de La Laguna",
+      "acronym": "UAL"
+    },
+    {
+      "name": "Universidad Autónoma de Nayarit",
+      "acronym": "UAN"
+    },
+    {
+      "name": "Universidad Autónoma de Nuevo León",
+      "acronym": "UANL"
+    },
+    {
+      "name": "Universidad Autónoma de Occidente",
+      "acronym": "UADEO"
+    },
+    {
+      "name": "Universidad Autónoma de Querétaro",
+      "acronym": "UAQ"
+    },
+    {
+      "name": "Universidad Autónoma de San Luis Potosí",
+      "acronym": "UASLP"
+    },
+    {
+      "name": "Universidad Autónoma de Sinaloa",
+      "acronym": "UAS"
+    },
+    {
+      "name": "Universidad Autónoma de Tamaulipas",
+      "acronym": "UAT"
+    },
+    {
+      "name": "Universidad Autónoma de Tlaxcala",
+      "acronym": "UATx"
+    },
+    {
+      "name": "Universidad Autónoma de Yucatán",
+      "acronym": "UADY"
+    },
+    {
+      "name": "Universidad Autónoma de Zacatecas",
+      "acronym": "UAZ"
+    },
+    {
+      "name": "Universidad Autónoma del Carmen",
+      "acronym": "UNACAR"
+    },
+    {
+      "name": "Universidad Autónoma del Estado de Hidalgo",
+      "acronym": "UAEH"
+    },
+    {
+      "name": "Universidad Autónoma del Estado de Morelos",
+      "acronym": "UAEM"
+    },
+    {
+      "name": "Universidad Autónoma España de Durango",
+      "acronym": "UNES"
+    },
+    {
+      "name": "Universidad Autónoma Metropolitana",
+      "acronym": "UAM"
+    },
+    {
+      "name": "Universidad Chapultepec",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Contemporánea Mondragón",
+      "acronym": "UCO"
+    },
+    {
+      "name": "Universidad Cristóbal Colón",
+      "acronym": "UCC"
+    },
+    {
+      "name": "Universidad Cuauhtémoc",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Cultural",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad de Celaya",
+      "acronym": "UDEC"
+    },
+    {
+      "name": "Universidad de Ciencias y Administración",
+      "acronym": "UCAD"
+    },
+    {
+      "name": "Universidad de Ciencias y Artes de Chiapas",
+      "acronym": "UNICACH"
+    },
+    {
+      "name": "Universidad de Ciencias y Desarrollo",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad de Colima",
+      "acronym": "UCOL"
+    },
+    {
+      "name": "Universidad de Estudios Profesionales de Ciencias y Artes",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad de Guadalajara",
+      "acronym": "UDG"
+    },
+    {
+      "name": "Universidad de Guanajuato",
+      "acronym": "UGTO"
+    },
+    {
+      "name": "Universidad de La Comunicación",
+      "acronym": "UC"
+    },
+    {
+      "name": "Universidad La Salle",
+      "acronym": "ULSA"
+    },
+    {
+      "name": "Universidad de Las Américas Puebla",
+      "acronym": "UDLAP"
+    },
+    {
+      "name": "Universidad de Londres",
+      "acronym": "UDEL"
+    },
+    {
+      "name": "Universidad de Matehuala",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad de Monterrey",
+      "acronym": "UDEM"
+    },
+    {
+      "name": "Universidad de Negocios ISEC",
+      "acronym": "ISEC"
+    },
+    {
+      "name": "Universidad de Oriente",
+      "acronym": "UDO"
+    },
+    {
+      "name": "Universidad de Quintana Roo",
+      "acronym": "UQROO"
+    },
+    {
+      "name": "Universidad de Sonora",
+      "acronym": "UNISON"
+    },
+    {
+      "name": "Universidad de Tijuana",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad de Xalapa",
+      "acronym": "UX"
+    },
+    {
+      "name": "Universidad del Caribe",
+      "acronym": "UNICARIBE"
+    },
+    {
+      "name": "Universidad del Claustro de Sor Juana",
+      "acronym": "UCSJ"
+    },
+    {
+      "name": "Universidad del Desarrollo Empresarial y Pedagógico",
+      "acronym": "UNIVDEP"
+    },
+    {
+      "name": "Universidad del Fútbol y Ciencias del Deporte",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad del Golfo de México",
+      "acronym": "UGM"
+    },
+    {
+      "name": "Universidad del Mar",
+      "acronym": "UMAR"
+    },
+    {
+      "name": "Universidad del Medio Ambiente",
+      "acronym": "UMA"
+    },
+    {
+      "name": "Universidad del Noreste",
+      "acronym": "UNE"
+    },
+    {
+      "name": "Universidad del Papaloapan",
+      "acronym": "UNPA"
+    },
+    {
+      "name": "Universidad del Pedregal",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad del Tepeyac",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad del Valle de Atemajac",
+      "acronym": "UNIVA"
+    },
+    {
+      "name": "Universidad del Valle de Guadiana",
+      "acronym": "UVGUAD"
+    },
+    {
+      "name": "Universidad del Valle de México",
+      "acronym": "UVM"
+    },
+    {
+      "name": "Universidad del Valle de Puebla",
+      "acronym": "UVP"
+    },
+    {
+      "name": "Universidad Estatal de Sonora",
+      "acronym": "UES"
+    },
+    {
+      "name": "Universidad Gestalt de América",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Hipócrates",
+      "acronym": "UH"
+    },
+    {
+      "name": "Universidad Iberoamericana",
+      "acronym": "IBERO"
+    },
+    {
+      "name": "Universidad ICEL",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Insurgentes",
+      "acronym": "UIN"
+    },
+    {
+      "name": "Universidad Interamericana para el Desarrollo",
+      "acronym": "UNID"
+    },
+    {
+      "name": "Universidad Intercontinental",
+      "acronym": "UIC"
+    },
+    {
+      "name": "Universidad Intercultural del Estado de Tabasco",
+      "acronym": "UIET"
+    },
+    {
+      "name": "Universidad Internacional",
+      "acronym": "UNINTER"
+    },
+    {
+      "name": "Universidad Internacional Jefferson",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad José Martí de Latinoamérica",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Juárez Autónoma de Tabasco",
+      "acronym": "UJAT"
+    },
+    {
+      "name": "Universidad Juárez del Estado de Durango",
+      "acronym": "UJED"
+    },
+    {
+      "name": "Universidad La Concordia",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Latina",
+      "acronym": "UNILA"
+    },
+    {
+      "name": "Universidad Latina de América",
+      "acronym": "UNLA"
+    },
+    {
+      "name": "Universidad Marista",
+      "acronym": "Marista"
+    },
+    {
+      "name": "Universidad Mexicana",
+      "acronym": "UNIMEX"
+    },
+    {
+      "name": "Universidad Michoacana de San Nicolás de Hidalgo",
+      "acronym": "UMSNH"
+    },
+    {
+      "name": "Universidad Modelo",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Motolinía del Pedregal",
+      "acronym": "UMP"
+    },
+    {
+      "name": "Universidad Ort México",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Panamericana",
+      "acronym": "UP"
+    },
+    {
+      "name": "Universidad Pedagógica Nacional",
+      "acronym": "UPN"
+    },
+    {
+      "name": "Universidades Politécnicas",
+      "acronym": "UP"
+    },
+    {
+      "name": "Universidad Pontificia de México",
+      "acronym": "UPM"
+    },
+    {
+      "name": "Universidad Popular Autónoma de Veracruz",
+      "acronym": "UPAV"
+    },
+    {
+      "name": "Universidad Popular Autónoma del Estado de Puebla",
+      "acronym": "UPAEP"
+    },
+    {
+      "name": "Universidad Regiomontana",
+      "acronym": "U-ERRE"
+    },
+    {
+      "name": "Universidad Regional de Tequila",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Riviera",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Salesiana",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Simón Bolívar",
+      "acronym": "USB"
+    },
+    {
+      "name": "Universidad Sor Juana Inés de la Cruz",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Tangamanga",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Tecmilenio",
+      "acronym": ""
+    },
+    {
+      "name": "Universidades Tecnológicas",
+      "acronym": "UT"
+    },
+    {
+      "name": "Universidad Tecnológica Americana",
+      "acronym": "UTECA"
+    },
+    {
+      "name": "Universidad Tecnológica de México",
+      "acronym": "UNITEC"
+    },
+    {
+      "name": "Universidad Tres Culturas",
+      "acronym": "UTC"
+    },
+    {
+      "name": "Universidad UNITESBA",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Univer Milenium",
+      "acronym": ""
+    },
+    {
+      "name": "Universidad Valle del Grijalva",
+      "acronym": "UVG"
+    },
+    {
+      "name": "Universidad Vasco de Quiroga",
+      "acronym": "UVAQ"
+    },
+    {
+      "name": "Universidad Veracruzana",
+      "acronym": "UV"
+    },
+    {
+      "name": "Universidad Villa Rica",
+      "acronym": "UVR"
+    },
+    {
+      "name": "Universidad Virtual del Estado de Guanajuato",
+      "acronym": "UVEG"
+    },
+    {
+      "name": "Universidad Xochicalco Tijuana",
+      "acronym": ""
+    },
+    {
+      "name": "Utel University",
+      "acronym": "UTEL"
+    },
+    {
+      "name": "Otro",
+      "acronym": ""
+    }
+  ],
+  "campuses_by_institution": {
+    "17, Instituto de Estudios Críticos": [
+      {
+        "name": "17, Instituto de Estudios Críticos",
+        "acronym": ""
+      }
+    ],
+    "Benemérita Universidad Autónoma de Puebla": [
+      {
+        "name": "Benemérita Universidad Autónoma de Puebla (BUAP)",
+        "acronym": "BUAP"
+      }
+    ],
+    "Centro de Diseño Cine y Televisión": [
+      {
+        "name": "Centro de Diseño Cine y Televisión (Centro)",
+        "acronym": "Centro"
+      }
+    ],
+    "Centro de Enseñanza Técnica Industrial": [
+      {
+        "name": "Centro de Enseñanza Técnica Industrial (CETI)",
+        "acronym": "CETI"
+      }
+    ],
+    "Centro de Enseñanza Técnica y Superior": [
+      {
+        "name": "Centro de Enseñanza Técnica y Superior (CETYS Universidad)",
+        "acronym": "CETYS"
+      }
+    ],
+    "Centro de Estudios Superiores de Diseño de Monterrey": [
+      {
+        "name": "Centro de Estudios Superiores de Diseño de Monterrey",
+        "acronym": ""
+      }
+    ],
+    "Centro de Estudios Superiores de Veracruz": [
+      {
+        "name": "Centro de Estudios Superiores de Veracruz",
+        "acronym": ""
+      }
+    ],
+    "Centro de Estudios Universitarios Monterrey": [
+      {
+        "name": "Centro de Estudios Universitarios Monterrey (CEU)",
+        "acronym": "CEU"
+      }
+    ],
+    "Centro de Investigación Científica de Yucatán, A.C": [
+      {
+        "name": "Centro de Investigación Científica de Yucatán, A.C",
+        "acronym": "CICY"
+      }
+    ],
+    "Centro de Investigación Científica y de Educación Superior de Ensenada": [
+      {
+        "name": "Centro de Investigación Científica y de Educación Superior de Ensenada (CICESE)",
+        "acronym": "CICESE"
+      }
+    ],
+    "Centro de Investigación y Docencia Económicas": [
+      {
+        "name": "Centro de Investigación y Docencia Económicas (CIDE)",
+        "acronym": "CIDE"
+      }
+    ],
+    "Centro de Investigaciones Biológicas del Noroeste": [
+      {
+        "name": "Centro de Investigaciones Biológicas del Noroeste (CIBNOR)",
+        "acronym": "CIBNOR"
+      }
+    ],
+    "Centro Universitario de Comunicación": [
+      {
+        "name": "Centro Universitario de Comunicación (CUC)",
+        "acronym": "CUC"
+      }
+    ],
+    "Centro Universitario Incarnate Word": [
+      {
+        "name": "Centro Universitario Incarnate Word (CIW)",
+        "acronym": "CIW"
+      }
+    ],
+    "Centro Universitario Isidro Fabela": [
+      {
+        "name": "Centro Universitario Isidro Fabela",
+        "acronym": ""
+      }
+    ],
+    "Centro Universitario UTEG": [
+      {
+        "name": "Centro Universitario UTEG (UTEG)",
+        "acronym": "UTEG"
+      }
+    ],
+    "Colegio de Postgraduados": [
+      {
+        "name": "Colegio de Postgraduados",
+        "acronym": "COLPOS"
+      }
+    ],
+    "El Colegio de la Frontera Norte": [
+      {
+        "name": "El Colegio de la Frontera Norte (COLEF)",
+        "acronym": "COLEF"
+      }
+    ],
+    "El Colegio de la Frontera Sur": [
+      {
+        "name": "El Colegio de la Frontera Sur (ECOSUR)",
+        "acronym": "ECOSUR"
+      }
+    ],
+    "El Colegio de México": [
+      {
+        "name": "El Colegio de México (COLMEX)",
+        "acronym": "COLMEX"
+      }
+    ],
+    "El Colegio de Michoacán": [
+      {
+        "name": "El Colegio de Michoacán (COLMICH)",
+        "acronym": "COLMICH"
+      }
+    ],
+    "El Colegio de Sonora": [
+      {
+        "name": "El Colegio de Sonora (COLSON)",
+        "acronym": "COLSON"
+      }
+    ],
+    "El Colegio de Veracruz": [
+      {
+        "name": "El Colegio de Veracruz (COLVER)",
+        "acronym": "COLVER"
+      }
+    ],
+    "Escuela Bancaria y Comercial": [
+      {
+        "name": "Escuela Bancaria y Comercial (EBC)",
+        "acronym": "EBC"
+      }
+    ],
+    "Escuela de Jurisprudencia y Humanidades S.C.": [
+      {
+        "name": "Escuela de Jurisprudencia y Humanidades S.C.",
+        "acronym": ""
+      }
+    ],
+    "Escuela Libre de Derecho": [
+      {
+        "name": "Escuela Libre de Derecho (ELD)",
+        "acronym": "ELD"
+      }
+    ],
+    "Escuela Libre de Derecho de Puebla": [
+      {
+        "name": "Escuela Libre de Derecho de Puebla (ELDP)",
+        "acronym": "ELDP"
+      }
+    ],
+    "Escuela Nacional de Antropología e Historia": [
+      {
+        "name": "Escuela Nacional de Antropología e Historia (ENAH)",
+        "acronym": "ENAH"
+      }
+    ],
+    "Escuela Nacional de Entrenadores Deportivos": [
+      {
+        "name": "Escuela Nacional de Entrenadores Deportivos",
+        "acronym": "ENED"
+      }
+    ],
+    "Facultad Latinoamericana de Ciencias Sociales": [
+      {
+        "name": "Facultad Latinoamericana de Ciencias Sociales (FLACSO)",
+        "acronym": "FLACSO"
+      }
+    ],
+    "Instituto Artek": [
+      {
+        "name": "Instituto Artek",
+        "acronym": ""
+      }
+    ],
+    "Instituto de Ecología A.C": [
+      {
+        "name": "Instituto de Ecología A.C (INECOL)",
+        "acronym": "INECOL"
+      }
+    ],
+    "Instituto de Educación Digital del Estado de Puebla": [
+      {
+        "name": "Instituto de Educación Digital del Estado de Puebla",
+        "acronym": ""
+      }
+    ],
+    "Instituto de Estudios Superiores de Chiapas": [
+      {
+        "name": "Instituto de Estudios Superiores de Chiapas (IESCH)",
+        "acronym": "IESCH"
+      }
+    ],
+    "Instituto de Estudios Superiores de Tamaulipas": [
+      {
+        "name": "Instituto de Estudios Superiores de Tamaulipas (IEST)",
+        "acronym": "IEST"
+      }
+    ],
+    "Instituto de Estudios Superiores Federico Rangel Fuentes": [
+      {
+        "name": "Instituto de Estudios Superiores Federico Rangel Fuentes",
+        "acronym": ""
+      }
+    ],
+    "Instituto de Estudios Universitarios": [
+      {
+        "name": "Instituto de Estudios Universitarios (IEU)",
+        "acronym": "IEU"
+      }
+    ],
+    "Instituto de Investigaciones Dr. José María Luis Mora": [
+      {
+        "name": "Instituto de Investigaciones Dr. José María Luis Mora",
+        "acronym": ""
+      }
+    ],
+    "Instituto Nacional de Astrofísica Óptica y Electrónica": [
+      {
+        "name": "Instituto Nacional de Astrofísica Óptica y Electrónica (INAEO)",
+        "acronym": "INAEO"
+      }
+    ],
+    "Instituto Panamericano de Alta Dirección de Empresas": [
+      {
+        "name": "Instituto Panamericano de Alta Dirección de Empresas (IPADE)",
+        "acronym": "IPADE"
+      }
+    ],
+    "Instituto Politecnico Nacional": [
+      {
+        "name": "CICS - Unidad Milpa Alta",
+        "acronym": "CICS"
+      },
+      {
+        "name": "CICS - Unidad Santo Tomás",
+        "acronym": "CICS"
+      },
+      {
+        "name": "ENBA - Escuela Nacional de Biblioteconomía y Archivonomía",
+        "acronym": "ENBA"
+      },
+      {
+        "name": "ENCB - Escuela Nacional de Ciencias Biológicas",
+        "acronym": "ENCB"
+      },
+      {
+        "name": "ENMH - Escuela Nacional de Medicina y Homeopatía",
+        "acronym": "ENMH"
+      },
+      {
+        "name": "ESCA - Unidad Santo Tomás",
+        "acronym": "ESCA"
+      },
+      {
+        "name": "ESCA - Unidad Tepepan",
+        "acronym": "ESCA"
+      },
+      {
+        "name": "ESCOM - Escuela Superior de Cómputo",
+        "acronym": "ESCOM"
+      },
+      {
+        "name": "ESE - Escuela Superior de Economía",
+        "acronym": "ESE"
+      },
+      {
+        "name": "ESEO - Escuela Superior de Enfermería y Obstetricia",
+        "acronym": "ESEO"
+      },
+      {
+        "name": "ESFM - Escuela Superior de Física y Matemáticas",
+        "acronym": "ESFM"
+      },
+      {
+        "name": "ESIA - Unidad Tecamachalco",
+        "acronym": "ESIA"
+      },
+      {
+        "name": "ESIA - Unidad Ticomán",
+        "acronym": "ESIA"
+      },
+      {
+        "name": "ESIA - Unidad Zacatenco",
+        "acronym": "ESIA"
+      },
+      {
+        "name": "ESIME - Unidad Azcapotzalco",
+        "acronym": "ESIME"
+      },
+      {
+        "name": "ESIME - Unidad Culhuacán",
+        "acronym": "ESIME"
+      },
+      {
+        "name": "ESIME - Unidad Ticomán",
+        "acronym": "ESIME"
+      },
+      {
+        "name": "ESIME - Unidad Zacatenco",
+        "acronym": "ESIME"
+      },
+      {
+        "name": "ESIQIE - Ing. Química e Industrias Extractivas",
+        "acronym": "ESIQIE"
+      },
+      {
+        "name": "ESIT - Escuela Superior de Ingeniería Textil",
+        "acronym": "ESIT"
+      },
+      {
+        "name": "ESM - Escuela Superior de Medicina",
+        "acronym": "ESM"
+      },
+      {
+        "name": "EST - Escuela Superior de Turismo",
+        "acronym": "EST"
+      },
+      {
+        "name": "UPIICSA - Ing. y Ciencias Soc. y Admin.",
+        "acronym": "UPIICSA"
+      },
+      {
+        "name": "UPIIG - Campus Guanajuato",
+        "acronym": "UPIIG"
+      },
+      {
+        "name": "UPIIH - Campus Hidalgo",
+        "acronym": "UPIIH"
+      },
+      {
+        "name": "UPIIP - Campus Palenque",
+        "acronym": "UPIIP"
+      },
+      {
+        "name": "UPIIT - Campus Tlaxcala",
+        "acronym": "UPIIT"
+      },
+      {
+        "name": "UPIITA - Ing. y Tecnologías Avanzadas",
+        "acronym": "UPIITA"
+      },
+      {
+        "name": "UPIIZ - Campus Zacatecas",
+        "acronym": "UPIIZ"
+      }
+    ],
+    "Instituto Rosario Castellanos": [
+      {
+        "name": "Instituto Rosario Castellanos",
+        "acronym": "IRC"
+      }
+    ],
+    "Instituto Tecnológico Autónomo de México": [
+      {
+        "name": "Instituto Tecnológico Autónomo de México (ITAM)",
+        "acronym": "ITAM"
+      }
+    ],
+    "Instituto Tecnológico y de Estudios Superiores de Occidente": [
+      {
+        "name": "Instituto Tecnológico Superior de Occidente del Estado de Hidalgo",
+        "acronym": "ITESO"
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Zacatecas Occidente",
+        "acronym": "ITESO"
+      },
+      {
+        "name": "Instituto Tecnológico y de Estudios Superiores de Occidente (ITESO)",
+        "acronym": "ITESO"
+      }
+    ],
+    "Intituto Suizo": [
+      {
+        "name": "Intituto Suizo (ISU)",
+        "acronym": "ISU"
+      }
+    ],
+    "Laboratorio Nacional de Informática Avanzada": [
+      {
+        "name": "Laboratorio Nacional de Informática Avanzada (LANIA)",
+        "acronym": "LANIA"
+      }
+    ],
+    "Otro": [
+      {
+        "name": "Otro",
+        "acronym": ""
+      }
+    ],
+    "SAE Institute": [
+      {
+        "name": "SAE Institute (SAE)",
+        "acronym": "SAE"
+      }
+    ],
+    "Tecnológico de Monterrey": [
+      {
+        "name": "Tecnológico de Monterrey (ITESM)",
+        "acronym": "ITESM"
+      }
+    ],
+    "Tecnológico Nacional de México": [
+      {
+        "name": "Centro Interdisciplinario de Investigación y Docencia en Educación Técnica (CIIDET)",
+        "acronym": "CIIDET"
+      },
+      {
+        "name": "Centro Nacional de Investigación y Desarrollo Tecnológico (CENIDET)",
+        "acronym": "CENIDET"
+      },
+      {
+        "name": "Centro Regional de Optimización y Desarrollo de Equipo de Celaya (CRODE-Celaya)",
+        "acronym": "CRODE-Celaya"
+      },
+      {
+        "name": "Centro Regional de Optimización y Desarrollo de Equipo de Chihuahua (CRODE-Chihuahua)",
+        "acronym": "CRODE-Chihuahua"
+      },
+      {
+        "name": "Centro Regional de Optimización y Desarrollo de Equipo de Mérida (CRODE-Mérida)",
+        "acronym": "CRODE M"
+      },
+      {
+        "name": "Centro Regional de Optimización y Desarrollo de Equipo de Orizaba (CRODE-Orizaba)",
+        "acronym": "CRODE-Orizaba"
+      },
+      {
+        "name": "Instituto Tecnológico de Acapulco",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Agua Prieta",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Aguascalientes",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Altamira",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Altiplano de Tlaxcala",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Álvaro Obregón",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Apizaco",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Atitalaquia",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Bahía de Banderas",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Boca del Río",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Campeche",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Cancún",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Cd. Altamirano",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Cd. Cuauhtémoc",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Cd. Guzmán",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Cd. Jiménez",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Cd. Juárez",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Cd. Madero",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Cd. Valles",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Cd. Victoria",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Celaya",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Cerro Azul",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Chetumal",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Chihuahua",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Chihuahua II",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Chilpancingo",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Chiná",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Colima",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Comitán",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Comitancillo",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Conkal",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Costa Grande",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Cuautla",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Culiacán",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Delicias",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Durango",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de El Salto",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Ensenada",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Estudios Superiores de la Región Carbonífera",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Estudios Superiores de Los Cabos",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Estudios Superiores de Zamora",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Frontera Comalapa",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Guaymas",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Gustavo A. Madero",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Gustavo A. Madero II",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Hermosillo",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Huatabampo",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Huejutla",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Huimanguillo",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Iguala",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Istmo",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Iztapalapa",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Iztapalapa II",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Iztapalapa III",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Jiquilpan",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de La Chontalpa",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de La Cuenca del Papaloapan",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de La Laguna",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de La Paz",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de La Piedad",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de La Zona Maya",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de La Zona Olmeca",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Lázaro Cárdenas",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de León",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Lerma",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Linares",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Los Mochis",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Matamoros",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Matehuala",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Mazatlán",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Mérida",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Mexicali",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Milpa Alta",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Milpa Alta II",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Minatitlán",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Morelia",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Nogales",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Norte de Nayarit",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Nuevo Laredo",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Nuevo León",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Oaxaca",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Ocotlán",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Orizaba",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Pabellón de Arteaga",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Pachuca",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Parral",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Piedras Negras",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Pinotepa",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Pochutla",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Puebla",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Querétaro",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Reynosa",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Roque",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Salina Cruz",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Saltillo",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de San Juan del Río",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de San Luis Potosí",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de San Marcos",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Sinaloa de Leyva",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Sonora (ITSON)",
+        "acronym": "ITSON"
+      },
+      {
+        "name": "Instituto Tecnológico de Sur de Nayarit",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Tapachula",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Tecomatlán",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Tehuacán",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Tepic",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Tijuana",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Tizimín",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Tláhuac",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Tláhuac II",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Tláhuac III",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Tlajomulco",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Tlalnepantla",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Tlalpan",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Tlaxiaco",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Toluca",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Torreón",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Tuxtepec",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Tuxtla Gutiérrez",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Úrsulo Galván",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Valle de Etla",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Valle de Morelia",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Valle de Oaxaca",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Valle del Guadiana",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Valle del Yaqui",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Veracruz",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Villahermosa",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Zacatecas",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Zacatepec",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico de Zitácuaro",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico El Llano Aguascalientes",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico José Mario Molina Pasquel y Henríquez",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Latinoamericano",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Abasolo",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Acatlán de Osorio",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Acayucan",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Álamo Temapache",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Alvarado",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Apatzingán",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Atlixco",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Cajeme",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Calkiní",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Cananea",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Cd. Acuña",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Cd. Constitución",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Cd. Hidalgo",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Cd. Serdán",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Centla",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Champotón",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Chicontepec",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Cintalapa",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Coalcomán",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Coatzacoalcos",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Comalcalco",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Cosamaloapan",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Ébano",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de El Dorado",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Escárcega",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Felipe Carrillo Puerto",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Fresnillo",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Guanajuato",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Guasave",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Hopelchén",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Huatusco",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Huauchinango",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Huetamo",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Huichapan",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Irapuato",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Jerez",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Jesús Carranza",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Juan Rodríguez Clara",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de La Costa Chica",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de La Montaña",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de La Región de Los Llanos",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de La Región Sierra",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de La Sierra Negra de Ajalpan",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de La Sierra Norte de Puebla",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Las Choapas",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Lerdo",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Libres",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Loreto",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Los Reyes",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Los Ríos",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Macuspana",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Mante",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Martínez de La Torre",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Misantla",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Monclova",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Motul",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Mulegé",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Múzquiz",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Naranjos",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Nochistlán",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Nuevo Casas Grandes",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Oriente del Estado de Hidalgo",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de P'urhépecha",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Pánuco",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Pátzcuaro",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Perote",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Poza Rica",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Progreso",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Puerto Peñasco",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Purísima del Rincón",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Puruándiro",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Rioverde",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Salvatierra",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de San Andrés Tuxtla",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de San Luis Potosí Capital",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de San Martín Texmelucan",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de San Miguel El Grande",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de San Pedro de Las Colonias",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Santa María del Oro",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Santiago Papasquiaro",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Sur de Guanajuato",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Sur del Estado de Yucatán",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Tacámbaro",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Tamazunchale",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Tantoyuca",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Tepeaca",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Tepexi de Rodríguez",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Teposcolula",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Teziutlán",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Tierra Blanca",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Tlatlauquitepec",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Tlaxco",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Uruapan",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Valladolid",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Venustiano Carranza",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Villa La Venta",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Xalapa",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Zacapoaxtla",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Zacatecas Norte",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Zacatecas Sur",
+        "acronym": ""
+      },
+      {
+        "name": "Instituto Tecnológico Superior de Zongolica",
+        "acronym": ""
+      },
+      {
+        "name": "Tecnológico de Estudios Superiores de Chalco (TESCHA)",
+        "acronym": "TESCHA"
+      },
+      {
+        "name": "Tecnológico de Estudios Superiores de Chicoloapan (TESCH)",
+        "acronym": "TESCH"
+      },
+      {
+        "name": "Tecnológico de Estudios Superiores de Chimalhuacán (TESCHI)",
+        "acronym": "TESCHI"
+      },
+      {
+        "name": "Tecnológico de Estudios Superiores de Coacalco (TESCO)",
+        "acronym": "TESCO"
+      },
+      {
+        "name": "Tecnológico de Estudios Superiores de Cuautitlán Izcalli (TESCI)",
+        "acronym": "TESCI"
+      },
+      {
+        "name": "Tecnológico de Estudios Superiores de Ecatepec (TESE)",
+        "acronym": "TESE"
+      },
+      {
+        "name": "Tecnológico de Estudios Superiores de Huixquilucan (TESH)",
+        "acronym": "TESH"
+      },
+      {
+        "name": "Tecnológico de Estudios Superiores de Ixtapaluca (TESI)",
+        "acronym": "TESI"
+      },
+      {
+        "name": "Tecnológico de Estudios Superiores de Jilotepec (TESJI)",
+        "acronym": "TESJI"
+      },
+      {
+        "name": "Tecnológico de Estudios Superiores de Jocotitlán (TESJO)",
+        "acronym": "TESJO"
+      },
+      {
+        "name": "Tecnológico de Estudios Superiores de Oriente del Estado de México (TESOEM)",
+        "acronym": "TESOEM"
+      },
+      {
+        "name": "Tecnológico de Estudios Superiores de San Felipe del Progreso (TESSFP)",
+        "acronym": "TESSFP"
+      },
+      {
+        "name": "Tecnológico de Estudios Superiores de Tianguistenco (TEST)",
+        "acronym": "TEST"
+      },
+      {
+        "name": "Tecnológico de Estudios Superiores de Valle de Bravo (TESVB)",
+        "acronym": "TESVB"
+      },
+      {
+        "name": "Tecnológico de Estudios Superiores de Villa Guerrero (TESVG)",
+        "acronym": "TESVG"
+      }
+    ],
+    "Universidad Abierta y a Distancia de México": [
+      {
+        "name": "Universidad Abierta y a Distancia de México",
+        "acronym": "UnADM"
+      }
+    ],
+    "Universidad Aeronáutica en Querétaro": [
+      {
+        "name": "Universidad Aeronáutica en Querétaro (UNAQ)",
+        "acronym": "UNAQ"
+      }
+    ],
+    "Universidad Anáhuac": [
+      {
+        "name": "Universidad Anáhuac Cancún",
+        "acronym": "Anáhuac Cancún"
+      },
+      {
+        "name": "Universidad Anáhuac Córdoba",
+        "acronym": "Anáhuac Córdoba"
+      },
+      {
+        "name": "Universidad Anáhuac Mayab",
+        "acronym": "Anáhuac Mayab"
+      },
+      {
+        "name": "Universidad Anáhuac México",
+        "acronym": "Anáhuac México"
+      },
+      {
+        "name": "Universidad Anáhuac Oaxaca",
+        "acronym": "Anáhuac Oaxaca"
+      },
+      {
+        "name": "Universidad Anáhuac Puebla",
+        "acronym": "Anáhuac Puebla"
+      },
+      {
+        "name": "Universidad Anáhuac Querétaro",
+        "acronym": "Anáhuac Querétaro"
+      },
+      {
+        "name": "Universidad Anáhuac Xalapa",
+        "acronym": "Anáhuac Xalapa"
+      }
+    ],
+    "Universidad Autónoma Agraria Antonio Narro": [
+      {
+        "name": "Universidad Autónoma Agraria Antonio Narro (UAAAN)",
+        "acronym": "UAAAN"
+      }
+    ],
+    "Universidad Autónoma Benito Juárez de Oaxaca": [
+      {
+        "name": "Universidad Autónoma Benito Juárez de Oaxaca (UABJO)",
+        "acronym": "UABJO"
+      }
+    ],
+    "Universidad Autónoma Chapingo": [
+      {
+        "name": "Universidad Autónoma Chapingo (UACh)",
+        "acronym": "UACh"
+      }
+    ],
+    "Universidad Autónoma de Aguascalientes": [
+      {
+        "name": "Universidad Autónoma de Aguascalientes (UAA)",
+        "acronym": "UAA"
+      }
+    ],
+    "Universidad Autónoma de Baja California": [
+      {
+        "name": "Universidad Autónoma de Baja California (UABC)",
+        "acronym": "UABC"
+      }
+    ],
+    "Universidad Autónoma de Baja California Sur": [
+      {
+        "name": "Universidad Autónoma de Baja California Sur (UABCS)",
+        "acronym": "UABCS"
+      }
+    ],
+    "Universidad Autónoma de Campeche": [
+      {
+        "name": "Universidad Autónoma de Campeche (UACAM)",
+        "acronym": "UACAM"
+      }
+    ],
+    "Universidad Autónoma de Chiapas": [
+      {
+        "name": "Universidad Autónoma de Chiapas (UNACH)",
+        "acronym": "UNACH"
+      }
+    ],
+    "Universidad Autónoma de Chihuahua": [
+      {
+        "name": "Universidad Autónoma de Chihuahua (UACH)",
+        "acronym": "UACh"
+      }
+    ],
+    "Universidad Autónoma de Ciudad Juárez": [
+      {
+        "name": "Universidad Autónoma de Ciudad Juárez (UACJ)",
+        "acronym": "UACJ"
+      }
+    ],
+    "Universidad Autónoma de Coahuila": [
+      {
+        "name": "Universidad Autónoma de Coahuila (UADEC)",
+        "acronym": "UADEC"
+      }
+    ],
+    "Universidad Autónoma de Durango": [
+      {
+        "name": "Universidad Autónoma de Durango (UAD)",
+        "acronym": "UAD"
+      }
+    ],
+    "Universidad Autónoma de Guadalajara": [
+      {
+        "name": "Universidad Autónoma de Guadalajara (UAG)",
+        "acronym": "UAG"
+      }
+    ],
+    "Universidad Autónoma de Guerrero": [
+      {
+        "name": "Universidad Autónoma de Guerrero (UAGRO)",
+        "acronym": "UAGRO"
+      }
+    ],
+    "Universidad Autónoma de La Laguna": [
+      {
+        "name": "Universidad Autónoma de La Laguna (UAL)",
+        "acronym": "UAL"
+      }
+    ],
+    "Universidad Autónoma de Nayarit": [
+      {
+        "name": "Universidad Autónoma de Nayarit (UAN)",
+        "acronym": "UAN"
+      }
+    ],
+    "Universidad Autónoma de Nuevo León": [
+      {
+        "name": "Universidad Autónoma de Nuevo León (UANL)",
+        "acronym": "UANL"
+      }
+    ],
+    "Universidad Autónoma de Occidente": [
+      {
+        "name": "Universidad Autónoma de Occidente (UADEO)",
+        "acronym": "UADEO"
+      }
+    ],
+    "Universidad Autónoma de Querétaro": [
+      {
+        "name": "Universidad Autónoma de Querétaro (UAQ)",
+        "acronym": "UAQ"
+      }
+    ],
+    "Universidad Autónoma de San Luis Potosí": [
+      {
+        "name": "Universidad Autónoma de San Luis Potosí (UASLP)",
+        "acronym": "UASLP"
+      }
+    ],
+    "Universidad Autónoma de Sinaloa": [
+      {
+        "name": "Universidad Autónoma de Sinaloa (UAS)",
+        "acronym": "UAS"
+      }
+    ],
+    "Universidad Autónoma de Tamaulipas": [
+      {
+        "name": "Universidad Autónoma de Tamaulipas (UAT)",
+        "acronym": "UAT"
+      }
+    ],
+    "Universidad Autónoma de Tlaxcala": [
+      {
+        "name": "Universidad Autónoma de Tlaxcala (UATx)",
+        "acronym": "UATx"
+      }
+    ],
+    "Universidad Autónoma de Yucatán": [
+      {
+        "name": "Universidad Autónoma de Yucatán (UADY)",
+        "acronym": "UADY"
+      }
+    ],
+    "Universidad Autónoma de Zacatecas": [
+      {
+        "name": "Universidad Autónoma de Zacatecas (UAZ)",
+        "acronym": "UAZ"
+      }
+    ],
+    "Universidad Autónoma del Carmen": [
+      {
+        "name": "Universidad Autónoma del Carmen (UNACAR)",
+        "acronym": "UNACAR"
+      }
+    ],
+    "Universidad Autónoma del Estado de Hidalgo": [
+      {
+        "name": "Universidad Autónoma del Estado de Hidalgo (UAEH)",
+        "acronym": "UAEH"
+      }
+    ],
+    "Universidad Autónoma del Estado de México": [
+      {
+        "name": "Centro Universitario UAEM Ecatepec",
+        "acronym": "CU UAEM Ecatepec"
+      },
+      {
+        "name": "Universidad Autónoma del Estado de México (UAEMex)",
+        "acronym": "UAEMex"
+      }
+    ],
+    "Universidad Autónoma del Estado de Morelos": [
+      {
+        "name": "Universidad Autónoma del Estado de Morelos (UAEM)",
+        "acronym": "UAEM"
+      }
+    ],
+    "Universidad Autónoma España de Durango": [
+      {
+        "name": "Universidad Autónoma España de Durango (UNES)",
+        "acronym": "UNES"
+      }
+    ],
+    "Universidad Autónoma Metropolitana": [
+      {
+        "name": "Universidad Autónoma Metropolitana (UAM)",
+        "acronym": "UAM"
+      }
+    ],
+    "Universidad Chapultepec": [
+      {
+        "name": "Universidad Chapultepec",
+        "acronym": ""
+      }
+    ],
+    "Universidad Contemporánea Mondragón": [
+      {
+        "name": "Universidad Contemporánea Mondragón (UCO)",
+        "acronym": "UCO"
+      }
+    ],
+    "Universidad Cristóbal Colón": [
+      {
+        "name": "Universidad Cristóbal Colón (UCC)",
+        "acronym": "UCC"
+      }
+    ],
+    "Universidad Cuauhtémoc": [
+      {
+        "name": "Universidad Cuauhtémoc",
+        "acronym": ""
+      }
+    ],
+    "Universidad Cultural": [
+      {
+        "name": "Universidad Cultural",
+        "acronym": ""
+      }
+    ],
+    "Universidad de Celaya": [
+      {
+        "name": "Universidad de Celaya (UDEC)",
+        "acronym": "UDEC"
+      }
+    ],
+    "Universidad de Ciencias y Administración": [
+      {
+        "name": "Universidad de Ciencias y Administración (UCAD)",
+        "acronym": "UCAD"
+      }
+    ],
+    "Universidad de Ciencias y Artes de Chiapas": [
+      {
+        "name": "Universidad de Ciencias y Artes de Chiapas (UNICACH)",
+        "acronym": "UNICACH"
+      }
+    ],
+    "Universidad de Ciencias y Desarrollo": [
+      {
+        "name": "Universidad de Ciencias y Desarrollo",
+        "acronym": ""
+      }
+    ],
+    "Universidad de Colima": [
+      {
+        "name": "Universidad de Colima (UCOL)",
+        "acronym": "UCOL"
+      }
+    ],
+    "Universidad de Estudios Profesionales de Ciencias y Artes": [
+      {
+        "name": "Universidad de Estudios Profesionales de Ciencias y Artes",
+        "acronym": ""
+      }
+    ],
+    "Universidad de Guadalajara": [
+      {
+        "name": "Universidad de Guadalajara (UDG)",
+        "acronym": "UDG"
+      }
+    ],
+    "Universidad de Guanajuato": [
+      {
+        "name": "Universidad de Guanajuato (UGTO)",
+        "acronym": "UGTO"
+      }
+    ],
+    "Universidad de La Comunicación": [
+      {
+        "name": "Universidad de La Comunicación (UC)",
+        "acronym": "UC"
+      }
+    ],
+    "Universidad de Las Américas Puebla": [
+      {
+        "name": "Universidad de Las Américas Puebla (UDLAP)",
+        "acronym": "UDLAP"
+      }
+    ],
+    "Universidad de Londres": [
+      {
+        "name": "Universidad de Londres (UDEL)",
+        "acronym": "UDEL"
+      }
+    ],
+    "Universidad de Matehuala": [
+      {
+        "name": "Universidad de Matehuala",
+        "acronym": ""
+      }
+    ],
+    "Universidad de Monterrey": [
+      {
+        "name": "Universidad de Monterrey (UDEM)",
+        "acronym": "UDEM"
+      }
+    ],
+    "Universidad de Negocios ISEC": [
+      {
+        "name": "Universidad de Negocios ISEC (ISEC)",
+        "acronym": "ISEC"
+      }
+    ],
+    "Universidad de Oriente": [
+      {
+        "name": "Universidad de Oriente (UDO)",
+        "acronym": "UDO"
+      }
+    ],
+    "Universidad de Quintana Roo": [
+      {
+        "name": "Universidad de Quintana Roo (UQROO)",
+        "acronym": "UQROO"
+      }
+    ],
+    "Universidad de Sonora": [
+      {
+        "name": "Universidad de Sonora (UNISON)",
+        "acronym": "UNISON"
+      }
+    ],
+    "Universidad de Tijuana": [
+      {
+        "name": "Universidad de Tijuana",
+        "acronym": ""
+      }
+    ],
+    "Universidad de Xalapa": [
+      {
+        "name": "Universidad de Xalapa (UX)",
+        "acronym": "UX"
+      }
+    ],
+    "Universidad del Caribe": [
+      {
+        "name": "Universidad del Caribe (UNICARIBE)",
+        "acronym": "UNICARIBE"
+      }
+    ],
+    "Universidad del Claustro de Sor Juana": [
+      {
+        "name": "Universidad del Claustro de Sor Juana (UCSJ)",
+        "acronym": "UCSJ"
+      }
+    ],
+    "Universidad del Desarrollo Empresarial y Pedagógico": [
+      {
+        "name": "Universidad del Desarrollo Empresarial y Pedagógico (UNIVDEP)",
+        "acronym": "UNIVDEP"
+      }
+    ],
+    "Universidad del Fútbol y Ciencias del Deporte": [
+      {
+        "name": "Universidad del Fútbol y Ciencias del Deporte",
+        "acronym": ""
+      }
+    ],
+    "Universidad del Golfo de México": [
+      {
+        "name": "Universidad del Golfo de México Rectoría Norte (UGM NORTE)",
+        "acronym": "UGM NORTE"
+      },
+      {
+        "name": "Universidad del Golfo de México Rectoría Sur (UGM SUR)",
+        "acronym": "UGM SUR"
+      }
+    ],
+    "Universidad del Mar": [
+      {
+        "name": "Universidad del Mar (UMAR)",
+        "acronym": "UMAR"
+      }
+    ],
+    "Universidad del Medio Ambiente": [
+      {
+        "name": "Universidad del Medio Ambiente (UMA)",
+        "acronym": "UMA"
+      }
+    ],
+    "Universidad del Noreste": [
+      {
+        "name": "Universidad del Noreste (UNE)",
+        "acronym": "UNE"
+      }
+    ],
+    "Universidad del Papaloapan": [
+      {
+        "name": "Universidad del Papaloapan (UNPA)",
+        "acronym": "UNPA"
+      }
+    ],
+    "Universidad del Pedregal": [
+      {
+        "name": "Universidad del Pedregal",
+        "acronym": ""
+      }
+    ],
+    "Universidad del Tepeyac": [
+      {
+        "name": "Universidad del Tepeyac",
+        "acronym": ""
+      }
+    ],
+    "Universidad del Valle de Atemajac": [
+      {
+        "name": "Universidad del Valle de Atemajac (UNIVA)",
+        "acronym": "UNIVA"
+      }
+    ],
+    "Universidad del Valle de Guadiana": [
+      {
+        "name": "Universidad del Valle de Guadiana (UVGUAD)",
+        "acronym": "UVGUAD"
+      }
+    ],
+    "Universidad del Valle de México": [
+      {
+        "name": "Universidad del Valle de México (UVM)",
+        "acronym": "UVM"
+      }
+    ],
+    "Universidad del Valle de Puebla": [
+      {
+        "name": "Universidad del Valle de Puebla (UVP)",
+        "acronym": "UVP"
+      }
+    ],
+    "Universidad Estatal de Sonora": [
+      {
+        "name": "Universidad Estatal de Sonora (UES)",
+        "acronym": "UES"
+      }
+    ],
+    "Universidad Gestalt de América": [
+      {
+        "name": "Universidad Gestalt de América",
+        "acronym": ""
+      }
+    ],
+    "Universidad Hipócrates": [
+      {
+        "name": "Universidad Hipócrates (UH)",
+        "acronym": "UH"
+      }
+    ],
+    "Universidad Iberoamericana": [
+      {
+        "name": "Universidad Iberoamericana León (IBERO León)",
+        "acronym": "IBERO"
+      },
+      {
+        "name": "Universidad Iberoamericana México (UIA)",
+        "acronym": "UIA"
+      },
+      {
+        "name": "Universidad Iberoamericana Puebla (IBERO Puebla)",
+        "acronym": "IBERO Puebla"
+      },
+      {
+        "name": "Universidad Iberoamericana Tijuana (IBERO Tijuana)",
+        "acronym": "IBERO Tijuana"
+      },
+      {
+        "name": "Universidad Iberoamericana Torreón (IBERO TTorreón)",
+        "acronym": "IBERO"
+      }
+    ],
+    "Universidad ICEL": [
+      {
+        "name": "Universidad ICEL",
+        "acronym": ""
+      }
+    ],
+    "Universidad Insurgentes": [
+      {
+        "name": "Universidad Insurgentes (UIN)",
+        "acronym": "UIN"
+      }
+    ],
+    "Universidad Interamericana para el Desarrollo": [
+      {
+        "name": "Universidad Interamericana para el Desarrollo (UNID)",
+        "acronym": "UNID"
+      }
+    ],
+    "Universidad Intercontinental": [
+      {
+        "name": "Universidad Intercontinental (UIC)",
+        "acronym": "UIC"
+      }
+    ],
+    "Universidad Intercultural del Estado de Tabasco": [
+      {
+        "name": "Universidad Intercultural del Estado de Tabasco (UIET)",
+        "acronym": "UIET"
+      }
+    ],
+    "Universidad Internacional": [
+      {
+        "name": "Universidad Internacional (UNINTER)",
+        "acronym": "UNINTER"
+      }
+    ],
+    "Universidad Internacional Jefferson": [
+      {
+        "name": "Universidad Internacional Jefferson",
+        "acronym": ""
+      }
+    ],
+    "Universidad José Martí de Latinoamérica": [
+      {
+        "name": "Universidad José Martí de Latinoamérica",
+        "acronym": ""
+      }
+    ],
+    "Universidad Juárez Autónoma de Tabasco": [
+      {
+        "name": "Universidad Juárez Autónoma de Tabasco (UJAT)",
+        "acronym": "UJAT"
+      }
+    ],
+    "Universidad Juárez del Estado de Durango": [
+      {
+        "name": "Universidad Juárez del Estado de Durango (UJED)",
+        "acronym": "UJED"
+      }
+    ],
+    "Universidad La Concordia": [
+      {
+        "name": "Universidad La Concordia",
+        "acronym": ""
+      }
+    ],
+    "Universidad La Salle": [
+      {
+        "name": "Universidad de La Salle Bajío",
+        "acronym": "La Salle Bajío"
+      },
+      {
+        "name": "Universidad La Salle Cancún",
+        "acronym": "La Salle Cancún"
+      },
+      {
+        "name": "Universidad La Salle Chihuahua",
+        "acronym": "La Salle Chihuahua"
+      },
+      {
+        "name": "Universidad La Salle Cuernavaca",
+        "acronym": "La Salle Cuernavaca"
+      },
+      {
+        "name": "Universidad La Salle Laguna",
+        "acronym": "La Salle Laguna"
+      },
+      {
+        "name": "Universidad La Salle México",
+        "acronym": "La Salle México"
+      },
+      {
+        "name": "Universidad La Salle Morelia",
+        "acronym": "La Salle Morelia"
+      },
+      {
+        "name": "Universidad La Salle Nezahualcóyotl",
+        "acronym": "La Salle Nezahualcóyotl"
+      },
+      {
+        "name": "Universidad La Salle Noroeste",
+        "acronym": "La Salle Noroeste"
+      },
+      {
+        "name": "Universidad La Salle Oaxaca",
+        "acronym": "La Salle Oaxaca"
+      },
+      {
+        "name": "Universidad La Salle Pachuca",
+        "acronym": "La Salle Pachuca"
+      },
+      {
+        "name": "Universidad La Salle Puebla",
+        "acronym": "La Salle Puebla"
+      },
+      {
+        "name": "Universidad La Salle Saltillo",
+        "acronym": "La Salle Saltillo"
+      },
+      {
+        "name": "Universidad La Salle Victoria",
+        "acronym": "La Salle Victoria"
+      }
+    ],
+    "Universidad Latina": [
+      {
+        "name": "Universidad Latina (UNILA)",
+        "acronym": "UNILA"
+      }
+    ],
+    "Universidad Latina de América": [
+      {
+        "name": "Universidad Latina de América (UNLA)",
+        "acronym": "UNLA"
+      }
+    ],
+    "Universidad Marista": [
+      {
+        "name": "Universidad Marista de Guadalajara",
+        "acronym": "Marista de Guadalajara"
+      },
+      {
+        "name": "Universidad Marista de San Luis Potosí",
+        "acronym": "Marista de San Luis Potosí"
+      }
+    ],
+    "Universidad Mexicana": [
+      {
+        "name": "Universidad Mexicana (UNIMEX)",
+        "acronym": "UNIMEX"
+      }
+    ],
+    "Universidad Michoacana de San Nicolás de Hidalgo": [
+      {
+        "name": "Universidad Michoacana de San Nicolás de Hidalgo (UMSNH)",
+        "acronym": "UMSNH"
+      }
+    ],
+    "Universidad Modelo": [
+      {
+        "name": "Universidad Modelo",
+        "acronym": ""
+      }
+    ],
+    "Universidad Motolinía del Pedregal": [
+      {
+        "name": "Universidad Motolinía del Pedregal (UMP)",
+        "acronym": "UMP"
+      }
+    ],
+    "Universidad Nacional autonoma de mexico": [
+      {
+        "name": "ENAC (Artes Cinematográficas)",
+        "acronym": "ENAC"
+      },
+      {
+        "name": "ENALLT (Lenguas, Lingüística y Traducción)",
+        "acronym": "ENALLT"
+      },
+      {
+        "name": "ENCiT (Ciencias de la Tierra)",
+        "acronym": "ENCiT"
+      },
+      {
+        "name": "ENES Unidad Juriquilla",
+        "acronym": "ENES Juriquilla"
+      },
+      {
+        "name": "ENES Unidad León",
+        "acronym": "ENES León"
+      },
+      {
+        "name": "ENES Unidad Mérida",
+        "acronym": "ENES Mérida"
+      },
+      {
+        "name": "ENES Unidad Morelia",
+        "acronym": "ENES Morelia"
+      },
+      {
+        "name": "Escuela Nacional de Enfermería y Obstetricia",
+        "acronym": "ENEO"
+      },
+      {
+        "name": "Escuela Nacional de Trabajo Social",
+        "acronym": "ENTS"
+      },
+      {
+        "name": "Facultad de Arquitectura",
+        "acronym": "FARCU"
+      },
+      {
+        "name": "Facultad de Artes y Diseño",
+        "acronym": "FAD"
+      },
+      {
+        "name": "Facultad de Ciencias",
+        "acronym": "FCIE"
+      },
+      {
+        "name": "Facultad de Ciencias Políticas y Sociales",
+        "acronym": "FCPS"
+      },
+      {
+        "name": "Facultad de Contaduría y Administración",
+        "acronym": "FCA"
+      },
+      {
+        "name": "Facultad de Derecho",
+        "acronym": "FD"
+      },
+      {
+        "name": "Facultad de Economía",
+        "acronym": "FE"
+      },
+      {
+        "name": "Facultad de Estudios Superiores Acatlán",
+        "acronym": ""
+      },
+      {
+        "name": "Facultad de Estudios Superiores Aragón",
+        "acronym": ""
+      },
+      {
+        "name": "Facultad de Estudios Superiores Cuautitlán",
+        "acronym": "FESC"
+      },
+      {
+        "name": "Facultad de Estudios Superiores Iztacala",
+        "acronym": "FESI"
+      },
+      {
+        "name": "Facultad de Estudios Superiores Zaragoza",
+        "acronym": "FESZ"
+      },
+      {
+        "name": "Facultad de Filosofía y Letras",
+        "acronym": "FFyL"
+      },
+      {
+        "name": "Facultad de Ingeniería",
+        "acronym": "FI"
+      },
+      {
+        "name": "Facultad de Medicina",
+        "acronym": "FM"
+      },
+      {
+        "name": "Facultad de Medicina Veterinaria y Zootecnia",
+        "acronym": "FMVZ"
+      },
+      {
+        "name": "Facultad de Música",
+        "acronym": "FaM"
+      },
+      {
+        "name": "Facultad de Odontología",
+        "acronym": "FO"
+      },
+      {
+        "name": "Facultad de Psicología",
+        "acronym": "FP"
+      },
+      {
+        "name": "Facultad de Química",
+        "acronym": "FQ"
+      }
+    ],
+    "Universidad Ort México": [
+      {
+        "name": "Universidad Ort México",
+        "acronym": ""
+      }
+    ],
+    "Universidad Panamericana": [
+      {
+        "name": "Universidad Panamericana Aguascalientes (UP Aguascalientes)",
+        "acronym": "UP Aguascalientes"
+      },
+      {
+        "name": "Universidad Panamericana Ciudad de México (UP)",
+        "acronym": "UP"
+      },
+      {
+        "name": "Universidad Panamericana Guadalajara (UP Guadalajara)",
+        "acronym": "UP Guadalajara"
+      }
+    ],
+    "Universidad Pedagógica Nacional": [
+      {
+        "name": "Universidad Pedagógica Nacional (UPN)",
+        "acronym": "UPN"
+      }
+    ],
+    "Universidad Pontificia de México": [
+      {
+        "name": "Universidad Pontificia de México (UPM)",
+        "acronym": "UPM"
+      }
+    ],
+    "Universidad Popular Autónoma de Veracruz": [
+      {
+        "name": "Universidad Popular Autónoma de Veracruz (UPAV)",
+        "acronym": "UPAV"
+      }
+    ],
+    "Universidad Popular Autónoma del Estado de Puebla": [
+      {
+        "name": "Universidad Popular Autónoma del Estado de Puebla (UPAEP)",
+        "acronym": "UPAEP"
+      }
+    ],
+    "Universidad Regiomontana": [
+      {
+        "name": "Universidad Regiomontana (U-ERRE)",
+        "acronym": "U-ERRE"
+      }
+    ],
+    "Universidad Regional de Tequila": [
+      {
+        "name": "Universidad Regional de Tequila",
+        "acronym": ""
+      }
+    ],
+    "Universidad Riviera": [
+      {
+        "name": "Universidad Riviera",
+        "acronym": ""
+      }
+    ],
+    "Universidad Salesiana": [
+      {
+        "name": "Universidad Salesiana",
+        "acronym": ""
+      }
+    ],
+    "Universidad Simón Bolívar": [
+      {
+        "name": "Universidad Simón Bolívar (USB)",
+        "acronym": "USB"
+      }
+    ],
+    "Universidad Sor Juana Inés de la Cruz": [
+      {
+        "name": "Universidad Sor Juana Inés de la Cruz",
+        "acronym": ""
+      }
+    ],
+    "Universidad Tangamanga": [
+      {
+        "name": "Universidad Tangamanga",
+        "acronym": ""
+      }
+    ],
+    "Universidad Tecmilenio": [
+      {
+        "name": "Universidad Tecmilenio",
+        "acronym": ""
+      }
+    ],
+    "Universidad Tecnológica Americana": [
+      {
+        "name": "Universidad Tecnológica Americana (UTECA)",
+        "acronym": "UTECA"
+      },
+      {
+        "name": "Universidad Tecnológica de Candelaria (UTECAN)",
+        "acronym": "UTECA"
+      },
+      {
+        "name": "Universidad Tecnológica Latinoamericana en Línea",
+        "acronym": "UTECA"
+      }
+    ],
+    "Universidad Tecnológica de México": [
+      {
+        "name": "Universidad Tecnológica de La Zona Metropolitana del Valle de México (UTVAM)",
+        "acronym": "UNITEC"
+      },
+      {
+        "name": "Universidad Tecnológica de México (UNITEC)",
+        "acronym": "UNITEC"
+      },
+      {
+        "name": "Universidad Tecnológica del Sur del Estado de México (UTSEM)",
+        "acronym": "UNITEC"
+      }
+    ],
+    "Universidad Tres Culturas": [
+      {
+        "name": "Universidad Tres Culturas (UTC)",
+        "acronym": "UTC"
+      }
+    ],
+    "Universidad UNITESBA": [
+      {
+        "name": "Universidad UNITESBA",
+        "acronym": ""
+      }
+    ],
+    "Universidad Univer Milenium": [
+      {
+        "name": "Universidad Univer Milenium",
+        "acronym": ""
+      }
+    ],
+    "Universidad Valle del Grijalva": [
+      {
+        "name": "Universidad Valle del Grijalva (UVG)",
+        "acronym": "UVG"
+      }
+    ],
+    "Universidad Vasco de Quiroga": [
+      {
+        "name": "Universidad Vasco de Quiroga (UVAQ)",
+        "acronym": "UVAQ"
+      }
+    ],
+    "Universidad Veracruzana": [
+      {
+        "name": "Universidad Veracruzana (UV)",
+        "acronym": "UV"
+      }
+    ],
+    "Universidad Villa Rica": [
+      {
+        "name": "Universidad Villa Rica (UVR)",
+        "acronym": "UVR"
+      }
+    ],
+    "Universidad Virtual del Estado de Guanajuato": [
+      {
+        "name": "Universidad Virtual del Estado de Guanajuato (UVEG)",
+        "acronym": "UVEG"
+      }
+    ],
+    "Universidad Xochicalco Tijuana": [
+      {
+        "name": "Universidad Xochicalco Tijuana",
+        "acronym": ""
+      }
+    ],
+    "Universidades Politécnicas": [
+      {
+        "name": "Universidad Politécnica de Aguascalientes (UPA)",
+        "acronym": "UPA"
+      },
+      {
+        "name": "Universidad Politécnica de Altamira",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Politécnica de Amozoc (UPAM)",
+        "acronym": "UPAM"
+      },
+      {
+        "name": "Universidad Politécnica de Apodaca (UPAP)",
+        "acronym": "UPAP"
+      },
+      {
+        "name": "Universidad Politécnica de Atlacomulco (UPA)",
+        "acronym": "UPA"
+      },
+      {
+        "name": "Universidad Politécnica de Atlautla",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Politécnica de Bacalar (UPB)",
+        "acronym": "UPB"
+      },
+      {
+        "name": "Universidad Politécnica de Baja California (UPBC)",
+        "acronym": "UPBC"
+      },
+      {
+        "name": "Universidad Politécnica de Chiapas",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Politécnica de Chihuahua (UPCH)",
+        "acronym": "UPCH"
+      },
+      {
+        "name": "Universidad Politécnica de Chimalhuacán (UPCHI)",
+        "acronym": "UPCHI"
+      },
+      {
+        "name": "Universidad Politécnica de Cuautitlán Izcallí (UPCI)",
+        "acronym": "UPCI"
+      },
+      {
+        "name": "Universidad Politécnica de Cuencamé (UPC)",
+        "acronym": "UPC"
+      },
+      {
+        "name": "Universidad Politécnica de Durango",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Politécnica de Francisco I. Madero (UPFIM)",
+        "acronym": "UPFIM"
+      },
+      {
+        "name": "Universidad Politécnica de García (UPG)",
+        "acronym": "UPG"
+      },
+      {
+        "name": "Universidad Politécnica de Gómez Palacio",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Politécnica de Guanajuato (UPG)",
+        "acronym": "UPG"
+      },
+      {
+        "name": "Universidad Politécnica de Huatusco",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Politécnica de Huejutla",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Politécnica de La Energía (UPE)",
+        "acronym": "UPE"
+      },
+      {
+        "name": "Universidad Politécnica de La Región Laguna (UPRL)",
+        "acronym": "UPRL"
+      },
+      {
+        "name": "Universidad Politécnica de La Región Ribereña (UPRR)",
+        "acronym": "UPRR"
+      },
+      {
+        "name": "Universidad Politécnica de La Zona Metropolitana de Guadalajara (UPZMG)",
+        "acronym": "UPZMG"
+      },
+      {
+        "name": "Universidad Politécnica de Lázaro Cárdenas (UPLC)",
+        "acronym": "UPLC"
+      },
+      {
+        "name": "Universidad Politécnica de Monclova Frontera (UPMF)",
+        "acronym": "UPMF"
+      },
+      {
+        "name": "Universidad Politécnica de Nayarit (UPEN)",
+        "acronym": "UPEN"
+      },
+      {
+        "name": "Universidad Politécnica de Otzolotepec (UPOTEC)",
+        "acronym": "UPOTEC"
+      },
+      {
+        "name": "Universidad Politécnica de Pachuca (UPP)",
+        "acronym": "UPP"
+      },
+      {
+        "name": "Universidad Politécnica de Pénjamo (UPPE)",
+        "acronym": "UPPE"
+      },
+      {
+        "name": "Universidad Politécnica de Piedras Negras (UPPN)",
+        "acronym": "UPPN"
+      },
+      {
+        "name": "Universidad Politécnica de Puebla (UPPUE)",
+        "acronym": "UPPUE"
+      },
+      {
+        "name": "Universidad Politécnica de Querétaro (UPQ)",
+        "acronym": "UPQ"
+      },
+      {
+        "name": "Universidad Politécnica de Quintana Roo (UPQROO)",
+        "acronym": "UPQROO"
+      },
+      {
+        "name": "Universidad Politécnica de Ramos Arizpe (UPRA)",
+        "acronym": "UPRA"
+      },
+      {
+        "name": "Universidad Politécnica de San Luis Potosí (UPSLP)",
+        "acronym": "UPSLP"
+      },
+      {
+        "name": "Universidad Politécnica de Santa Rosa Jáuregui (UPSRJ)",
+        "acronym": "UPSRJ"
+      },
+      {
+        "name": "Universidad Politécnica de Sinaloa (UPSIN)",
+        "acronym": "UPSIN"
+      },
+      {
+        "name": "Universidad Politécnica de Tapachula",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Politécnica de Tecámac (UPT)",
+        "acronym": "UPT"
+      },
+      {
+        "name": "Universidad Politécnica de Texcoco (UPTEX)",
+        "acronym": "UPTEX"
+      },
+      {
+        "name": "Universidad Politécnica de Tlaxcala (UPTLAX)",
+        "acronym": "UPTLAX"
+      },
+      {
+        "name": "Universidad Politécnica de Tlaxcala Región Poniente (UPTREP)",
+        "acronym": "UPTREP"
+      },
+      {
+        "name": "Universidad Politécnica de Tulancingo (UPT)",
+        "acronym": "UPT"
+      },
+      {
+        "name": "Universidad Politécnica de Uruapan (UPU)",
+        "acronym": "UPU"
+      },
+      {
+        "name": "Universidad Politécnica de Victoria (UPV)",
+        "acronym": "UPV"
+      },
+      {
+        "name": "Universidad Politécnica de Zacatecas (UPZ)",
+        "acronym": "UPZ"
+      },
+      {
+        "name": "Universidad Politécnica del Bicentenario (UPB)",
+        "acronym": "UPB"
+      },
+      {
+        "name": "Universidad Politécnica del Centro (UPC)",
+        "acronym": "UPC"
+      },
+      {
+        "name": "Universidad Politécnica del Estado de Guerrero (UPEG)",
+        "acronym": "UPEG"
+      },
+      {
+        "name": "Universidad Politécnica del Estado de Morelos (UPEMOR)",
+        "acronym": "UPEMOR"
+      },
+      {
+        "name": "Universidad Politécnica del Golfo de México (UPGM)",
+        "acronym": "UPGM"
+      },
+      {
+        "name": "Universidad Politécnica del Mar y La Sierra (UPMyS)",
+        "acronym": "UPMyS"
+      },
+      {
+        "name": "Universidad Politécnica del Sur de Zacatecas (UPSZ)",
+        "acronym": "UPSZ"
+      },
+      {
+        "name": "Universidad Politécnica del Valle de Évora (UPVE)",
+        "acronym": "UPVE"
+      },
+      {
+        "name": "Universidad Politécnica del Valle de México (UPVM)",
+        "acronym": "UPVM"
+      },
+      {
+        "name": "Universidad Politécnica del Valle de Toluca (UPVT)",
+        "acronym": "UPVT"
+      },
+      {
+        "name": "Universidad Politécnica Juventino Rosas (UPJR)",
+        "acronym": "UPJR"
+      },
+      {
+        "name": "Universidad Politécnica Mesoamericana (UPM)",
+        "acronym": "UPM"
+      },
+      {
+        "name": "Universidad Politécnica Metropolitana de Hidalgo (UPMH)",
+        "acronym": "UPMH"
+      },
+      {
+        "name": "Universidad Politécnica Metropolitana de Puebla (UPMP)",
+        "acronym": "UPMP"
+      }
+    ],
+    "Universidades Tecnológicas": [
+      {
+        "name": "Universidad Tecnológica Bilingüe Internacional y Sustentable de Puebla",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica Cadereyta",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Acapulco",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Aguascalientes (UTAGS)",
+        "acronym": "UTAGS"
+      },
+      {
+        "name": "Universidad Tecnológica de Altamira (UTA)",
+        "acronym": "UTA"
+      },
+      {
+        "name": "Universidad Tecnológica de Bahía de Banderas (UTBB)",
+        "acronym": "UTBB"
+      },
+      {
+        "name": "Universidad Tecnológica de Calakmul",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Calvillo",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Camargo",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Campeche (UTCAM)",
+        "acronym": "UTCAM"
+      },
+      {
+        "name": "Universidad Tecnológica de Cancún",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Chetumal",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Chihuahua (UTCH)",
+        "acronym": "UTCH"
+      },
+      {
+        "name": "Universidad Tecnológica de Chihuahua Sur (UTCH Sur)",
+        "acronym": "UTCH Sur"
+      },
+      {
+        "name": "Universidad Tecnológica de Ciudad Acuña (UTCA)",
+        "acronym": "UTCA"
+      },
+      {
+        "name": "Universidad Tecnológica de Ciudad Juárez (UTCJ)",
+        "acronym": "UTCJ"
+      },
+      {
+        "name": "Universidad Tecnológica de Coahuila (UTC)",
+        "acronym": "UTC"
+      },
+      {
+        "name": "Universidad Tecnológica de Corregidora",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Culiacán",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Durango (UTD)",
+        "acronym": "UTD"
+      },
+      {
+        "name": "Universidad Tecnológica de Escuinapa (UTESC)",
+        "acronym": "UTESC"
+      },
+      {
+        "name": "Universidad Tecnológica de Etchojoa",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Guaymas (UT Guaymas)",
+        "acronym": "UT Guaymas"
+      },
+      {
+        "name": "Universidad Tecnológica de Gutiérrez Zamora (UTGZ)",
+        "acronym": "UTGZ"
+      },
+      {
+        "name": "Universidad Tecnológica de Hermosillo (UTH)",
+        "acronym": "UTH"
+      },
+      {
+        "name": "Universidad Tecnológica de Huejotzingo (UTH)",
+        "acronym": "UTH"
+      },
+      {
+        "name": "Universidad Tecnológica de Izúcar de Matamoros (UTIM)",
+        "acronym": "UTIM"
+      },
+      {
+        "name": "Universidad Tecnológica de La Babícora (UT Babícora)",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de La Costa (UTC)",
+        "acronym": "UTC"
+      },
+      {
+        "name": "Universidad Tecnológica de La Costa Grande de Guerrero (UTCGG)",
+        "acronym": "UTCGG"
+      },
+      {
+        "name": "Universidad Tecnológica de La Huasteca Hidalguense (UTHH)",
+        "acronym": "UTHH"
+      },
+      {
+        "name": "Universidad Tecnológica de La Laguna Durango (UTLD)",
+        "acronym": "UTLD"
+      },
+      {
+        "name": "Universidad Tecnológica de La Mixteca (UTM)",
+        "acronym": "UTM"
+      },
+      {
+        "name": "Universidad Tecnológica de La Paz (UTLP)",
+        "acronym": "UTLP"
+      },
+      {
+        "name": "Universidad Tecnológica de la Región Benito Juárez",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de La Región Carbonífera (UTRC)",
+        "acronym": "UTRC"
+      },
+      {
+        "name": "Universidad Tecnológica de La Región Centro de Coahuila (UTRCC)",
+        "acronym": "UTRCC"
+      },
+      {
+        "name": "Universidad Tecnológica de La Región Norte de Guerrero",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de La Riviera Maya (UTRM)",
+        "acronym": "UTRM"
+      },
+      {
+        "name": "Universidad Tecnológica de La Selva (UT Selva)",
+        "acronym": "UT Selva"
+      },
+      {
+        "name": "Universidad Tecnológica de La Sierra (UT Sierra)",
+        "acronym": "UT Sierra"
+      },
+      {
+        "name": "Universidad Tecnológica de La Sierra Hidalguense (UTSH)",
+        "acronym": "UTSH"
+      },
+      {
+        "name": "Universidad Tecnológica de La Sierra Sur de Oaxaca (UTSSO)",
+        "acronym": "UTSSO"
+      },
+      {
+        "name": "Universidad Tecnológica de La Tarahumara (UTT)",
+        "acronym": "UTT"
+      },
+      {
+        "name": "Universidad Tecnológica de La Tierra Caliente",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de La Zona Metropolitana de Guadalajara (UTZMG)",
+        "acronym": "UTZMG"
+      },
+      {
+        "name": "Universidad Tecnológica de León (UTL)",
+        "acronym": "UTL"
+      },
+      {
+        "name": "Universidad Tecnológica de Los Valles Centrales de Oaxaca (UTVCO)",
+        "acronym": "UTVCO"
+      },
+      {
+        "name": "Universidad Tecnológica de Manzanillo (UTEM)",
+        "acronym": "UTEM"
+      },
+      {
+        "name": "Universidad Tecnológica de Matamoros (UT Matamoros)",
+        "acronym": "UT Matamoros"
+      },
+      {
+        "name": "Universidad Tecnológica de Mineral de La Reforma (UTMIR)",
+        "acronym": "UTMIR"
+      },
+      {
+        "name": "Universidad Tecnológica de Morelia (UTM)",
+        "acronym": "UTM"
+      },
+      {
+        "name": "Universidad Tecnológica de Nayarit (UT Nayarit)",
+        "acronym": "UT Nayarit"
+      },
+      {
+        "name": "Universidad Tecnológica de Nezahualcóyotl (UTN)",
+        "acronym": "UTN"
+      },
+      {
+        "name": "Universidad Tecnológica de Nogales, Sonora",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Nuevo Laredo (UTNL)",
+        "acronym": "UTNL"
+      },
+      {
+        "name": "Universidad Tecnológica de Oriental",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Paquimé (UT Paquimé)",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Parral (UTP)",
+        "acronym": "UTP"
+      },
+      {
+        "name": "Universidad Tecnológica de Parras de La Fuente",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Poanas (UTP)",
+        "acronym": "UTP"
+      },
+      {
+        "name": "Universidad Tecnológica de Puebla",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Puerto Peñasco (UTPP)",
+        "acronym": "UTPP"
+      },
+      {
+        "name": "Universidad Tecnológica de Querétaro (UTEQ)",
+        "acronym": "UTEQ"
+      },
+      {
+        "name": "Universidad Tecnológica de Regional del Sur (UTRS)",
+        "acronym": "UTRS"
+      },
+      {
+        "name": "Universidad Tecnológica de Rodeo",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Salamanca (UTS)",
+        "acronym": "UTS"
+      },
+      {
+        "name": "Universidad Tecnológica de Saltillo (UTS)",
+        "acronym": "UTS"
+      },
+      {
+        "name": "Universidad Tecnológica de San Juan del Río (UTSJR)",
+        "acronym": "UTSJR"
+      },
+      {
+        "name": "Universidad Tecnológica de San Luis Potosí (UTSLP)",
+        "acronym": "UTSLP"
+      },
+      {
+        "name": "Universidad Tecnológica de San Luis Río Colorado",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de San Miguel de Allende (UTSMA)",
+        "acronym": "UTSMA"
+      },
+      {
+        "name": "Universidad Tecnológica de Tabasco (UTTAB)",
+        "acronym": "UTTAB"
+      },
+      {
+        "name": "Universidad Tecnológica de Tamaulipas Norte (UTT)",
+        "acronym": "UTT"
+      },
+      {
+        "name": "Universidad Tecnológica de Tamazula (UT Tamazula)",
+        "acronym": "UT Tamazula"
+      },
+      {
+        "name": "Universidad Tecnológica de Tecámac (UTTEC)",
+        "acronym": "UTTEC"
+      },
+      {
+        "name": "Universidad Tecnológica de Tecamachalco (UTTECAM)",
+        "acronym": "UTTECAM"
+      },
+      {
+        "name": "Universidad Tecnológica de Tehuacán",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Tijuana (UTT)",
+        "acronym": "UTT"
+      },
+      {
+        "name": "Universidad Tecnológica de Tlaxcala (UTT)",
+        "acronym": "UTT"
+      },
+      {
+        "name": "Universidad Tecnológica de Torreón (UT Torreón)",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica de Tula-Tepeji (UTTT)",
+        "acronym": "UTTT"
+      },
+      {
+        "name": "Universidad Tecnológica de Tulancingo (UTEC)",
+        "acronym": "UTEC"
+      },
+      {
+        "name": "Universidad Tecnológica de Xicotepec de Juárez (UTXJ)",
+        "acronym": "UTXJ"
+      },
+      {
+        "name": "Universidad Tecnológica de Zinacantepec (UTZIN)",
+        "acronym": "UTZIN"
+      },
+      {
+        "name": "Universidad Tecnológica del Centro",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica del Centro de Veracruz (UTCV)",
+        "acronym": "UTCV"
+      },
+      {
+        "name": "Universidad Tecnológica del Estado de Zacatecas (UTZAC)",
+        "acronym": "UTZAC"
+      },
+      {
+        "name": "Universidad Tecnológica del Mar de Tamaulipas Bicentenario",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica del Mar del Estado de Guerrero",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica del Mayab (UT del Mayab)",
+        "acronym": "UT del Mayab"
+      },
+      {
+        "name": "Universidad Tecnológica del Mezquital (UTVM)",
+        "acronym": "UTVM"
+      },
+      {
+        "name": "Universidad Tecnológica del Norte de Aguascalientes (UTNA)",
+        "acronym": "UTNA"
+      },
+      {
+        "name": "Universidad Tecnológica del Norte de Coahuila (UTNC)",
+        "acronym": "UTNC"
+      },
+      {
+        "name": "Universidad Tecnológica del Norte de Guanajuato (UTNG)",
+        "acronym": "UTNG"
+      },
+      {
+        "name": "Universidad Tecnológica del Oriente de Michoacán (UTOM)",
+        "acronym": "UTOM"
+      },
+      {
+        "name": "Universidad Tecnológica del Poniente (UTP)",
+        "acronym": "UTP"
+      },
+      {
+        "name": "Universidad Tecnológica del Sur de Sonora (UTS)",
+        "acronym": "UTS"
+      },
+      {
+        "name": "Universidad Tecnológica del Sur del Estado de Morelos (UTSEM)",
+        "acronym": "UTSEM"
+      },
+      {
+        "name": "Universidad Tecnológica del Sureste de Veracruz",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica del Suroeste de Guanajuato (UTSOE)",
+        "acronym": "UTSOE"
+      },
+      {
+        "name": "Universidad Tecnológica del Usumacinta",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica del Valle de Toluca",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica del Valle del Mezquital (UTVM)",
+        "acronym": "UTVM"
+      },
+      {
+        "name": "Universidad Tecnológica El Retoño (UTR)",
+        "acronym": "UTR"
+      },
+      {
+        "name": "Universidad Tecnológica Emiliano Zapata del Estado de Morelos (UTEZ)",
+        "acronym": "UTEZ"
+      },
+      {
+        "name": "Universidad Tecnológica Fidel Velázquez",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica Gral. Mariano Escobedo",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica Jalisco (UTJ)",
+        "acronym": "UTJ"
+      },
+      {
+        "name": "Universidad Tecnológica Laja Bajío (UTLB)",
+        "acronym": "UTLB"
+      },
+      {
+        "name": "Universidad Tecnológica Linares",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica Metropolitana (UTM)",
+        "acronym": "UTM"
+      },
+      {
+        "name": "Universidad Tecnológica Metropolitana de Aguascalientes",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica Metropolitana de San Luis Potosí BIS",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica Minera de Zimapán (UTMZ)",
+        "acronym": "UTMZ"
+      },
+      {
+        "name": "Universidad Tecnológica Paso del Norte",
+        "acronym": ""
+      },
+      {
+        "name": "Universidad Tecnológica Santa Catarina (UT Santa Catarina)",
+        "acronym": "UT Santa Catarina"
+      }
+    ],
+    "Utel University": [
+      {
+        "name": "Utel University (UTEL)",
+        "acronym": "UTEL"
+      }
+    ]
+  },
+  "dialing_codes": [
+    {
+      "code": "+93",
+      "country_name": "Afganistán"
+    },
+    {
+      "code": "+355",
+      "country_name": "Albania"
+    },
+    {
+      "code": "+49",
+      "country_name": "Alemania"
+    },
+    {
+      "code": "+376",
+      "country_name": "Andorra"
+    },
+    {
+      "code": "+244",
+      "country_name": "Angola"
+    },
+    {
+      "code": "+1-264",
+      "country_name": "Anguila"
+    },
+    {
+      "code": "+1-268",
+      "country_name": "Antigua y Barbuda"
+    },
+    {
+      "code": "+966",
+      "country_name": "Arabia Saudita"
+    },
+    {
+      "code": "+213",
+      "country_name": "Argelia"
+    },
+    {
+      "code": "+54",
+      "country_name": "Argentina"
+    },
+    {
+      "code": "+374",
+      "country_name": "Armenia"
+    },
+    {
+      "code": "+297",
+      "country_name": "Aruba"
+    },
+    {
+      "code": "+61",
+      "country_name": "Australia"
+    },
+    {
+      "code": "+43",
+      "country_name": "Austria"
+    },
+    {
+      "code": "+994",
+      "country_name": "Azerbaiyán"
+    },
+    {
+      "code": "+1-242",
+      "country_name": "Bahamas"
+    },
+    {
+      "code": "+973",
+      "country_name": "Baréin"
+    },
+    {
+      "code": "+880",
+      "country_name": "Bangladés"
+    },
+    {
+      "code": "+1-246",
+      "country_name": "Barbados"
+    },
+    {
+      "code": "+32",
+      "country_name": "Bélgica"
+    },
+    {
+      "code": "+501",
+      "country_name": "Belice"
+    },
+    {
+      "code": "+229",
+      "country_name": "Benín"
+    },
+    {
+      "code": "+1-441",
+      "country_name": "Bermudas"
+    },
+    {
+      "code": "+375",
+      "country_name": "Bielorrusia"
+    },
+    {
+      "code": "+591",
+      "country_name": "Bolivia"
+    },
+    {
+      "code": "+387",
+      "country_name": "Bosnia y Herzegovina"
+    },
+    {
+      "code": "+267",
+      "country_name": "Botsuana"
+    },
+    {
+      "code": "+55",
+      "country_name": "Brasil"
+    },
+    {
+      "code": "+673",
+      "country_name": "Brunéi"
+    },
+    {
+      "code": "+359",
+      "country_name": "Bulgaria"
+    },
+    {
+      "code": "+226",
+      "country_name": "Burkina Faso"
+    },
+    {
+      "code": "+257",
+      "country_name": "Burundi"
+    },
+    {
+      "code": "+975",
+      "country_name": "Bután"
+    },
+    {
+      "code": "+238",
+      "country_name": "Cabo Verde"
+    },
+    {
+      "code": "+855",
+      "country_name": "Camboya"
+    },
+    {
+      "code": "+237",
+      "country_name": "Camerún"
+    },
+    {
+      "code": "+1",
+      "country_name": "Canadá"
+    },
+    {
+      "code": "+235",
+      "country_name": "Chad"
+    },
+    {
+      "code": "+56",
+      "country_name": "Chile"
+    },
+    {
+      "code": "+86",
+      "country_name": "China"
+    },
+    {
+      "code": "+357",
+      "country_name": "Chipre"
+    },
+    {
+      "code": "+57",
+      "country_name": "Colombia"
+    },
+    {
+      "code": "+269",
+      "country_name": "Comoras"
+    },
+    {
+      "code": "+242",
+      "country_name": "Congo (Brazzaville)"
+    },
+    {
+      "code": "+243",
+      "country_name": "Congo (Rep. Democrática)"
+    },
+    {
+      "code": "+850",
+      "country_name": "Corea del Norte"
+    },
+    {
+      "code": "+82",
+      "country_name": "Corea del Sur"
+    },
+    {
+      "code": "+225",
+      "country_name": "Costa de Marfil"
+    },
+    {
+      "code": "+506",
+      "country_name": "Costa Rica"
+    },
+    {
+      "code": "+385",
+      "country_name": "Croacia"
+    },
+    {
+      "code": "+53",
+      "country_name": "Cuba"
+    },
+    {
+      "code": "+599",
+      "country_name": "Curazao"
+    },
+    {
+      "code": "+45",
+      "country_name": "Dinamarca"
+    },
+    {
+      "code": "+1-767",
+      "country_name": "Dominica"
+    },
+    {
+      "code": "+593",
+      "country_name": "Ecuador"
+    },
+    {
+      "code": "+20",
+      "country_name": "Egipto"
+    },
+    {
+      "code": "+503",
+      "country_name": "El Salvador"
+    },
+    {
+      "code": "+971",
+      "country_name": "Emiratos Árabes Unidos"
+    },
+    {
+      "code": "+291",
+      "country_name": "Eritrea"
+    },
+    {
+      "code": "+421",
+      "country_name": "Eslovaquia"
+    },
+    {
+      "code": "+386",
+      "country_name": "Eslovenia"
+    },
+    {
+      "code": "+34",
+      "country_name": "España"
+    },
+    {
+      "code": "+1",
+      "country_name": "Estados Unidos"
+    },
+    {
+      "code": "+372",
+      "country_name": "Estonia"
+    },
+    {
+      "code": "+268",
+      "country_name": "Esuatini (Suazilandia)"
+    },
+    {
+      "code": "+251",
+      "country_name": "Etiopía"
+    },
+    {
+      "code": "+63",
+      "country_name": "Filipinas"
+    },
+    {
+      "code": "+358",
+      "country_name": "Finlandia"
+    },
+    {
+      "code": "+679",
+      "country_name": "Fiyi"
+    },
+    {
+      "code": "+33",
+      "country_name": "Francia"
+    },
+    {
+      "code": "+241",
+      "country_name": "Gabón"
+    },
+    {
+      "code": "+220",
+      "country_name": "Gambia"
+    },
+    {
+      "code": "+995",
+      "country_name": "Georgia"
+    },
+    {
+      "code": "+233",
+      "country_name": "Ghana"
+    },
+    {
+      "code": "+350",
+      "country_name": "Gibraltar"
+    },
+    {
+      "code": "+1-473",
+      "country_name": "Granada"
+    },
+    {
+      "code": "+30",
+      "country_name": "Grecia"
+    },
+    {
+      "code": "+299",
+      "country_name": "Groenlandia"
+    },
+    {
+      "code": "+1-671",
+      "country_name": "Guam"
+    },
+    {
+      "code": "+502",
+      "country_name": "Guatemala"
+    },
+    {
+      "code": "+224",
+      "country_name": "Guinea"
+    },
+    {
+      "code": "+245",
+      "country_name": "Guinea-Bisáu"
+    },
+    {
+      "code": "+240",
+      "country_name": "Guinea Ecuatorial"
+    },
+    {
+      "code": "+592",
+      "country_name": "Guyana"
+    },
+    {
+      "code": "+509",
+      "country_name": "Haití"
+    },
+    {
+      "code": "+504",
+      "country_name": "Honduras"
+    },
+    {
+      "code": "+852",
+      "country_name": "Hong Kong"
+    },
+    {
+      "code": "+36",
+      "country_name": "Hungría"
+    },
+    {
+      "code": "+91",
+      "country_name": "India"
+    },
+    {
+      "code": "+62",
+      "country_name": "Indonesia"
+    },
+    {
+      "code": "+964",
+      "country_name": "Irak"
+    },
+    {
+      "code": "+98",
+      "country_name": "Irán"
+    },
+    {
+      "code": "+353",
+      "country_name": "Irlanda"
+    },
+    {
+      "code": "+44-1624",
+      "country_name": "Isla de Man"
+    },
+    {
+      "code": "+354",
+      "country_name": "Islandia"
+    },
+    {
+      "code": "+1-345",
+      "country_name": "Islas Caimán"
+    },
+    {
+      "code": "+682",
+      "country_name": "Islas Cook"
+    },
+    {
+      "code": "+298",
+      "country_name": "Islas Feroe"
+    },
+    {
+      "code": "+500",
+      "country_name": "Islas Malvinas"
+    },
+    {
+      "code": "+1-670",
+      "country_name": "Islas Marianas del Norte"
+    },
+    {
+      "code": "+692",
+      "country_name": "Islas Marshall"
+    },
+    {
+      "code": "+677",
+      "country_name": "Islas Salomón"
+    },
+    {
+      "code": "+1-649",
+      "country_name": "Islas Turcas y Caicos"
+    },
+    {
+      "code": "+1-284",
+      "country_name": "Islas Vírgenes Británicas"
+    },
+    {
+      "code": "+1-340",
+      "country_name": "Islas Vírgenes de EE. UU."
+    },
+    {
+      "code": "+972",
+      "country_name": "Israel"
+    },
+    {
+      "code": "+39",
+      "country_name": "Italia"
+    },
+    {
+      "code": "+1-876 / +1-658",
+      "country_name": "Jamaica"
+    },
+    {
+      "code": "+81",
+      "country_name": "Japón"
+    },
+    {
+      "code": "+962",
+      "country_name": "Jordania"
+    },
+    {
+      "code": "+7",
+      "country_name": "Kazajistán"
+    },
+    {
+      "code": "+254",
+      "country_name": "Kenia"
+    },
+    {
+      "code": "+996",
+      "country_name": "Kirguistán"
+    },
+    {
+      "code": "+686",
+      "country_name": "Kiribati"
+    },
+    {
+      "code": "+965",
+      "country_name": "Kuwait"
+    },
+    {
+      "code": "+856",
+      "country_name": "Laos"
+    },
+    {
+      "code": "+266",
+      "country_name": "Lesoto"
+    },
+    {
+      "code": "+371",
+      "country_name": "Letonia"
+    },
+    {
+      "code": "+961",
+      "country_name": "Líbano"
+    },
+    {
+      "code": "+231",
+      "country_name": "Liberia"
+    },
+    {
+      "code": "+218",
+      "country_name": "Libia"
+    },
+    {
+      "code": "+423",
+      "country_name": "Liechtenstein"
+    },
+    {
+      "code": "+370",
+      "country_name": "Lituania"
+    },
+    {
+      "code": "+352",
+      "country_name": "Luxemburgo"
+    },
+    {
+      "code": "+853",
+      "country_name": "Macao"
+    },
+    {
+      "code": "+389",
+      "country_name": "Macedonia del Norte"
+    },
+    {
+      "code": "+261",
+      "country_name": "Madagascar"
+    },
+    {
+      "code": "+60",
+      "country_name": "Malasia"
+    },
+    {
+      "code": "+265",
+      "country_name": "Malaui"
+    },
+    {
+      "code": "+960",
+      "country_name": "Maldivas"
+    },
+    {
+      "code": "+223",
+      "country_name": "Malí"
+    },
+    {
+      "code": "+356",
+      "country_name": "Malta"
+    },
+    {
+      "code": "+212",
+      "country_name": "Marruecos"
+    },
+    {
+      "code": "+230",
+      "country_name": "Mauricio"
+    },
+    {
+      "code": "+222",
+      "country_name": "Mauritania"
+    },
+    {
+      "code": "+52",
+      "country_name": "México"
+    },
+    {
+      "code": "+691",
+      "country_name": "Micronesia"
+    },
+    {
+      "code": "+373",
+      "country_name": "Moldavia"
+    },
+    {
+      "code": "+377",
+      "country_name": "Mónaco"
+    },
+    {
+      "code": "+976",
+      "country_name": "Mongolia"
+    },
+    {
+      "code": "+382",
+      "country_name": "Montenegro"
+    },
+    {
+      "code": "+1-664",
+      "country_name": "Montserrat"
+    },
+    {
+      "code": "+258",
+      "country_name": "Mozambique"
+    },
+    {
+      "code": "+95",
+      "country_name": "Birmania (Myanmar)"
+    },
+    {
+      "code": "+264",
+      "country_name": "Namibia"
+    },
+    {
+      "code": "+674",
+      "country_name": "Nauru"
+    },
+    {
+      "code": "+977",
+      "country_name": "Nepal"
+    },
+    {
+      "code": "+505",
+      "country_name": "Nicaragua"
+    },
+    {
+      "code": "+227",
+      "country_name": "Níger"
+    },
+    {
+      "code": "+234",
+      "country_name": "Nigeria"
+    },
+    {
+      "code": "+683",
+      "country_name": "Niue"
+    },
+    {
+      "code": "+47",
+      "country_name": "Noruega"
+    },
+    {
+      "code": "+687",
+      "country_name": "Nueva Caledonia"
+    },
+    {
+      "code": "+64",
+      "country_name": "Nueva Zelanda"
+    },
+    {
+      "code": "+968",
+      "country_name": "Omán"
+    },
+    {
+      "code": "+31",
+      "country_name": "Países Bajos"
+    },
+    {
+      "code": "+92",
+      "country_name": "Pakistán"
+    },
+    {
+      "code": "+680",
+      "country_name": "Palaos"
+    },
+    {
+      "code": "+970",
+      "country_name": "Palestina"
+    },
+    {
+      "code": "+507",
+      "country_name": "Panamá"
+    },
+    {
+      "code": "+675",
+      "country_name": "Papúa Nueva Guinea"
+    },
+    {
+      "code": "+595",
+      "country_name": "Paraguay"
+    },
+    {
+      "code": "+51",
+      "country_name": "Perú"
+    },
+    {
+      "code": "+689",
+      "country_name": "Polinesia Francesa"
+    },
+    {
+      "code": "+48",
+      "country_name": "Polonia"
+    },
+    {
+      "code": "+351",
+      "country_name": "Portugal"
+    },
+    {
+      "code": "+1-787 / +1-939",
+      "country_name": "Puerto Rico"
+    },
+    {
+      "code": "+974",
+      "country_name": "Catar"
+    },
+    {
+      "code": "+44",
+      "country_name": "Reino Unido"
+    },
+    {
+      "code": "+236",
+      "country_name": "República Centroafricana"
+    },
+    {
+      "code": "+420",
+      "country_name": "República Checa"
+    },
+    {
+      "code": "+1-809 / +1-829 / +1-849",
+      "country_name": "República Dominicana"
+    },
+    {
+      "code": "+262",
+      "country_name": "Reunión / Mayotte"
+    },
+    {
+      "code": "+40",
+      "country_name": "Rumanía"
+    },
+    {
+      "code": "+7",
+      "country_name": "Rusia"
+    },
+    {
+      "code": "+685",
+      "country_name": "Samoa"
+    },
+    {
+      "code": "+1-684",
+      "country_name": "Samoa Americana"
+    },
+    {
+      "code": "+1-869",
+      "country_name": "San Cristóbal y Nieves"
+    },
+    {
+      "code": "+378",
+      "country_name": "San Marino"
+    },
+    {
+      "code": "+508",
+      "country_name": "San Pedro y Miquelón"
+    },
+    {
+      "code": "+1-784",
+      "country_name": "San Vicente y las Granadinas"
+    },
+    {
+      "code": "+1-758",
+      "country_name": "Santa Lucía"
+    },
+    {
+      "code": "+239",
+      "country_name": "Santo Tomé y Príncipe"
+    },
+    {
+      "code": "+221",
+      "country_name": "Senegal"
+    },
+    {
+      "code": "+381",
+      "country_name": "Serbia"
+    },
+    {
+      "code": "+248",
+      "country_name": "Seychelles"
+    },
+    {
+      "code": "+232",
+      "country_name": "Sierra Leona"
+    },
+    {
+      "code": "+65",
+      "country_name": "Singapur"
+    },
+    {
+      "code": "+963",
+      "country_name": "Siria"
+    },
+    {
+      "code": "+252",
+      "country_name": "Somalia"
+    },
+    {
+      "code": "+94",
+      "country_name": "Sri Lanka"
+    },
+    {
+      "code": "+27",
+      "country_name": "Sudáfrica"
+    },
+    {
+      "code": "+249",
+      "country_name": "Sudán"
+    },
+    {
+      "code": "+211",
+      "country_name": "Sudán del Sur"
+    },
+    {
+      "code": "+46",
+      "country_name": "Suecia"
+    },
+    {
+      "code": "+41",
+      "country_name": "Suiza"
+    },
+    {
+      "code": "+597",
+      "country_name": "Surinam"
+    },
+    {
+      "code": "+66",
+      "country_name": "Tailandia"
+    },
+    {
+      "code": "+886",
+      "country_name": "Taiwán"
+    },
+    {
+      "code": "+255",
+      "country_name": "Tanzania"
+    },
+    {
+      "code": "+992",
+      "country_name": "Tayikistán"
+    },
+    {
+      "code": "+670",
+      "country_name": "Timor Oriental"
+    },
+    {
+      "code": "+228",
+      "country_name": "Togo"
+    },
+    {
+      "code": "+690",
+      "country_name": "Tokelau"
+    },
+    {
+      "code": "+676",
+      "country_name": "Tonga"
+    },
+    {
+      "code": "+1-868",
+      "country_name": "Trinidad y Tobago"
+    },
+    {
+      "code": "+216",
+      "country_name": "Túnez"
+    },
+    {
+      "code": "+993",
+      "country_name": "Turkmenistán"
+    },
+    {
+      "code": "+90",
+      "country_name": "Turquía"
+    },
+    {
+      "code": "+688",
+      "country_name": "Tuvalu"
+    },
+    {
+      "code": "+380",
+      "country_name": "Ucrania"
+    },
+    {
+      "code": "+256",
+      "country_name": "Uganda"
+    },
+    {
+      "code": "+598",
+      "country_name": "Uruguay"
+    },
+    {
+      "code": "+998",
+      "country_name": "Uzbekistán"
+    },
+    {
+      "code": "+678",
+      "country_name": "Vanuatu"
+    },
+    {
+      "code": "+379 / +39",
+      "country_name": "Vaticano"
+    },
+    {
+      "code": "+58",
+      "country_name": "Venezuela"
+    },
+    {
+      "code": "+84",
+      "country_name": "Vietnam"
+    },
+    {
+      "code": "+681",
+      "country_name": "Wallis y Futuna"
+    },
+    {
+      "code": "+967",
+      "country_name": "Yemen"
+    },
+    {
+      "code": "+253",
+      "country_name": "Yibuti"
+    },
+    {
+      "code": "+260",
+      "country_name": "Zambia"
+    },
+    {
+      "code": "+263",
+      "country_name": "Zimbabue"
+    }
+  ]
+}

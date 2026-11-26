@@ -1,3 +1,5 @@
+import json
+
 from django.db import transaction, IntegrityError
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError, PermissionDenied, NotFound
@@ -7,10 +9,10 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from catalogs.temporary_catalogs import resolve_temporary_catalog_data
 from .models import LegalDocument, Privilege, Profile, Role, RolePrivilege, User, UserLegalDocument, UserPrivilege, UserRole
 from .permissions import HasPrivilege
 from .serializers import (
+    ChangeEmailSerializer, ChangePasswordSerializer,
     LegalDocumentSerializer, LoginSerializer, ProfileSerializer,
     RegisterSerializer, UserSerializer, AdminLegalDocumentSerializer, OwnLegalAcceptanceSerializer,
 )
@@ -63,11 +65,59 @@ class ProfileView(APIView):
     def patch(self, request):
         profile, _ = Profile.objects.get_or_create(user=request.user)
         with transaction.atomic():
-            payload = resolve_temporary_catalog_data(request.data)
+            if "area_ids_json" in request.data:
+                raw = request.data.copy()
+                raw_json = raw.pop("area_ids_json")[0] if hasattr(raw, "getlist") else raw.pop("area_ids_json")
+                try:
+                    parsed_ids = json.loads(raw_json)
+                    if not isinstance(parsed_ids, list):
+                        raise ValueError("area_ids_json debe ser una lista.")
+                except (ValueError, TypeError) as exc:
+                    raise ValidationError({"area_ids": "Formato inválido para áreas de evaluación."}) from exc
+                if hasattr(raw, "setlist"):
+                    raw.setlist("area_ids", [str(item) for item in parsed_ids])
+                else:
+                    raw["area_ids"] = parsed_ids
+                payload = raw
+            else:
+                payload = request.data
+
             serializer = ProfileSerializer(profile, data=payload, partial=True, context={"request": request})
             serializer.is_valid(raise_exception=True)
             serializer.save()
         return Response(serializer.data)
+
+
+class ChangePasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = ChangePasswordSerializer(data=request.data, context={"request": request})
+        serializer.is_valid(raise_exception=True)
+        request.user.set_password(serializer.validated_data["new_password"])
+        request.user.save(update_fields=["password"])
+        return Response({"message": "Contraseña actualizada correctamente."})
+
+
+class ChangeEmailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = ChangeEmailSerializer(data=request.data, context={"request": request})
+        serializer.is_valid(raise_exception=True)
+        request.user.email = serializer.validated_data["new_email"]
+        try:
+            request.user.save(update_fields=["email"])
+        except IntegrityError as exc:
+            raise ValidationError(
+                {"new_email": "Ya existe otra cuenta registrada con este correo electrónico."}
+            ) from exc
+        return Response(
+            {
+                "message": "Correo electrónico actualizado correctamente.",
+                "user": UserSerializer(request.user, context={"request": request}).data,
+            }
+        )
 
 
 class LegalDocumentsView(APIView):

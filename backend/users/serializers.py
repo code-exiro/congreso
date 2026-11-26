@@ -1,3 +1,5 @@
+import re
+
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
@@ -6,11 +8,37 @@ from django.utils import timezone
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import LegalDocument, Menu, Privilege, Profile, Role, RolePrivilege, UserLegalDocument, UserPrivilege, UserRole
-from .services import effective_profile_status, ensure_default_ponente_role, get_user_menus, get_user_privilege_codes
+from catalogs.models import Area
+from .models import LegalDocument, Menu, Privilege, Profile, Role, RolePrivilege, UserArea, UserLegalDocument, UserPrivilege, UserRole
+from .services import (
+    effective_profile_status,
+    ensure_default_ponente_role,
+    get_user_menus,
+    get_user_privilege_codes,
+    user_can_evaluate,
+)
 
 
 User = get_user_model()
+BIOGRAPHY_MAX_WORDS = 500
+
+
+def count_biography_words(text):
+    """
+    Cuenta palabras reales en la semblanza.
+    - Un espacio simple o doble espacio NO cuenta como palabra.
+    - Un triple espacio (o más espacios/saltos consecutivos) SÍ penaliza
+      contando 1 palabra extra por cada bloque de 3 espacios para evitar texto fantasma.
+    """
+    if not text:
+        return 0
+    stripped = text.strip()
+    real_words = len(stripped.split()) if stripped else 0
+    space_penalties = sum(
+        len(match.group(0)) // 3
+        for match in re.finditer(r"[ \t]{3,}|\n{3,}", text)
+    )
+    return real_words + space_penalties
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -20,6 +48,14 @@ class ProfileSerializer(serializers.ModelSerializer):
     legal_complete = serializers.SerializerMethodField()
     pending_legal_document_ids = serializers.SerializerMethodField()
     unavailable_legal_types = serializers.SerializerMethodField()
+    can_manage_evaluator_areas = serializers.SerializerMethodField()
+    areas = serializers.SerializerMethodField()
+    area_ids = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Area.objects.all(),
+        required=False,
+        write_only=True,
+    )
 
     def _status(self, obj):
         return effective_profile_status(obj.user, obj)
@@ -39,15 +75,84 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_unavailable_legal_types(self, obj):
         return self._status(obj)["unavailable_legal_types"]
 
+    def get_can_manage_evaluator_areas(self, obj):
+        return user_can_evaluate(obj.user)
+
+    def get_areas(self, obj):
+        if not user_can_evaluate(obj.user):
+            return []
+        user_areas = (
+            UserArea.objects.filter(user=obj.user)
+            .select_related("area")
+            .order_by("area__name")
+        )
+        return [
+            {"id": ua.area_id, "code": ua.area.code, "name": ua.area.name}
+            for ua in user_areas
+        ]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["area_ids"] = [item["id"] for item in data["areas"]]
+        return data
+
+    def validate_biography(self, value):
+        if value and count_biography_words(value) > BIOGRAPHY_MAX_WORDS:
+            raise serializers.ValidationError(
+                f"La semblanza no puede superar las {BIOGRAPHY_MAX_WORDS} palabras "
+                "(los espacios triples o mayores cuentan como palabras adicionales)."
+            )
+        return value
+
+    def validate(self, attrs):
+        institution = attrs.get(
+            "institution",
+            self.instance.institution if self.instance else None,
+        )
+        campus = attrs.get(
+            "campus",
+            self.instance.campus if self.instance else None,
+        )
+        if campus is not None and institution is not None and campus.institution_id != institution.pk:
+            raise serializers.ValidationError(
+                {"campus": "El campus seleccionado no pertenece a la institución elegida."}
+            )
+        return attrs
+
+    def update(self, instance, validated_data):
+        areas_input = validated_data.pop("area_ids", None)
+        profile = super().update(instance, validated_data)
+        if areas_input is not None and user_can_evaluate(instance.user):
+            desired_ids = {area.pk for area in areas_input}
+            UserArea.objects.filter(user=instance.user).exclude(
+                area_id__in=desired_ids
+            ).delete()
+            existing_ids = set(
+                UserArea.objects.filter(user=instance.user).values_list("area_id", flat=True)
+            )
+            for area_id in desired_ids - existing_ids:
+                UserArea.objects.create(user=instance.user, area_id=area_id)
+        return profile
+
     class Meta:
         model = Profile
         fields = (
-            "id", "state", "country", "institution", "academic_level", "dialing_code",
-            "profile_picture", "mobile_phone", "phone", "biography", "is_complete",
-            "basic_profile_complete", "legal_complete", "pending_legal_document_ids", "unavailable_legal_types",
+            "id", "state", "country", "institution", "campus", "academic_level", "academic_status",
+            "dialing_code", "profile_picture", "mobile_phone", "phone", "biography",
+            "can_manage_evaluator_areas", "areas", "area_ids",
+            "is_complete", "basic_profile_complete", "legal_complete",
+            "pending_legal_document_ids", "unavailable_legal_types",
             "created_at", "updated_at",
         )
-        read_only_fields = ("id", "country", "is_complete", "basic_profile_complete", "legal_complete", "pending_legal_document_ids", "unavailable_legal_types", "created_at", "updated_at")
+        read_only_fields = (
+            "id", "country", "can_manage_evaluator_areas", "areas",
+            "is_complete", "basic_profile_complete", "legal_complete",
+            "pending_legal_document_ids", "unavailable_legal_types",
+            "created_at", "updated_at",
+        )
+        extra_kwargs = {
+            "biography": {"trim_whitespace": False},
+        }
 
 
 class MenuSerializer(serializers.ModelSerializer):
@@ -394,3 +499,55 @@ class UserRoleAssignmentUpdateSerializer(serializers.Serializer):
                 "Un mismo privilegio no puede estar habilitado y deshabilitado simultáneamente."
             )
         return attrs
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    current_password = serializers.CharField(write_only=True, trim_whitespace=False)
+    new_password = serializers.CharField(write_only=True, min_length=8, trim_whitespace=False)
+    new_password_confirm = serializers.CharField(write_only=True, trim_whitespace=False)
+
+    def validate_current_password(self, value):
+        user = self.context["request"].user
+        if not user.check_password(value):
+            raise serializers.ValidationError("La contraseña actual es incorrecta.")
+        return value
+
+    def validate(self, attrs):
+        user = self.context["request"].user
+        if attrs["new_password"] != attrs["new_password_confirm"]:
+            raise serializers.ValidationError(
+                {"new_password_confirm": "La confirmación de contraseña no coincide."}
+            )
+        if attrs["current_password"] == attrs["new_password"]:
+            raise serializers.ValidationError(
+                {"new_password": "La nueva contraseña debe ser diferente a la actual."}
+            )
+        try:
+            validate_password(attrs["new_password"], user=user)
+        except DjangoValidationError as exc:
+            raise serializers.ValidationError({"new_password": exc.messages}) from exc
+        return attrs
+
+
+class ChangeEmailSerializer(serializers.Serializer):
+    current_password = serializers.CharField(write_only=True, trim_whitespace=False)
+    new_email = serializers.EmailField()
+
+    def validate_current_password(self, value):
+        user = self.context["request"].user
+        if not user.check_password(value):
+            raise serializers.ValidationError("La contraseña actual es incorrecta.")
+        return value
+
+    def validate_new_email(self, value):
+        user = self.context["request"].user
+        normalized = User.objects.normalize_email(value)
+        if normalized.lower() == user.email.lower():
+            raise serializers.ValidationError(
+                "El nuevo correo electrónico debe ser diferente al actual."
+            )
+        if User.objects.filter(email__iexact=normalized).exclude(pk=user.pk).exists():
+            raise serializers.ValidationError(
+                "Ya existe otra cuenta registrada con este correo electrónico."
+            )
+        return normalized
