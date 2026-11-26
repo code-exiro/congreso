@@ -4,8 +4,11 @@ from django.contrib import admin
 
 from .models import (
     AcademicLevel,
+    AcademicStatus,
     Area,
+    Campus,
     Country,
+    DialingCode,
     Institution,
     State,
 )
@@ -30,6 +33,12 @@ class AcademicLevelAdmin(admin.ModelAdmin):
     search_fields = ("degree",)
 
 
+@admin.register(AcademicStatus)
+class AcademicStatusAdmin(admin.ModelAdmin):
+    list_display = ("id", "code", "name")
+    search_fields = ("code", "name")
+
+
 @admin.register(Area)
 class AreaAdmin(admin.ModelAdmin):
     list_display = ("id", "code", "name")
@@ -38,5 +47,18 @@ class AreaAdmin(admin.ModelAdmin):
 
 @admin.register(Institution)
 class InstitutionAdmin(admin.ModelAdmin):
-    list_display = ("id", "name")
-    search_fields = ("name",)
+    list_display = ("id", "name", "acronym")
+    search_fields = ("name", "acronym")
+
+
+@admin.register(Campus)
+class CampusAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "acronym", "institution")
+    list_filter = ("institution",)
+    search_fields = ("name", "acronym", "institution__name")
+
+
+@admin.register(DialingCode)
+class DialingCodeAdmin(admin.ModelAdmin):
+    list_display = ("id", "code", "country_name", "country")
+    search_fields = ("code", "country_name")

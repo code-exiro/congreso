@@ -94,6 +94,16 @@ def get_user_menus(user):
     ).distinct().order_by("order", "id")
 
 
+def user_can_evaluate(user):
+    """
+    Indica si el usuario tiene permiso efectivo para evaluar trabajos
+    (ya sea por tener el rol evaluador o por tener el privilegio 'evaluar_trabajo').
+    """
+    if not user or not user.is_authenticated or not user.is_active:
+        return False
+    return "evaluar_trabajo" in get_user_privilege_codes(user)
+
+
 REQUIRED_LEGAL_TYPES = (LegalDocument.Type.TERMS, LegalDocument.Type.PRIVACY_NOTICE)
 
 

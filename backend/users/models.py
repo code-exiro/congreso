@@ -44,8 +44,10 @@ class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile", verbose_name="usuario")
     state = models.ForeignKey("catalogs.State", on_delete=models.PROTECT, related_name="profiles", null=True, blank=True, verbose_name="estado")
     institution = models.ForeignKey("catalogs.Institution", on_delete=models.PROTECT, related_name="profiles", null=True, blank=True, verbose_name="institución")
+    campus = models.ForeignKey("catalogs.Campus", on_delete=models.PROTECT, related_name="profiles", null=True, blank=True, verbose_name="campus")
     academic_level = models.ForeignKey("catalogs.AcademicLevel", on_delete=models.PROTECT, related_name="profiles", null=True, blank=True, verbose_name="nivel académico")
-    dialing_code = models.CharField(max_length=10, blank=True, verbose_name="lada")
+    academic_status = models.ForeignKey("catalogs.AcademicStatus", on_delete=models.PROTECT, related_name="profiles", null=True, blank=True, verbose_name="estatus académico")
+    dialing_code = models.CharField(max_length=50, blank=True, verbose_name="lada")
     profile_picture = models.ImageField(upload_to="profiles/", null=True, blank=True, verbose_name="foto de perfil")
     mobile_phone = models.CharField(max_length=20, blank=True, verbose_name="teléfono móvil")
     phone = models.CharField(max_length=20, blank=True, verbose_name="teléfono fijo")
@@ -56,8 +58,12 @@ class Profile(models.Model):
 
     def calculate_is_complete(self):
         return bool(
-            self.state_id and self.institution_id and self.academic_level_id
-            and self.dialing_code.strip() and self.mobile_phone.strip()
+            self.state_id
+            and self.institution_id
+            and self.campus_id
+            and self.academic_level_id
+            and self.academic_status_id
+            and self.biography.strip()
         )
 
     def save(self, *args, **kwargs):
