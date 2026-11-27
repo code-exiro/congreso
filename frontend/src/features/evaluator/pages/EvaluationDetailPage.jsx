@@ -44,6 +44,8 @@ export default function EvaluationDetailPage() {
   const { trabajo, miEvaluacion, estado } = assignment;
   const due = deadlineLabel(assignment.fechaLimite, estado);
   const yaEvaluado = estado === 'evaluado' && miEvaluacion;
+  const sinExtenso = assignment.etapa === 'extenso' && !trabajo.archivo?.url;
+  const esResumen = assignment.etapa !== 'extenso' || sinExtenso;
 
   return (
     <div className="ev-page">
@@ -54,7 +56,7 @@ export default function EvaluationDetailPage() {
       <section className="ev-hero ev-hero--detail">
         <div>
           <span className="ev-eyebrow">
-            {trabajo.folio} · Evaluación {assignment.ronda}
+            {trabajo.folio} · {assignment.etapa === "extenso" ? "Extenso" : "Resumen"} · ronda {assignment.ronda}
           </span>
           <h1 className="ev-hero__title ev-hero__title--md">{trabajo.titulo}</h1>
           <div className="ev-meta">
@@ -68,11 +70,36 @@ export default function EvaluationDetailPage() {
         </div>
       </section>
 
+      {assignment.plazo && !yaEvaluado && (
+        <div className={`ev-plazo ${assignment.plazo.abierta ? 'ev-plazo--ok' : 'ev-plazo--cerrado'}`} role="status">
+          <IconClock width={16} height={16} /> {assignment.plazo.mensaje}
+        </div>
+      )}
+
       <div className="ev-workspace">
-        <PdfViewer assignment={assignment} />
+        {esResumen ? (
+          <section className="ev-card ev-resumen" aria-label="Resumen del trabajo">
+            <header className="ev-resumen__head">
+              <span className="ev-card__title">
+                <IconFile /> {sinExtenso ? 'Resumen del trabajo' : 'Resumen a evaluar'}
+              </span>
+              {sinExtenso && (
+                <span className="ev-muted ev-small">El ponente todavía no sube el extenso en PDF; mientras tanto puedes leer el resumen.</span>
+              )}
+              {trabajo.palabrasClave?.length > 0 && (
+                <span className="ev-muted ev-small">Palabras clave: {trabajo.palabrasClave.join(', ')}</span>
+              )}
+            </header>
+            <div className="ev-resumen__body">
+              {trabajo.resumen ? <p className="ev-resumen__text">{trabajo.resumen}</p> : <p className="ev-muted">Este trabajo no tiene resumen.</p>}
+            </div>
+          </section>
+        ) : (
+          <PdfViewer assignment={assignment} />
+        )}
 
         <div className="ev-workspace__side">
-          <details className="ev-card ev-collapse">
+          <details className="ev-card ev-collapse" open={false}>
             <summary className="ev-collapse__summary">
               <span className="ev-card__title">
                 <IconFile /> Datos del trabajo
@@ -97,10 +124,10 @@ export default function EvaluationDetailPage() {
                 <dd>{trabajo.palabrasClave?.length ? trabajo.palabrasClave.join(', ') : '—'}</dd>
               </div>
             </dl>
-            {trabajo.resumen && (
+            {!esResumen && trabajo.resumen && (
               <>
                 <h3 className="ev-subtitle">Resumen</h3>
-                <p className="ev-paragraph">{trabajo.resumen}</p>
+                <p className="ev-paragraph ev-resumen__text">{trabajo.resumen}</p>
               </>
             )}
           </details>

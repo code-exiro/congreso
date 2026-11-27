@@ -32,7 +32,7 @@ import {
 const fields = [
   { name: "first_name", label: "Nombre(s)", autoComplete: "given-name", fullRow: true, maxLength: 150 },
   { name: "last_name", label: "Apellido paterno", autoComplete: "family-name", maxLength: 150 },
-  { name: "maternal_last_name", label: "Apellido materno (opcional)", autoComplete: "off", optional: true, maxLength: 150 },
+  { name: "maternal_last_name", label: "Apellido materno", autoComplete: "off", maxLength: 150 },
   { name: "email", label: "Correo electrónico", type: "email", autoComplete: "email", fullRow: true, maxLength: 254 },
   { name: "password", label: "Contraseña", type: "password", autoComplete: "new-password" },
   { name: "password_confirm", label: "Confirmar contraseña", type: "password", autoComplete: "new-password" },
@@ -98,6 +98,7 @@ export default function RegisterPage() {
       ...current,
       accepted_terms: false,
       accepted_privacy_notice: false,
+      confirmed_adult: false,
     }));
     try {
       const result = await getRegistrationDocuments({ signal: controller.signal });
@@ -151,6 +152,7 @@ event.preventDefault();
   const consents = [
     { name: "accepted_terms", label: "términos y condiciones", document: documents?.terms },
     { name: "accepted_privacy_notice", label: "aviso de privacidad", document: documents?.privacy },
+    { name: "confirmed_adult", label: "", document: null, text: "Confirmo que soy mayor de edad (18 años o más)" },
   ];
   return (
     <>
@@ -267,6 +269,9 @@ event.preventDefault();
                         slotProps={{
                           htmlInput: {
                             maxLength: field.maxLength,
+                            style: ["first_name", "last_name", "maternal_last_name"].includes(field.name)
+                              ? { textTransform: "uppercase" }
+                              : undefined,
                           },
                           input: {
                             endAdornment:
@@ -335,6 +340,7 @@ event.preventDefault();
                       <FormControl
                         key={consent.name}
                         error={Boolean(errors[consent.name])}
+                        sx={consent.document ? undefined : { gridColumn: { sm: "1 / -1" } }}
                       >
                         <FormControlLabel
                           disabled={submitting}
@@ -368,15 +374,21 @@ event.preventDefault();
                               component="span"
                               sx={{ fontSize: ".8rem", lineHeight: 1.5 }}
                             >
-                              Acepto{" "}
-                              <Link
-                                href={consent.document.file}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                sx={{ color: "#e7c77d", fontWeight: 600 }}
-                              >
-                                {consent.label}
-                              </Link>
+                              {consent.document ? (
+                                <>
+                                  Acepto{" "}
+                                  <Link
+                                    href={consent.document.file}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    sx={{ color: "#e7c77d", fontWeight: 600 }}
+                                  >
+                                    {consent.label}
+                                  </Link>
+                                </>
+                              ) : (
+                                consent.text
+                              )}
                             </Typography>
                           }
                         />

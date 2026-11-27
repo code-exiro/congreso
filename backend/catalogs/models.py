@@ -1,5 +1,6 @@
 # backend/catalogs/models.py
 
+from django.core.validators import RegexValidator
 from django.db import models
 
 
@@ -97,6 +98,12 @@ class Institution(models.Model):
         verbose_name="nombre de la institución",
     )
 
+    acronym = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name="acrónimo",
+    )
+
     def __str__(self):
         return self.name
 
@@ -104,3 +111,45 @@ class Institution(models.Model):
         verbose_name = "institución"
         verbose_name_plural = "instituciones"
         ordering = ["name"]
+
+class Campus(models.Model):
+    """Diccionario: Campus."""
+
+    institution = models.ForeignKey(
+        Institution,
+        on_delete=models.PROTECT,
+        related_name="campuses",
+        verbose_name="institución",
+    )
+    name = models.CharField(max_length=150, verbose_name="nombre del campus")
+    acronym = models.CharField(max_length=30, blank=True, verbose_name="acrónimo del campus")
+
+    def __str__(self):
+        return f"{self.name} ({self.institution.name})"
+
+    class Meta:
+        verbose_name = "campus"
+        verbose_name_plural = "campus"
+        ordering = ["institution__name", "name"]
+        constraints = [
+            models.UniqueConstraint(fields=["institution", "name"], name="unique_campus_per_institution"),
+        ]
+
+
+class Lada(models.Model):
+    """Diccionario: Lada. No es única: varios países comparten lada."""
+
+    digitos = models.CharField(
+        max_length=30,
+        validators=[RegexValidator(r"^\+[0-9][0-9 /+-]*$", "Usa el formato +52 o +1-264.")],
+        verbose_name="lada",
+    )
+    pais = models.CharField(max_length=100, verbose_name="país de la lada")
+
+    def __str__(self):
+        return f"{self.digitos} ({self.pais})"
+
+    class Meta:
+        verbose_name = "lada"
+        verbose_name_plural = "ladas"
+        ordering = ["pais"]

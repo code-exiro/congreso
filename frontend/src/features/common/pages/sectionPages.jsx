@@ -6,7 +6,6 @@ import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
 import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
 import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
-import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
 
 export function MisSolicitudesPage() {
   return (
@@ -92,14 +91,3 @@ export function LimiteEvaluacionesPage() {
   );
 }
 
-export function PersonalizacionPage() {
-  return (
-    <SectionPlaceholderPage
-      title="Personalización del Sitio"
-      category="Configuraciones"
-      icon={PaletteOutlinedIcon}
-      description="Configuración de logotipo, colores temáticos, fechas límite de convocatorias y textos informativos del congreso."
-      allowedRoles={["Coordinador", "Administrador"]}
-    />
-  );
-}

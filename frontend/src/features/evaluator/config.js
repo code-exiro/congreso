@@ -18,7 +18,8 @@ export const EVALUATOR_PRIVILEGES = {
   verObservacionesPrevias: 'evaluacion.ver_observaciones_previas',
 };
 
-export const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000').replace(/\/$/, '');
+// VITE_API_URL puede terminar o no en /api; los endpoints de abajo ya incluyen /api.
+export const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000').replace(/\/+$/, '').replace(/\/api$/, '');
 
 export const EVALUATOR_ENDPOINTS = {
   list: '/api/evaluaciones/asignadas/',
@@ -28,9 +29,8 @@ export const EVALUATOR_ENDPOINTS = {
 
 // Datos de ejemplo: activos en desarrollo mientras no exista el backend.
 // Para usar la API real pon VITE_EVALUATOR_MOCKS=false en tu .env.
-export const USE_MOCKS =
-  import.meta.env.VITE_EVALUATOR_MOCKS === 'true' ||
-  (import.meta.env.DEV && import.meta.env.VITE_EVALUATOR_MOCKS !== 'false');
+// Ya existe el backend: los datos de ejemplo solo se usan con VITE_EVALUATOR_MOCKS=true.
+export const USE_MOCKS = import.meta.env.VITE_EVALUATOR_MOCKS === 'true';
 
 // Máximo de caracteres por comentario (igual que en el backend).
 export const COMENTARIO_MAX = 500;
@@ -41,5 +41,5 @@ export const DRAFT_KEY = (assignmentId) => `ev-borrador-${assignmentId}`;
 export const DICTAMEN_OPTIONS = [
   { value: 'aceptado', label: 'Aceptado' },
   { value: 'aceptado_cambios', label: 'Aceptado con cambios' },
-  { value: 'rechazado', label: 'Rechazado' },
+  { value: 'rechazado', label: 'Debe modificarse' },
 ];

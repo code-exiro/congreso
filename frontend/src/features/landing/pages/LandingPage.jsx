@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../auth/context/AuthContext'
+import apiClient from '../../../shared/api/apiClient'
 import './landing.css'
 
 const NAV = [
@@ -221,17 +222,17 @@ function formatDateRange(startDate, endDate) {
   return `Del ${formatDate(startDate)} al ${formatDate(endDate)}`
 }
 
+// Sube el archivo al servidor (solo administrador) y devuelve su URL pública,
+// así el contenido se conserva y se reutiliza entre congresos.
 function readFileAsDataUrl(file, onSuccess, onError) {
-  const reader = new FileReader()
-  reader.onload = () => {
-    if (typeof reader.result === 'string') {
-      onSuccess(reader.result)
-    } else {
-      onError?.('No se pudo leer el archivo seleccionado.')
-    }
-  }
-  reader.onerror = () => onError?.('No se pudo leer el archivo seleccionado.')
-  reader.readAsDataURL(file)
+  const body = new FormData()
+  body.append('archivo', file)
+  apiClient
+    .post('/landing/archivos/', body, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
+    })
+    .then(({ data }) => onSuccess(data.url))
+    .catch((e) => onError?.(e?.response?.data?.detail || 'No se pudo subir el archivo.'))
 }
 
 function ImagePicker({ src, alt, label, enabled, className = '', imageClassName = '', onChange }) {
@@ -330,7 +331,8 @@ function Calendar({ events, month, onMonthChange }) {
 
 export default function App() {
   const navigate = useNavigate()
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
+  const puedeEditar = isAuthenticated && (user?.privileges ?? []).includes('diseño_pagina')
   const [open, setOpen] = useState(false)
 
   const handleGoToProfile = () => {
@@ -344,7 +346,9 @@ export default function App() {
   const [com, setCom] = useState(0)
   const [popup, setPopup] = useState(null) // Modal de conferencias magistrales
   const [infoModal, setInfoModal] = useState(null) // Modal de tipos de actividad / áreas temáticas
-  const [adminEnabled, setAdminEnabled] = useState(false)
+  const [adminOn, setAdminOn] = useState(false)
+  const adminEnabled = puedeEditar && adminOn
+  const [guardado, setGuardado] = useState('')
   const [primaryColor, setPrimaryColor] = useState('#151b29')
   const [secondaryColor, setSecondaryColor] = useState('#e2c275')
 
@@ -395,6 +399,40 @@ export default function App() {
   // Estado de Patrocinadores
   const [sponsors, setSponsors] = useState(INITIAL_SPONSORS)
   const [newSponsor, setNewSponsor] = useState({ name: '', src: '' })
+
+  // Carga el contenido guardado de la landing (si existe).
+  useEffect(() => {
+    apiClient.get('/landing/').then(({ data }) => {
+      const c = data?.contenido || {}
+      if (c.primaryColor) setPrimaryColor(c.primaryColor)
+      if (c.secondaryColor) setSecondaryColor(c.secondaryColor)
+      if (c.convocatoria) setConvocatoria((previo) => ({ ...previo, ...c.convocatoria }))
+      if (c.bannerImage) setBannerImage(c.bannerImage)
+      if (c.posterImage) setPosterImage(c.posterImage)
+      if (c.programImage) setProgramImage(c.programImage)
+      if (c.timeline) setTimeline(c.timeline)
+      if (c.docs) setDocs(c.docs)
+      if (c.videos) setVideos(c.videos)
+      if (c.historicos) setHistoricos(c.historicos)
+      if (c.contactInfo) setContactInfo(c.contactInfo)
+      if (c.sponsors) setSponsors(c.sponsors)
+    }).catch(() => {})
+  }, [])
+
+  const guardarPagina = async () => {
+    setGuardado('Guardando…')
+    try {
+      await apiClient.put('/landing/', {
+        contenido: {
+          primaryColor, secondaryColor, convocatoria, bannerImage, posterImage, programImage,
+          timeline, docs, videos, historicos, contactInfo, sponsors,
+        },
+      }, { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } })
+      setGuardado('Cambios guardados')
+    } catch (e) {
+      setGuardado(e?.response?.data?.detail || 'No se pudo guardar')
+    }
+  }
 
   const nav = (id) => {
     setOpen(false)
@@ -468,8 +506,7 @@ export default function App() {
   const handleVideoFileUpload = (e) => {
     const file = e.target.files?.[0]
     if (!file) return
-    const objectUrl = URL.createObjectURL(file)
-    setVideoForm((prev) => ({ ...prev, link: objectUrl }))
+    readFileAsDataUrl(file, (url) => setVideoForm((prev) => ({ ...prev, link: url })))
   }
 
   const saveVideo = (e) => {
@@ -583,21 +620,26 @@ export default function App() {
             </div>
           </div>
 
-          <label className="admin-toggle">
-            <input
-              type="checkbox"
-              checked={adminEnabled}
-              onChange={(event) => setAdminEnabled(event.target.checked)}
-            />
-            <span className="admin-switch" aria-hidden="true" />
-            <span>Modo administrador</span>
-          </label>
+          {puedeEditar && (
+            <label className="admin-toggle">
+              <input
+                type="checkbox"
+                checked={adminOn}
+                onChange={(event) => setAdminOn(event.target.checked)}
+              />
+              <span className="admin-switch" aria-hidden="true" />
+              <span>Modo administrador</span>
+            </label>
+          )}
           {adminEnabled && (
             <div className="admin-colors">
               <label>Color principal <input type="color" value={primaryColor} onChange={(event) => setPrimaryColor(event.target.value)} /></label>
               <label>Color secundario <input type="color" value={secondaryColor} onChange={(event) => setSecondaryColor(event.target.value)} /></label>
+              <button type="button" onClick={guardarPagina}>Guardar cambios</button>
+              {guardado && <span>{guardado}</span>}
             </div>
           )}
+          {isAuthenticated && (
           <button
             type="button"
             onClick={handleGoToProfile}
@@ -610,7 +652,12 @@ export default function App() {
           >
             Mi Perfil
           </button>
-          <Link to="/login" className="cta">Registrarse / Iniciar sesión</Link>
+          )}
+          {isAuthenticated ? (
+            <Link to="/" className="cta">Ir al panel</Link>
+          ) : (
+            <Link to="/login" className="cta">Registrarse / Iniciar sesión</Link>
+          )}
         </nav>
       </header>
 

@@ -325,7 +325,7 @@ function DocumentFormDialog({ open, editing, busy, error, onClose, onSave }) {
                 value={draft.version}
                 onChange={(event) => change("version", event.target.value)}
                 disabled={busy}
-                inputProps={{ maxLength: 50 }}
+                slotProps={{ htmlInput: { maxLength: 50 } }}
                 sx={fieldSx}
               />
             </Box>
@@ -346,7 +346,7 @@ function DocumentFormDialog({ open, editing, busy, error, onClose, onSave }) {
                 value={draft.name}
                 onChange={(event) => change("name", event.target.value)}
                 disabled={busy}
-                inputProps={{ maxLength: 255 }}
+                slotProps={{ htmlInput: { maxLength: 255 } }}
                 sx={fieldSx}
               />
             </Box>

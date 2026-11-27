@@ -25,24 +25,6 @@ export default function registrarcongreso() {
     qr_congreso: null,
   });
 
-  // 2. Campos de la tabla [Pagina] (Identidad visual de la Landing y Auth)
-  const [colorBanner, setColorBanner] = useState('#002B49');
-  const [archivosPagina, setArchivosPagina] = useState({
-    banner: null,
-    cartel: null,
-    logo_congreso: null,
-    logo_departamento: null,
-    programa: null,
-    imagen_login: null,
-    imagen_contraseña: null,
-    imagen_crearCuenta: null,
-  });
-
-  // Vista previa local para el banner y logo
-  const [previewBanner, setPreviewBanner] = useState(null);
-  const [previewLogo, setPreviewLogo] = useState(null);
-  const [showPassword, setShowPassword] = useState(false);
-
   // 3. Catálogos desde el backend (con valores iniciales de respaldo)
   const [catFechas, setCatFechas] = useState([
     { id_fechas: 1, nombre_fecha: 'Recepción de resúmenes' },
@@ -69,6 +51,8 @@ export default function registrarcongreso() {
   // 4. Relaciones N:M ([CongresoFechas], [CongresoActividad], [CongresoCuota], [CongresoPatrocinador])
   const [fechasAsignadas, setFechasAsignadas] = useState([
     { id_fecha: 1, fecha_inicio: '', fecha_fin: '' },
+    { id_fecha: 2, fecha_inicio: '', fecha_fin: '' },
+    { id_fecha: 3, fecha_inicio: '', fecha_fin: '' },
   ]);
   const [actividadesActivas, setActividadesActivas] = useState([1, 4]);
   const [cuotasAsignadas, setCuotasAsignadas] = useState([
@@ -76,6 +60,7 @@ export default function registrarcongreso() {
   ]);
   const [patrocinadoresActivos, setPatrocinadoresActivos] = useState([1]);
 
+  const [showPassword, setShowPassword] = useState(false);
   const [enviando, setEnviando] = useState(false);
   const [mensaje, setMensaje] = useState({ tipo: '', texto: '' });
 
@@ -85,7 +70,11 @@ export default function registrarcongreso() {
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (!data) return;
-        if (data.fechas) setCatFechas(data.fechas);
+        if (data.fechas) {
+          setCatFechas(data.fechas);
+          // Una fila por cada fecha del proceso; las que se dejen vacías no se envían.
+          setFechasAsignadas(data.fechas.map((f) => ({ id_fecha: f.id_fechas, fecha_inicio: '', fecha_fin: '' })));
+        }
         if (data.actividades) setCatActividades(data.actividades);
         if (data.cuotas) setCatCuotas(data.cuotas);
         if (data.patrocinadores) setCatPatrocinadores(data.patrocinadores);
@@ -103,19 +92,6 @@ export default function registrarcongreso() {
   const handleFileCongreso = (e) => {
     const { name, files } = e.target;
     setArchivosCongreso((prev) => ({ ...prev, [name]: files[0] || null }));
-  };
-
-  const handleFilePagina = (e) => {
-    const { name, files } = e.target;
-    const file = files[0] || null;
-    setArchivosPagina((prev) => ({ ...prev, [name]: file }));
-
-    if (name === 'banner' && file) {
-      setPreviewBanner(URL.createObjectURL(file));
-    }
-    if (name === 'logo_congreso' && file) {
-      setPreviewLogo(URL.createObjectURL(file));
-    }
   };
 
   // Manejadores para [CongresoFechas]
@@ -179,12 +155,6 @@ export default function registrarcongreso() {
         if (file) formData.append(key, file);
       });
 
-      // Datos y archivos de [Pagina]
-      formData.append('color_banner', colorBanner);
-      Object.entries(archivosPagina).forEach(([key, file]) => {
-        if (file) formData.append(key, file);
-      });
-
       // Relaciones N:M serializadas en JSON
       formData.append(
         'fechas',
@@ -208,7 +178,7 @@ export default function registrarcongreso() {
       const response = await fetch('http://localhost:8000/api/congresos/crear/', {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          Authorization: `Bearer ${localStorage.getItem('access_token') || ''}`,
         },
         body: formData,
       });
@@ -250,37 +220,11 @@ export default function registrarcongreso() {
           <span className="rc-eyebrow">Configuración de Edición</span>
           <h1>Registrar Nuevo Congreso</h1>
           <p>
-            Parametriza los datos institucionales, documentos oficiales y la identidad visual
-            que alimentarán automáticamente la página principal.
+            Captura los datos institucionales y documentos oficiales de la edición. El contenido
+            de la página principal (banners, logos, programa, colores) se hereda del congreso
+            anterior y se edita después desde la landing en modo administrador.
           </p>
         </div>
-
-        {/* Vista previa en vivo del encabezado de la Landing Page */}
-        <section
-          className="rc-live-preview"
-          style={{
-            backgroundColor: colorBanner,
-            backgroundImage: previewBanner
-              ? `linear-gradient(rgba(0, 29, 51, 0.72), rgba(0, 29, 51, 0.72)), url(${previewBanner})`
-              : 'none',
-          }}
-        >
-          <div className="rc-preview-content">
-            <span className="rc-preview-tag">Vista previa de portada · {congreso.modalidad_congreso}</span>
-            <div className="rc-preview-title-row">
-              {previewLogo && (
-                <img src={previewLogo} alt="Logo Congreso" className="rc-preview-logo" />
-              )}
-              <div>
-                <h2>
-                  {congreso.nombre_congreso || 'CONING'}{' '}
-                  {congreso.edicion_congreso ? `· Edición ${congreso.edicion_congreso}` : ''}
-                </h2>
-                <p>📍 {congreso.ubicacion_sede || 'Sede por definir'}</p>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {mensaje.texto && (
           <div className={`rc-alert ${mensaje.tipo === 'exito' ? 'rc-alert-ok' : 'rc-alert-err'}`}>
@@ -515,98 +459,6 @@ export default function registrarcongreso() {
             </div>
           </section>
 
-          {/* SECCIÓN 4: IDENTIDAD VISUAL Y MARCA BLANCA (Tabla Pagina) */}
-          <section className="rc-card">
-            <div className="rc-card-head">
-              <span className="rc-step">04</span>
-              <div>
-                <h3>Identidad Visual de la Landing Page</h3>
-                <p>Parametrización gráfica de la edición (Tabla Página).</p>
-              </div>
-            </div>
-
-            <div className="rc-color-row">
-              <div className="rc-field">
-                <label>Color Institucional del Banner (HEX / RGB)</label>
-                <div className="rc-color-picker">
-                  <input
-                    type="color"
-                    value={colorBanner}
-                    onChange={(e) => setColorBanner(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    value={colorBanner}
-                    onChange={(e) => setColorBanner(e.target.value)}
-                    maxLength={7}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="rc-grid-4">
-              <div className="rc-file-box">
-                <label>Banner Principal (JPG/PNG)</label>
-                <input type="file" name="banner" accept="image/*" onChange={handleFilePagina} />
-              </div>
-
-              <div className="rc-file-box">
-                <label>Cartel Promocional (JPG/PNG)</label>
-                <input type="file" name="cartel" accept="image/*" onChange={handleFilePagina} />
-              </div>
-
-              <div className="rc-file-box">
-                <label>Logo del Congreso (JPG/PNG)</label>
-                <input type="file" name="logo_congreso" accept="image/*" onChange={handleFilePagina} />
-              </div>
-
-              <div className="rc-file-box">
-                <label>Logo del Departamento</label>
-                <input
-                  type="file"
-                  name="logo_departamento"
-                  accept="image/*"
-                  onChange={handleFilePagina}
-                />
-              </div>
-
-              <div className="rc-file-box">
-                <label>Programa General (PDF/JPG)</label>
-                <input
-                  type="file"
-                  name="programa"
-                  accept=".pdf,image/*"
-                  onChange={handleFilePagina}
-                />
-              </div>
-
-              <div className="rc-file-box">
-                <label>Imagen Inicio de Sesión</label>
-                <input type="file" name="imagen_login" accept="image/*" onChange={handleFilePagina} />
-              </div>
-
-              <div className="rc-file-box">
-                <label>Imagen Recuperar Contraseña</label>
-                <input
-                  type="file"
-                  name="imagen_contraseña"
-                  accept="image/*"
-                  onChange={handleFilePagina}
-                />
-              </div>
-
-              <div className="rc-file-box">
-                <label>Imagen Crear Cuenta</label>
-                <input
-                  type="file"
-                  name="imagen_crearCuenta"
-                  accept="image/*"
-                  onChange={handleFilePagina}
-                />
-              </div>
-            </div>
-          </section>
-
           {/* SECCIÓN 5: FECHAS IMPORTANTES Y CUOTAS (CongresoFechas & CongresoCuota) */}
           <section className="rc-card">
             <div className="rc-card-head">
@@ -620,23 +472,14 @@ export default function registrarcongreso() {
             <div className="rc-subblock">
               <div className="rc-subblock-header">
                 <h4>Fechas Importantes</h4>
-                <button type="button" className="rc-btn-secondary" onClick={agregarFecha}>
-                  + Agregar fecha
-                </button>
               </div>
+              <p className="rc-hint">Las etapas del proceso son fijas: solo indica el inicio y el cierre de cada una. Las que dejes vacías no se restringen.</p>
 
               {fechasAsignadas.map((item, idx) => (
                 <div className="rc-dynamic-row" key={idx}>
-                  <select
-                    value={item.id_fecha}
-                    onChange={(e) => actualizarFecha(idx, 'id_fecha', Number(e.target.value))}
-                  >
-                    {catFechas.map((cf) => (
-                      <option key={cf.id_fechas} value={cf.id_fechas}>
-                        {cf.nombre_fecha}
-                      </option>
-                    ))}
-                  </select>
+                  <span className="rc-fecha-nombre">
+                    {catFechas.find((cf) => cf.id_fechas === item.id_fecha)?.nombre_fecha || 'Fecha'}
+                  </span>
                   <input
                     type="date"
                     value={item.fecha_inicio}
@@ -649,15 +492,6 @@ export default function registrarcongreso() {
                     onChange={(e) => actualizarFecha(idx, 'fecha_fin', e.target.value)}
                     title="Fecha de cierre"
                   />
-                  {fechasAsignadas.length > 1 && (
-                    <button
-                      type="button"
-                      className="rc-btn-danger"
-                      onClick={() => eliminarFecha(idx)}
-                    >
-                      ✕
-                    </button>
-                  )}
                 </div>
               ))}
             </div>

@@ -7,6 +7,7 @@ export const INITIAL_REGISTER_VALUES = {
   password_confirm: "",
   accepted_terms: false,
   accepted_privacy_notice: false,
+  confirmed_adult: false,
 };
 
 export function validateRegisterForm(values) {
@@ -14,6 +15,7 @@ export function validateRegisterForm(values) {
 
   if (!values.first_name.trim()) errors.first_name = "Escribe tu nombre.";
   if (!values.last_name.trim()) errors.last_name = "Escribe tu apellido paterno.";
+  if (!values.maternal_last_name.trim()) errors.maternal_last_name = "Escribe tu apellido materno.";
 
   const email = values.email.trim();
   if (!email) {
@@ -47,20 +49,24 @@ export function validateRegisterForm(values) {
   if (values.accepted_privacy_notice !== true) {
     errors.accepted_privacy_notice = "Debes aceptar el aviso de privacidad.";
   }
+  if (values.confirmed_adult !== true) {
+    errors.confirmed_adult = "Debes confirmar que eres mayor de edad.";
+  }
 
   return errors;
 }
 
 export function buildRegisterPayload(values, documents) {
   return {
-    first_name: values.first_name.trim(),
-    last_name: values.last_name.trim(),
-    maternal_last_name: values.maternal_last_name.trim(),
+    first_name: values.first_name.trim().toUpperCase(),
+    last_name: values.last_name.trim().toUpperCase(),
+    maternal_last_name: values.maternal_last_name.trim().toUpperCase(),
     email: values.email.trim().toLowerCase(),
     password: values.password,
     password_confirm: values.password_confirm,
     accepted_terms: values.accepted_terms,
     accepted_privacy_notice: values.accepted_privacy_notice,
+    confirmed_adult: values.confirmed_adult,
     terms_document_id: documents.terms.id,
     privacy_document_id: documents.privacy.id,
   };

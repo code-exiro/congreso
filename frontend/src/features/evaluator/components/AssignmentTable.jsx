@@ -37,7 +37,7 @@ export default function AssignmentTable({ assignments }) {
                 <td data-label="Área">
                   <span className="ev-chip">{a.trabajo.area}</span>
                 </td>
-                <td data-label="Ronda">Evaluación {a.ronda}</td>
+                <td data-label="Ronda">{a.etapa === "extenso" ? "Extenso" : "Resumen"} · ronda {a.ronda}</td>
                 <td data-label="Fecha límite">
                   <div className="ev-due">
                     <span>{formatDate(a.fechaLimite)}</span>

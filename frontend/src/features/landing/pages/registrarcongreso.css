@@ -492,3 +492,14 @@
     grid-template-columns: 1fr;
   }
 }
+.rc-fecha-nombre {
+  flex: 1 1 220px;
+  font-weight: 600;
+  padding: 8px 4px;
+}
+
+.rc-hint {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  opacity: 0.75;
+}

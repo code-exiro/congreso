@@ -51,6 +51,9 @@ INSTALLED_APPS = [
     # Local apps
     "users",
     "catalogs",
+    "congreso",
+    "trabajos",
+    "soporte",
 ]
 
 MIDDLEWARE = [

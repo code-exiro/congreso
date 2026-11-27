@@ -68,6 +68,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     password_confirm = serializers.CharField(write_only=True, trim_whitespace=False)
     accepted_terms = serializers.BooleanField(write_only=True, required=True)
     accepted_privacy_notice = serializers.BooleanField(write_only=True, required=True)
+    confirmed_adult = serializers.BooleanField(write_only=True, required=True)
     terms_document_id = serializers.IntegerField(write_only=True, min_value=1)
     privacy_document_id = serializers.IntegerField(write_only=True, min_value=1)
 
@@ -75,13 +76,23 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             "email", "first_name", "last_name", "maternal_last_name", "password",
-            "password_confirm", "accepted_terms", "accepted_privacy_notice",
+            "password_confirm", "accepted_terms", "accepted_privacy_notice", "confirmed_adult",
             "terms_document_id", "privacy_document_id",
         )
         extra_kwargs = {
             "first_name": {"required": True, "allow_blank": False},
             "last_name": {"required": True, "allow_blank": False},
+            "maternal_last_name": {"required": True, "allow_blank": False},
         }
+
+    def validate_first_name(self, value):
+        return value.strip().upper()
+
+    def validate_last_name(self, value):
+        return value.strip().upper()
+
+    def validate_maternal_last_name(self, value):
+        return value.strip().upper()
 
     def validate_email(self, value):
         value = User.objects.normalize_email(value)
@@ -96,6 +107,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"accepted_terms": "Debes aceptar los términos y condiciones."})
         if not attrs["accepted_privacy_notice"]:
             raise serializers.ValidationError({"accepted_privacy_notice": "Debes aceptar el aviso de privacidad."})
+        if not attrs["confirmed_adult"]:
+            raise serializers.ValidationError({"confirmed_adult": "Debes confirmar que eres mayor de edad (18 años o más)."})
         candidate = User(**{
             key: attrs.get(key, "")
             for key in ("email", "first_name", "last_name", "maternal_last_name")
@@ -111,6 +124,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         data.pop("password_confirm")
         data.pop("accepted_terms")
         data.pop("accepted_privacy_notice")
+        data.pop("confirmed_adult")
         terms_id = data.pop("terms_document_id")
         privacy_id = data.pop("privacy_document_id")
         password = data.pop("password")
@@ -139,7 +153,7 @@ class RegisterSerializer(serializers.ModelSerializer):
                     raise serializers.ValidationError({"role": "El registro está temporalmente deshabilitado: el rol ponente está inactivo."})
                 role = ensure_default_ponente_role()
 
-                user = User.objects.create_user(password=password, **data)
+                user = User.objects.create_user(password=password, confirmed_adult=True, adult_confirmed_at=now, **data)
                 Profile.objects.create(user=user)
                 UserRole.objects.create(user=user, role=role)
                 for document_type, _, _ in expected:

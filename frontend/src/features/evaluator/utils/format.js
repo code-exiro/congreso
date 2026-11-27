@@ -49,5 +49,5 @@ export const ESTADOS = {
 export const DICTAMEN_LABELS = {
   aceptado: 'Aceptado',
   aceptado_cambios: 'Aceptado con cambios',
-  rechazado: 'Rechazado',
+  rechazado: 'Debe modificarse',
 };

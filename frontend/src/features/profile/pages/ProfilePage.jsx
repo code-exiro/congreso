@@ -29,6 +29,7 @@ import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
 import { useAuth } from "../../auth/context/AuthContext";
 import { getRoleMeta } from "../../../shared/utils/roleConfig";
 import { getOwnProfile, updateOwnProfile } from "../api/profileApi";
+import { adaptarCatalogosPerfil, getCatalogos } from "../api/catalogosApi";
 import { CATALOGOS_TEMPORALES } from "../constants/catalogosTemporales";
 
 const MAX_PHOTO_SIZE_BYTES = 5 * 1024 * 1024;
@@ -221,6 +222,20 @@ export default function ProfilePage() {
   const [submitError, setSubmitError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [toast, setToast] = useState("");
+  // Catálogos reales del backend; si no responden se usan los temporales.
+  const [catalogos, setCatalogos] = useState(CATALOGOS_TEMPORALES);
+
+  useEffect(() => {
+    let activo = true;
+    getCatalogos()
+      .then((data) => {
+        if (activo) setCatalogos(adaptarCatalogosPerfil(data));
+      })
+      .catch(() => {});
+    return () => {
+      activo = false;
+    };
+  }, []);
 
   const clearPreviewUrl = () => {
     if (previewUrlRef.current) {
@@ -459,20 +474,20 @@ export default function ProfilePage() {
 
   const hasKnownState =
     !form.state ||
-    CATALOGOS_TEMPORALES.estados.some((item) => String(item.id) === String(form.state));
+    catalogos.estados.some((item) => String(item.id) === String(form.state));
   const hasKnownInstitution =
     !form.institution ||
-    CATALOGOS_TEMPORALES.instituciones.some(
+    catalogos.instituciones.some(
       (item) => String(item.id) === String(form.institution),
     );
   const hasKnownLevel =
     !form.academic_level ||
-    CATALOGOS_TEMPORALES.nivelesAcademicos.some(
+    catalogos.nivelesAcademicos.some(
       (item) => String(item.id) === String(form.academic_level),
     );
   const hasKnownLada =
     !form.dialing_code ||
-    CATALOGOS_TEMPORALES.ladas.some((item) => item.codigo === form.dialing_code);
+    catalogos.ladas.some((item) => item.codigo === form.dialing_code);
 
   const isComplete = Boolean(profile?.is_complete);
 
@@ -923,7 +938,7 @@ export default function ProfilePage() {
                           Estado registrado (#{form.state})
                         </MenuItem>
                       )}
-                      {CATALOGOS_TEMPORALES.estados.map((item) => (
+                      {catalogos.estados.map((item) => (
                         <MenuItem key={item.id} value={item.id}>
                           {item.nombre} ({item.pais})
                         </MenuItem>
@@ -968,7 +983,7 @@ export default function ProfilePage() {
                           Nivel académico registrado (#{form.academic_level})
                         </MenuItem>
                       )}
-                      {CATALOGOS_TEMPORALES.nivelesAcademicos.map((item) => (
+                      {catalogos.nivelesAcademicos.map((item) => (
                         <MenuItem key={item.id} value={item.id}>
                           {item.nombre}
                         </MenuItem>
@@ -1013,7 +1028,7 @@ export default function ProfilePage() {
                           Institución registrada (#{form.institution})
                         </MenuItem>
                       )}
-                      {CATALOGOS_TEMPORALES.instituciones.map((item) => (
+                      {catalogos.instituciones.map((item) => (
                         <MenuItem key={item.id} value={item.id}>
                           {item.nombre}
                         </MenuItem>
@@ -1082,8 +1097,8 @@ export default function ProfilePage() {
                       {!hasKnownLada && (
                         <MenuItem value={form.dialing_code}>{form.dialing_code}</MenuItem>
                       )}
-                      {CATALOGOS_TEMPORALES.ladas.map((item) => (
-                        <MenuItem key={item.codigo} value={item.codigo}>
+                      {catalogos.ladas.map((item) => (
+                        <MenuItem key={item.id ?? item.codigo} value={item.codigo}>
                           {item.etiqueta}
                         </MenuItem>
                       ))}

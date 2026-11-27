@@ -19,6 +19,9 @@ class User(AbstractUser):
     accepted_privacy_notice = models.BooleanField(default=False, verbose_name="aceptó aviso de privacidad")
     terms_accepted_at = models.DateTimeField(null=True, blank=True)
     privacy_notice_accepted_at = models.DateTimeField(null=True, blank=True)
+    # PROPUESTO (no está en el diccionario): confirmación de mayoría de edad al registrarse.
+    confirmed_adult = models.BooleanField(default=False, verbose_name="confirmó mayoría de edad")
+    adult_confirmed_at = models.DateTimeField(null=True, blank=True, verbose_name="fecha de confirmación de mayoría de edad")
     created_at = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = "email"
@@ -31,6 +34,9 @@ class User(AbstractUser):
 
     def save(self, *args, **kwargs):
         self.email = self.__class__.objects.normalize_email(self.email)
+        # Minuta 23-oct-2026: nombre y apellidos se guardan siempre en MAYÚSCULAS.
+        for campo in ("first_name", "last_name", "maternal_last_name"):
+            setattr(self, campo, (getattr(self, campo) or "").strip().upper())
         return super().save(*args, **kwargs)
 
     def __str__(self):
@@ -267,4 +273,33 @@ class UserPrivilege(models.Model):
                 fields=["user", "privilege"],
                 name="unique_user_privilege",
             )
+        ]
+
+
+class SolicitudRol(models.Model):
+    """BORRADOR local: un usuario pide un rol y el coordinador lo acepta (se le asigna al instante) o lo rechaza."""
+
+    class Estado(models.TextChoices):
+        PENDIENTE = "pendiente", "Pendiente"
+        APROBADA = "aprobada", "Aprobada"
+        RECHAZADA = "rechazada", "Rechazada"
+
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="solicitudes_rol", verbose_name="usuario")
+    rol = models.ForeignKey(Role, on_delete=models.PROTECT, related_name="solicitudes", verbose_name="rol solicitado")
+    motivo = models.TextField(blank=True, max_length=500, verbose_name="motivo de la solicitud")
+    estado = models.CharField(max_length=10, choices=Estado.choices, default=Estado.PENDIENTE, verbose_name="estado")
+    comentario_resolucion = models.TextField(blank=True, max_length=500, verbose_name="comentario de la resolución")
+    resuelta_por = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="solicitudes_rol_resueltas", verbose_name="resuelta por")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="fecha de solicitud")
+    resuelta_at = models.DateTimeField(null=True, blank=True, verbose_name="fecha de resolución")
+
+    def __str__(self):
+        return f"{self.usuario.email} → {self.rol.name} ({self.estado})"
+
+    class Meta:
+        verbose_name = "solicitud de rol"
+        verbose_name_plural = "solicitudes de rol"
+        ordering = ["-created_at"]
+        constraints = [
+            models.UniqueConstraint(fields=["usuario", "rol"], condition=models.Q(estado="pendiente"), name="unica_solicitud_rol_pendiente"),
         ]

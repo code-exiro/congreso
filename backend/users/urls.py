@@ -1,6 +1,12 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
 
+from .solicitudes_rol import (
+    BandejaSolicitudesRolView,
+    CancelarSolicitudRolView,
+    MisSolicitudesRolView,
+    ResolverSolicitudRolView,
+)
 from .views import (
     AdminLegalDocumentDeactivateView,
     AdminLegalDocumentDetailView,
@@ -37,4 +43,8 @@ urlpatterns = [
     path("admin/roles/<int:pk>/", AdminRoleDetailView.as_view(), name="admin_role_detail"),
     path("admin/users/", AdminUsersRolesView.as_view(), name="admin_users"),
     path("admin/users/<int:pk>/roles/", AdminUserRoleUpdateView.as_view(), name="admin_user_roles"),
+    path("solicitudes-rol/", MisSolicitudesRolView.as_view(), name="solicitudes_rol"),
+    path("solicitudes-rol/<int:pk>/", CancelarSolicitudRolView.as_view(), name="solicitud_rol_cancelar"),
+    path("solicitudes-rol/bandeja/", BandejaSolicitudesRolView.as_view(), name="solicitudes_rol_bandeja"),
+    path("solicitudes-rol/<int:pk>/resolver/", ResolverSolicitudRolView.as_view(), name="solicitud_rol_resolver"),
 ]

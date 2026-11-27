@@ -78,8 +78,11 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      await login(form.email, form.password);
-      navigate(redirectTo, { replace: true });
+      const data = await login(form.email, form.password);
+      // Si venía de una pantalla que este usuario no puede abrir (otra cuenta en el mismo navegador), va al inicio.
+      const rutasPermitidas = new Set((data?.user?.menus ?? []).map((menu) => menu.route));
+      const rutaDestino = redirectTo.split(/[?#]/)[0];
+      navigate(rutaDestino === "/" || rutasPermitidas.has(rutaDestino) ? redirectTo : "/", { replace: true });
     } catch (requestError) {
       const data = requestError.response?.data;
       setError(
@@ -229,16 +232,16 @@ export default function LoginPage() {
             <Typography
               component="h1"
               sx={{
-                fontSize: { xs: "2.8rem", sm: "3.8rem", lg: "5rem" },
-                lineHeight: 1.06,
+                fontSize: { xs: "1.9rem", sm: "2.4rem", lg: "2.9rem" },
+                lineHeight: 1.15,
                 fontWeight: 800,
-                letterSpacing: "-0.045em",
+                letterSpacing: "-0.03em",
                 textWrap: "balance",
               }}
             >
-              Las ideas nos
+              Congreso Científico Tecnológico
               <Box component="span" sx={{ display: "block", color: "#e7c77d" }}>
-                conectan.
+                de las carreras de Ingeniería Mecánica Eléctrica, Industrial y Telecomunicaciones, Sistemas y Electrónica
               </Box>
             </Typography>
             <Box sx={{ width: 54, height: 3, bgcolor: "#e7c77d", my: 3.5 }} />
@@ -258,7 +261,7 @@ export default function LoginPage() {
           >
             <Stack component="form" spacing={3} onSubmit={handleSubmit} aria-labelledby="login-heading" aria-busy={loading}>
               <Box>
-                <Typography component="h2" id="login-heading" sx={{ fontSize: "2rem", fontWeight: 750, letterSpacing: "-0.03em" }}>
+                <Typography component="h2" id="login-heading" sx={{ color: "#ffffff", fontSize: "2rem", fontWeight: 750, letterSpacing: "-0.03em" }}>
                   Inicia sesión
                 </Typography>
                 <Typography sx={{ mt: 1, color: "#d6deeb", fontSize: "0.95rem", lineHeight: 1.6 }}>

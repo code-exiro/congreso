@@ -6,7 +6,7 @@ import { API_BASE_URL, EVALUATOR_ENDPOINTS, USE_MOCKS } from '../config';
 import { MOCK_ASSIGNMENTS } from './mockData';
 import { samplePdf } from '../utils/files';
 
-const TOKEN_KEYS = ['access', 'accessToken', 'token', 'authToken'];
+const TOKEN_KEYS = ['access_token', 'access', 'accessToken', 'token', 'authToken'];
 
 function getAuthToken() {
   try {
@@ -45,7 +45,7 @@ async function request(path, { method = 'GET', body, headers = {}, raw = false }
   const url = /^https?:\/\//.test(path) ? path : `${API_BASE_URL}${path}`;
   const response = await fetch(url, {
     method,
-    credentials: 'include',
+    credentials: 'omit',
     headers: {
       Accept: 'application/json',
       ...(isForm || !body ? {} : { 'Content-Type': 'application/json' }),
@@ -134,7 +134,10 @@ const httpApi = {
   // body: { respuestas: [{ pregunta, cumple, comentario }], dictamen, comentario }
   submit: (id, body) => request(EVALUATOR_ENDPOINTS.submit(id), { method: 'POST', body }),
   // El PDF se pide con el token y se muestra como blob (la URL viene en trabajo.archivo.url).
-  extensoPdf: (assignment) => request(assignment.trabajo.archivo.url, { raw: true }),
+  extensoPdf: (assignment) => {
+    if (!assignment.trabajo.archivo?.url) throw new ApiError('Este trabajo todavía no tiene un archivo para mostrar.', 404);
+    return request(assignment.trabajo.archivo.url, { raw: true });
+  },
 };
 
 export const evaluatorApi = USE_MOCKS ? mockApi : httpApi;

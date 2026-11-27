@@ -1027,7 +1027,7 @@ function RoleFormDialog({
                   value={name}
                   onChange={(e) => setName(e.target.value.toLowerCase())}
                   disabled={busy}
-                  inputProps={{ maxLength: 100 }}
+                  slotProps={{ htmlInput: { maxLength: 100 } }}
                   sx={fieldSx}
                 />
               </Box>

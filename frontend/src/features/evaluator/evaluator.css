@@ -493,6 +493,37 @@
   min-width: 0;
 }
 
+/* Resumen (etapa 1): ocupa el lugar del visor, con texto legible y sin desbordarse */
+.ev-resumen {
+  position: sticky;
+  top: var(--ev-sticky-top);
+  max-height: calc(100vh - var(--ev-sticky-top) - 16px);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.ev-resumen__head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.ev-resumen__body {
+  overflow-y: auto;
+  padding-top: 14px;
+  min-width: 0;
+}
+.ev-resumen__text {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: #e6ebf7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 /* Visor del extenso: se queda fijo mientras se contesta el formulario */
 .ev-viewer {
   position: sticky;
@@ -1012,6 +1043,10 @@ p.ev-viewer__msg {
     position: static;
     height: 78vh;
   }
+  .ev-resumen {
+    position: static;
+    max-height: none;
+  }
   .ev-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1094,3 +1129,16 @@ p.ev-viewer__msg {
     width: 100%;
   }
 }
+
+.ev-plazo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+.ev-plazo--ok { background: #e8f3ff; color: #14508f; }
+.ev-plazo--cerrado { background: #fff1e0; color: #8a4b00; }

@@ -28,13 +28,20 @@ import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import GavelOutlinedIcon from "@mui/icons-material/GavelOutlined";
 import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
+import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
+import RuleOutlinedIcon from "@mui/icons-material/RuleOutlined";
 import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
 import FactCheckOutlinedIcon from "@mui/icons-material/FactCheckOutlined";
 import EventAvailableOutlinedIcon from "@mui/icons-material/EventAvailableOutlined";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
+import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { NavLink, useLocation } from "react-router-dom";
+import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import { useAuth } from "../../features/auth/context/AuthContext";
 
 const navButtonSx = {
@@ -96,6 +103,13 @@ const menuIcons = {
   palette: PaletteOutlinedIcon,
   settings: SettingsOutlinedIcon,
   shield: ShieldOutlinedIcon,
+  payments: PaymentsOutlinedIcon,
+  fact_check: FactCheckOutlinedIcon,
+  verified: VerifiedOutlinedIcon,
+  add_circle: AddCircleOutlineIcon,
+  event: EventOutlinedIcon,
+  badge: BadgeOutlinedIcon,
+  rule: RuleOutlinedIcon,
 };
 
 const CATEGORIES_CONFIG = [
@@ -112,6 +126,13 @@ const CATEGORIES_CONFIG = [
     icon: FactCheckOutlinedIcon,
     prefix: "/evaluaciones/",
     matcher: (m) => m.category === "Evaluaciones" || m.route?.startsWith("/evaluaciones/"),
+  },
+  {
+    id: "pagos",
+    name: "Pagos",
+    icon: PaymentsOutlinedIcon,
+    prefix: "/pagos/",
+    matcher: (m) => m.category === "Pagos" || m.route?.startsWith("/pagos/"),
   },
   {
     id: "eventos",
@@ -224,6 +245,21 @@ export default function Sidebar({ drawerWidth, mobileOpen, onClose }) {
         </ListItemIcon>
         <ListItemText primary="Inicio" />
       </ListItemButton>
+
+      {/* Landing en modo administrador: solo con el privilegio de diseño de página */}
+      {(user?.privileges ?? []).includes("diseño_pagina") && (
+        <ListItemButton
+          component={NavLink}
+          to="/landing"
+          onClick={onClose}
+          sx={navButtonSx}
+        >
+          <ListItemIcon>
+            <LanguageOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Editar página principal" />
+        </ListItemButton>
+      )}
 
       {/* Mi Perfil - Accesible para todos los roles */}
       <ListItemButton

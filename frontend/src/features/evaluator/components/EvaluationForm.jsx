@@ -54,7 +54,9 @@ export default function EvaluationForm({ assignment, onSubmitted }) {
   const contestadas = preguntas.length - sinResponder.length;
   const conCorrecciones = preguntas.filter((p) => respuestas[p.id]?.cumple === false).length;
   const pendientes = [...sinResponder, ...sinComentario];
-  const completo = preguntas.length > 0 && pendientes.length === 0 && Boolean(dictamen);
+  // Con alguna respuesta «No» el trabajo no puede aceptarse tal cual: regresa al ponente para que lo corrija.
+  const dictamenInvalido = dictamen === 'aceptado' && conCorrecciones > 0;
+  const completo = preguntas.length > 0 && pendientes.length === 0 && Boolean(dictamen) && !dictamenInvalido;
 
   const irAPendiente = () => {
     setMostrarErrores(true);
@@ -110,10 +112,10 @@ export default function EvaluationForm({ assignment, onSubmitted }) {
       <header className="ev-form__head">
         <span className="ev-eyebrow">Formulario de evaluación</span>
         <h2 className="ev-card__title">
-          <IconClipboard /> Califica el extenso
+          <IconClipboard /> {assignment.etapa === 'extenso' ? 'Califica el extenso' : 'Califica el resumen'}
         </h2>
         <p className="ev-muted ev-small">
-          Lee el extenso y contesta cada punto. Si marcas <strong>No</strong>, escribe qué debe corregir el autor.
+          Lee el {assignment.etapa === 'extenso' ? 'extenso' : 'resumen'} y contesta cada punto. Si marcas <strong>No</strong>, escribe qué debe corregir el autor.
         </p>
         <div className="ev-progress" aria-live="polite">
           <div className="ev-progress__text">
@@ -218,12 +220,18 @@ export default function EvaluationForm({ assignment, onSubmitted }) {
             >
               <option value="">Selecciona una opción…</option>
               {DICTAMEN_OPTIONS.map((o) => (
-                <option key={o.value} value={o.value}>
+                <option key={o.value} value={o.value} disabled={o.value === 'aceptado' && conCorrecciones > 0}>
                   {o.label}
                 </option>
               ))}
             </select>
             {mostrarErrores && !dictamen && <p className="ev-field__error">Selecciona un dictamen.</p>}
+            {dictamenInvalido && (
+              <p className="ev-field__error">Marcaste «No» en alguna pregunta: elige «Aceptado con cambios» o «Debe modificarse» para que el ponente lo corrija.</p>
+            )}
+            {conCorrecciones > 0 && !dictamenInvalido && (
+              <p className="ev-muted ev-small">El ponente recibirá tus observaciones, corregirá y te lo volverá a enviar hasta que todo quede en «Sí».</p>
+            )}
           </div>
           <div className="ev-field">
             <label className="ev-field__label" htmlFor="ev-comentario">

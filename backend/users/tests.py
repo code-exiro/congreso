@@ -54,7 +54,7 @@ class RegistrationWorkflowTests(APITestCase):
         return {
             "email": "irene@example.test", "first_name": "Irene", "last_name": "Torres",
             "maternal_last_name": "Luna", "password": PASSWORD, "password_confirm": PASSWORD,
-            "accepted_terms": True, "accepted_privacy_notice": True,
+            "accepted_terms": True, "accepted_privacy_notice": True, "confirmed_adult": True,
             "terms_document_id": self.terms.pk, "privacy_document_id": self.privacy.pk,
             **extra,
         }
@@ -76,6 +76,13 @@ class RegistrationWorkflowTests(APITestCase):
         self.assertIsNone(user.terms_accepted_at)
         with self.assertRaises(FieldDoesNotExist):
             User._meta.get_field("username")
+
+    def test_maternal_last_name_is_required_and_names_are_uppercase(self):
+        self.assertEqual(self.register(maternal_last_name="").status_code, 400)
+        response = self.register(first_name="María José", last_name="López", maternal_last_name="Núñez")
+        self.assertEqual(response.status_code, 201, response.data)
+        user = User.objects.get(email="irene@example.test")
+        self.assertEqual((user.first_name, user.last_name, user.maternal_last_name), ("MARÍA JOSÉ", "LÓPEZ", "NÚÑEZ"))
 
     def test_login_uses_email_without_case_sensitivity(self):
         self.assertEqual(self.register(email="IRENE@Example.Test").status_code, 201)
@@ -110,6 +117,15 @@ class RegistrationWorkflowTests(APITestCase):
         response = self.register(password_confirm="otra-clave-123!")
         self.assertEqual(response.status_code, 400)
         self.assertIn("password_confirm", response.data)
+
+    def test_adult_confirmation_is_required_and_stored(self):
+        response = self.register(confirmed_adult=False)
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("confirmed_adult", response.data)
+        self.assertEqual(self.register().status_code, 201)
+        user = User.objects.get(email__iexact=self.payload()["email"]) if hasattr(self, "payload") else User.objects.latest("id")
+        self.assertTrue(user.confirmed_adult)
+        self.assertIsNotNone(user.adult_confirmed_at)
 
     def test_legal_consent_cannot_be_false(self):
         response = self.register(accepted_terms=False)
@@ -385,10 +401,13 @@ class HistoricalMigrationTests(TransactionTestCase):
         )
         original_password = user.password
         MigrationExecutor(connection).migrate([self.latest])
-        migrated = User.objects.get(pk=user.pk)
+        # Modelo histórico al estado 0005: el modelo actual ya tiene columnas de migraciones posteriores.
+        HistUser = MigrationExecutor(connection).loader.project_state([self.latest]).apps.get_model("users", "User")
+        migrated = HistUser.objects.get(pk=user.pk)
         self.assertEqual(migrated.email, "legacy@example.test")
         self.assertEqual(migrated.password, original_password)
-        self.assertTrue(migrated.check_password(PASSWORD))
+        from django.contrib.auth.hashers import check_password
+        self.assertTrue(check_password(PASSWORD, migrated.password))
         self.assertTrue(migrated.accepted_terms)
         self.assertEqual(migrated.terms_accepted_at, accepted_at)
         self.assertFalse(migrated.profile.is_complete)
@@ -744,8 +763,7 @@ class RolesPrivilegesAdminTests(APITestCase):
                 "/eventos/constancias",
                 "/trabajos/solicitudes",
                 "/trabajos/activos",
-                "/configuraciones/limite-evaluaciones",
-                "/configuraciones/personalizacion",
+                "/configuraciones/limite-evaluaciones",
                 "/configuraciones/documentos-legales",
                 "/configuraciones/roles-privilegios",
             }.issubset(target_routes)
@@ -765,3 +783,13 @@ class RolesPrivilegesAdminTests(APITestCase):
         )
         self.assertEqual(revoke_eval_resp.status_code, 200, revoke_eval_resp.data)
         self.assertNotIn("/evaluaciones/asignadas", {m.route for m in get_user_menus(self.target)})
+
+
+class DocumentosPruebaTests(TestCase):
+    def test_comando_deja_registro_disponible_y_es_idempotente(self):
+        from django.core.management import call_command
+        call_command("crear_documentos_legales_prueba")
+        call_command("crear_documentos_legales_prueba")
+        docs = self.client.get("/api/auth/legal-documents/").json()
+        self.assertEqual(sorted(d["type"] for d in docs), ["PRIVACY_NOTICE", "TERMS"])
+        self.assertTrue(all(d["file"] for d in docs))
