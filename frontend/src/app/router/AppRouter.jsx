@@ -23,7 +23,7 @@ import BandejaSolicitudesRolPage from "../../features/solicitudesRol/pages/Bande
 import MisPagosPage from "../../features/pagos/pages/MisPagosPage";
 import ValidacionPagosPage from "../../features/pagos/pages/ValidacionPagosPage";
 import ListadoSolicitudesPage from "../../features/solicitudes/pages/ListadoSolicitudesPage";
-
+import CongressPage from "../../features/crear_congreso/registrarcongreso";
 import {
   RegistroAsistenciaPage,
 } from "../../features/common/pages/sectionPages";
@@ -41,6 +41,7 @@ export default function AppRouter() {
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/admin/nuevo-congreso" element={<RegistrarCongresoPage />} />
 
+        <Route path="/congreso" element={<CongressPage />} />
         <Route
           path="/"
           element={

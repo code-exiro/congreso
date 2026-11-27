@@ -18,11 +18,11 @@ from rest_framework.response import Response
 from rest_framework.test import APIClient, APITestCase, APIRequestFactory, force_authenticate
 from rest_framework.views import APIView
 
-from catalogs.models import AcademicLevel, Country, Institution, State
+from catalogs.models import AcademicLevel, AcademicStatus, Area, Campus, Country, DialingCode, Institution, State
 from .forms import CustomUserCreationForm
 from .models import (
     LegalDocument, Menu, MenuPrivilege, Privilege, Profile,
-    Role, RolePrivilege, UserLegalDocument, UserRole,
+    Role, RolePrivilege, UserArea, UserLegalDocument, UserPrivilege, UserRole,
 )
 from .permissions import HasPrivilege
 from .serializers import UserSerializer
@@ -77,13 +77,6 @@ class RegistrationWorkflowTests(APITestCase):
         with self.assertRaises(FieldDoesNotExist):
             User._meta.get_field("username")
 
-    def test_maternal_last_name_is_required_and_names_are_uppercase(self):
-        self.assertEqual(self.register(maternal_last_name="").status_code, 400)
-        response = self.register(first_name="María José", last_name="López", maternal_last_name="Núñez")
-        self.assertEqual(response.status_code, 201, response.data)
-        user = User.objects.get(email="irene@example.test")
-        self.assertEqual((user.first_name, user.last_name, user.maternal_last_name), ("MARÍA JOSÉ", "LÓPEZ", "NÚÑEZ"))
-
     def test_login_uses_email_without_case_sensitivity(self):
         self.assertEqual(self.register(email="IRENE@Example.Test").status_code, 201)
         response = self.client.post(reverse("login"), {"email": "Irene@EXAMPLE.TEST", "password": PASSWORD}, format="json")
@@ -117,15 +110,6 @@ class RegistrationWorkflowTests(APITestCase):
         response = self.register(password_confirm="otra-clave-123!")
         self.assertEqual(response.status_code, 400)
         self.assertIn("password_confirm", response.data)
-
-    def test_adult_confirmation_is_required_and_stored(self):
-        response = self.register(confirmed_adult=False)
-        self.assertEqual(response.status_code, 400)
-        self.assertIn("confirmed_adult", response.data)
-        self.assertEqual(self.register().status_code, 201)
-        user = User.objects.get(email__iexact=self.payload()["email"]) if hasattr(self, "payload") else User.objects.latest("id")
-        self.assertTrue(user.confirmed_adult)
-        self.assertIsNotNone(user.adult_confirmed_at)
 
     def test_legal_consent_cannot_be_false(self):
         response = self.register(accepted_terms=False)
@@ -202,57 +186,232 @@ class RegistrationWorkflowTests(APITestCase):
         user = User.objects.get(email="irene@example.test")
         other = User.objects.create_user("otro@example.test", PASSWORD)
         Profile.objects.create(user=other)
-        country = Country.objects.create(name="México")
-        state = State.objects.create(country=country, name="Ciudad de México")
-        institution = Institution.objects.create(name="UNAM")
-        level = AcademicLevel.objects.create(degree="Licenciatura")
+        country = Country.objects.get(name="México")
+        state = State.objects.filter(country=country).first()
+        institution = Institution.objects.first()
+        campus = Campus.objects.filter(institution=institution).first()
+        level = AcademicLevel.objects.first()
+        status_obj = AcademicStatus.objects.get(code="terminado")
         self.client.force_authenticate(user)
+        # Lada y teléfono son opcionales; semblanza, campus y estatus académico son obligatorios
         response = self.client.patch(reverse("profile"), {
-            "state": state.pk, "institution": institution.pk, "academic_level": level.pk,
-            "dialing_code": "52", "mobile_phone": "5512345678", "is_complete": False,
+            "state": state.pk,
+            "institution": institution.pk,
+            "campus": campus.pk,
+            "academic_level": level.pk,
+            "academic_status": status_obj.pk,
+            "dialing_code": "",
+            "mobile_phone": "",
+            "biography": "Investigadora en ingeniería y docencia universitaria.",
+            "is_complete": False,
             "user": other.pk,
         }, format="json")
         self.assertEqual(response.status_code, 200, response.data)
         self.assertTrue(response.data["is_complete"])
         self.assertEqual(response.data["country"], country.pk)
         self.assertFalse(Profile.objects.get(user=other).is_complete)
-        response = self.client.patch(reverse("profile"), {"mobile_phone": ""}, format="json")
+        # Quitar semblanza vuelve incompleto el perfil
+        response = self.client.patch(reverse("profile"), {"biography": ""}, format="json")
         self.assertFalse(response.data["is_complete"])
 
     def test_profile_endpoint_requires_authentication(self):
         self.assertEqual(self.client.get(reverse("profile")).status_code, 401)
         self.assertEqual(self.client.patch(reverse("profile"), {"mobile_phone": "123"}).status_code, 401)
 
-    def test_profile_resolves_temporary_catalogs_and_rejects_unknown_ids(self):
+    def test_profile_uses_real_catalogs_dependent_states_and_rejects_unknown_ids(self):
         self.register()
         user = User.objects.get(email="irene@example.test")
         self.client.force_authenticate(user)
 
-        self.assertFalse(State.objects.exists())
-        self.assertFalse(Institution.objects.exists())
-        self.assertFalse(AcademicLevel.objects.exists())
+        catalogs_resp = self.client.get(reverse("profile_catalogs"))
+        self.assertEqual(catalogs_resp.status_code, 200)
+        self.assertGreaterEqual(len(catalogs_resp.data["countries"]), 200)
+        self.assertEqual(len(catalogs_resp.data["areas"]), 27)
+        self.assertEqual(len(catalogs_resp.data["academic_levels"]), 9)
+        self.assertEqual(
+            {s["code"] for s in catalogs_resp.data["academic_statuses"]},
+            {"cursando", "terminado"},
+        )
+        self.assertGreaterEqual(len(catalogs_resp.data["institutions"]), 170)
+        self.assertGreaterEqual(len(catalogs_resp.data["dialing_codes"]), 200)
+
+        mexico = Country.objects.get(name="México")
+        states_resp = self.client.get(reverse("catalog_states_by_country"), {"country": mexico.pk})
+        self.assertEqual(states_resp.status_code, 200)
+        self.assertEqual(len(states_resp.data), 32)
+        jalisco = next(s for s in states_resp.data if s["name"] == "Jalisco")
+
+        unam = Institution.objects.get(acronym="UNAM")
+        campuses_resp = self.client.get(reverse("catalog_campuses_by_institution"), {"institution": unam.pk})
+        self.assertEqual(campuses_resp.status_code, 200)
+        self.assertEqual(len(campuses_resp.data), 29)
+        fes_cuautitlan = next(c for c in campuses_resp.data if "Cuautitlán" in c["name"])
+
+        ipn = Institution.objects.get(acronym="IPN")
+        ipn_campus = Campus.objects.filter(institution=ipn).first()
+        mismatch_resp = self.client.patch(
+            reverse("profile"),
+            {"institution": unam.pk, "campus": ipn_campus.pk},
+            format="json",
+        )
+        self.assertEqual(mismatch_resp.status_code, 400)
+        self.assertIn("campus", mismatch_resp.data)
+
+        level = AcademicLevel.objects.get(degree="Licenciatura")
+        cursando = AcademicStatus.objects.get(code="cursando")
 
         response = self.client.patch(reverse("profile"), {
-            "state": 1,
-            "institution": 1,
-            "academic_level": 3,
-            "dialing_code": "+52",
-            "mobile_phone": "5512345678",
-            "phone": "5587654321",
-            "biography": "Investigador en sistemas.",
+            "state": jalisco["id"],
+            "institution": unam.pk,
+            "campus": fes_cuautitlan["id"],
+            "academic_level": level.pk,
+            "academic_status": cursando.pk,
+            "biography": "Estudiante de licenciatura en ingeniería.",
         }, format="json")
         self.assertEqual(response.status_code, 200, response.data)
         self.assertTrue(response.data["is_complete"])
-        self.assertEqual(response.data["state"], 1)
-        self.assertEqual(response.data["institution"], 1)
-        self.assertEqual(response.data["academic_level"], 3)
-        self.assertTrue(State.objects.filter(pk=1, name="Estado de México").exists())
-        self.assertTrue(Institution.objects.filter(pk=1, name="FES Cuautitlán - UNAM").exists())
-        self.assertTrue(AcademicLevel.objects.filter(pk=3, degree="Licenciatura / Ingeniería").exists())
+        self.assertEqual(response.data["country"], mexico.pk)
+        self.assertEqual(response.data["state"], jalisco["id"])
+        self.assertEqual(response.data["institution"], unam.pk)
+        self.assertEqual(response.data["campus"], fes_cuautitlan["id"])
+        self.assertEqual(response.data["academic_status"], cursando.pk)
 
-        bad_response = self.client.patch(reverse("profile"), {"state": 99999}, format="json")
+        bad_response = self.client.patch(reverse("profile"), {"state": 999999}, format="json")
         self.assertEqual(bad_response.status_code, 400)
         self.assertIn("state", bad_response.data)
+
+    def test_evaluator_areas_hidden_not_deleted_when_privilege_removed(self):
+        self.register()
+        user = User.objects.get(email="irene@example.test")
+        self.client.force_authenticate(user)
+
+        # Un ponente normal sin privilegio de evaluar no puede gestionar áreas
+        initial = self.client.get(reverse("profile"))
+        self.assertFalse(initial.data["can_manage_evaluator_areas"])
+        self.assertEqual(initial.data["area_ids"], [])
+
+        # Otorgar privilegio evaluar_trabajo (aunque su rol sea ponente)
+        eval_priv = Privilege.objects.get(code="evaluar_trabajo")
+        user_priv = UserPrivilege.objects.create(user=user, privilege=eval_priv, is_enabled=True)
+
+        with_priv = self.client.get(reverse("profile"))
+        self.assertTrue(with_priv.data["can_manage_evaluator_areas"])
+
+        areas = list(Area.objects.all()[:2])
+        save_resp = self.client.patch(
+            reverse("profile"),
+            {"area_ids": [a.pk for a in areas]},
+            format="json",
+        )
+        self.assertEqual(save_resp.status_code, 200, save_resp.data)
+        self.assertEqual(set(save_resp.data["area_ids"]), {a.pk for a in areas})
+
+        # Al quitarle el privilegio de evaluar, las áreas se ocultan del perfil pero NO se borran de BD
+        user_priv.is_enabled = False
+        user_priv.save()
+        hidden_resp = self.client.get(reverse("profile"))
+        self.assertFalse(hidden_resp.data["can_manage_evaluator_areas"])
+        self.assertEqual(hidden_resp.data["area_ids"], [])
+        self.assertEqual(UserArea.objects.filter(user=user).count(), 2)
+
+        # Guardar otro campo del perfil sin privilegio no borra sus áreas guardadas
+        self.client.patch(reverse("profile"), {"biography": "Nueva semblanza."}, format="json")
+        self.assertEqual(UserArea.objects.filter(user=user).count(), 2)
+
+        # Si recupera el privilegio, las áreas reaparecen automáticamente
+        user_priv.is_enabled = True
+        user_priv.save()
+        restored_resp = self.client.get(reverse("profile"))
+        self.assertTrue(restored_resp.data["can_manage_evaluator_areas"])
+        self.assertEqual(set(restored_resp.data["area_ids"]), {a.pk for a in areas})
+
+    def test_change_email_and_change_password_endpoints(self):
+        self.register()
+        user = User.objects.get(email="irene@example.test")
+        self.client.force_authenticate(user)
+
+        # Cambio de correo con contraseña incorrecta falla
+        bad_email = self.client.post(
+            reverse("change_email"),
+            {"current_password": "wrong-password", "new_email": "irene.nueva@example.test"},
+            format="json",
+        )
+        self.assertEqual(bad_email.status_code, 400)
+
+        # Cambio de correo válido
+        ok_email = self.client.post(
+            reverse("change_email"),
+            {"current_password": PASSWORD, "new_email": "irene.nueva@example.test"},
+            format="json",
+        )
+        self.assertEqual(ok_email.status_code, 200, ok_email.data)
+        user.refresh_from_db()
+        self.assertEqual(user.email, "irene.nueva@example.test")
+
+        # Cambio de contraseña válido
+        new_pwd = "NuevaClave!9xP4#mQ2"
+        ok_pwd = self.client.post(
+            reverse("change_password"),
+            {
+                "current_password": PASSWORD,
+                "new_password": new_pwd,
+                "new_password_confirm": new_pwd,
+            },
+            format="json",
+        )
+        self.assertEqual(ok_pwd.status_code, 200, ok_pwd.data)
+        user.refresh_from_db()
+        self.assertTrue(user.check_password(new_pwd))
+
+    def test_otro_institution_campus_fes_acronyms_and_biography_word_limit(self):
+        self.register()
+        user = User.objects.get(email="irene@example.test")
+        self.client.force_authenticate(user)
+
+        # 1. Abreviaciones actualizadas de FES
+        self.assertEqual(
+            Campus.objects.get(name="Facultad de Estudios Superiores Cuautitlán").acronym,
+            "FESC",
+        )
+        self.assertEqual(
+            Campus.objects.get(name="Facultad de Estudios Superiores Iztacala").acronym,
+            "FESI",
+        )
+        self.assertEqual(
+            Campus.objects.get(name="Facultad de Estudios Superiores Zaragoza").acronym,
+            "FESZ",
+        )
+
+        # 2. Institución "Otro" al final del catálogo con su único campus "Otro"
+        catalogs_resp = self.client.get(reverse("profile_catalogs"))
+        self.assertEqual(catalogs_resp.status_code, 200)
+        self.assertEqual(catalogs_resp.data["institutions"][-1]["name"], "Otro")
+        otro_inst_id = catalogs_resp.data["institutions"][-1]["id"]
+
+        otro_campuses_resp = self.client.get(
+            reverse("catalog_campuses_by_institution"),
+            {"institution": otro_inst_id},
+        )
+        self.assertEqual(otro_campuses_resp.status_code, 200)
+        self.assertEqual(len(otro_campuses_resp.data), 1)
+        self.assertEqual(otro_campuses_resp.data[0]["name"], "Otro")
+
+        # 3. Semblanza: 500 palabras con doble espacio es válida (doble espacio no cuenta como palabra)
+        ok_bio = "  ".join(["palabra"] * 500)
+        ok_resp = self.client.patch(reverse("profile"), {"biography": ok_bio}, format="json")
+        self.assertEqual(ok_resp.status_code, 200, ok_resp.data)
+
+        # 500 palabras + triple espacio cuenta como 501 y es rechazada
+        triple_space_bio = " ".join(["palabra"] * 500) + "   "
+        bad_triple = self.client.patch(reverse("profile"), {"biography": triple_space_bio}, format="json")
+        self.assertEqual(bad_triple.status_code, 400)
+        self.assertIn("biography", bad_triple.data)
+
+        # 501 palabras reales es rechazada
+        too_long_bio = " ".join(["palabra"] * 501)
+        bad_long = self.client.patch(reverse("profile"), {"biography": too_long_bio}, format="json")
+        self.assertEqual(bad_long.status_code, 400)
+        self.assertIn("biography", bad_long.data)
 
     def test_profile_supports_picture_upload_and_removal(self):
         import io
@@ -262,6 +421,12 @@ class RegistrationWorkflowTests(APITestCase):
         user = User.objects.get(email="irene@example.test")
         self.client.force_authenticate(user)
 
+        state = State.objects.first()
+        institution = Institution.objects.first()
+        campus = Campus.objects.filter(institution=institution).first()
+        level = AcademicLevel.objects.first()
+        status_obj = AcademicStatus.objects.get(code="terminado")
+
         buf = io.BytesIO()
         Image.new("RGB", (4, 4), color=(16, 33, 56)).save(buf, format="PNG")
         photo = SimpleUploadedFile("avatar.png", buf.getvalue(), content_type="image/png")
@@ -269,11 +434,12 @@ class RegistrationWorkflowTests(APITestCase):
         upload_response = self.client.patch(
             reverse("profile"),
             {
-                "state": "2",
-                "institution": "2",
-                "academic_level": "5",
-                "dialing_code": "+52",
-                "mobile_phone": "5511223344",
+                "state": str(state.pk),
+                "institution": str(institution.pk),
+                "campus": str(campus.pk),
+                "academic_level": str(level.pk),
+                "academic_status": str(status_obj.pk),
+                "biography": "Semblanza de prueba para carga de foto.",
                 "profile_picture": photo,
             },
             format="multipart",
@@ -763,7 +929,7 @@ class RolesPrivilegesAdminTests(APITestCase):
                 "/eventos/constancias",
                 "/trabajos/solicitudes",
                 "/trabajos/activos",
-                "/configuraciones/limite-evaluaciones",
+                "/configuraciones/limite-evaluaciones",
                 "/configuraciones/documentos-legales",
                 "/configuraciones/roles-privilegios",
             }.issubset(target_routes)

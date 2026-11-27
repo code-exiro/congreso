@@ -1,45 +1,99 @@
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import AcademicLevel, Area, Campus, Country, Institution, Lada, State
+from .models import (
+    AcademicLevel,
+    AcademicStatus,
+    Area,
+    Campus,
+    Country,
+    DialingCode,
+    Institution,
+    State,
+)
 
 
-class CatalogosView(APIView):
-    """GET /api/catalogos/ — catálogos de usuario (públicos, de solo lectura)."""
+class ProfileCatalogsView(APIView):
+    """
+    Devuelve todos los catálogos reales requeridos por el formulario de perfil
+    (excepto los estados, que se consultan de forma dependiente por país).
+    """
 
-    permission_classes = [AllowAny]
-    authentication_classes: list = []
-
-    def get(self, request):
-        return Response({
-            "paises": [{"id": p.pk, "nombre": p.name} for p in Country.objects.order_by("name")],
-            "estados": [
-                {"id": e.pk, "nombre": e.name, "pais_id": e.country_id, "pais": e.country.name}
-                for e in State.objects.select_related("country").order_by("country__name", "name")
-            ],
-            "instituciones": [
-                {"id": i.pk, "nombre": i.name, "acronimo": i.acronym} for i in Institution.objects.order_by("name")
-            ],
-            "niveles_academicos": [
-                {"id": n.pk, "nombre": n.degree, "descripcion": n.description} for n in AcademicLevel.objects.order_by("id")
-            ],
-            "areas": [{"id": a.pk, "clave": a.code, "nombre": a.name} for a in Area.objects.order_by("name")],
-            "ladas": [{"id": l.pk, "codigo": l.digitos, "pais": l.pais} for l in Lada.objects.order_by("pais")],
-        })
-
-
-class CampusView(APIView):
-    """GET /api/catalogos/campus/?institucion=<id> — campus de una institución."""
-
-    permission_classes = [AllowAny]
-    authentication_classes: list = []
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        qs = Campus.objects.order_by("name")
-        institucion = request.query_params.get("institucion")
-        if institucion and institucion.isdigit():
-            qs = qs.filter(institution_id=int(institucion))
-        return Response([
-            {"id": c.pk, "nombre": c.name, "acronimo": c.acronym, "institucion_id": c.institution_id} for c in qs
-        ])
+        countries = list(Country.objects.all().order_by("name").values("id", "name"))
+        academic_levels = list(
+            AcademicLevel.objects.all().order_by("id").values("id", "degree", "description")
+        )
+        academic_statuses = list(
+            AcademicStatus.objects.all().order_by("id").values("id", "code", "name")
+        )
+        institutions = sorted(
+            Institution.objects.all().order_by("name").values("id", "name", "acronym"),
+            key=lambda item: (item["name"].strip().lower() == "otro", item["name"].lower()),
+        )
+        dialing_codes = list(
+            DialingCode.objects.all()
+            .order_by("country_name", "code")
+            .values("id", "code", "country_name", "country_id")
+        )
+        areas = list(Area.objects.all().order_by("name").values("id", "code", "name"))
+
+        return Response(
+            {
+                "countries": countries,
+                "academic_levels": academic_levels,
+                "academic_statuses": academic_statuses,
+                "institutions": institutions,
+                "dialing_codes": dialing_codes,
+                "areas": areas,
+            }
+        )
+
+
+class StatesByCountryView(APIView):
+    """
+    Devuelve los estados pertenecientes al país indicado (?country=<id>).
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        country_param = request.query_params.get("country")
+        if not country_param:
+            return Response([])
+        try:
+            country_id = int(country_param)
+        except (TypeError, ValueError):
+            return Response([])
+        states = list(
+            State.objects.filter(country_id=country_id)
+            .order_by("name")
+            .values("id", "name", "country_id")
+        )
+        return Response(states)
+
+
+class CampusesByInstitutionView(APIView):
+    """
+    Devuelve los campus pertenecientes a la institución indicada (?institution=<id>).
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        inst_param = request.query_params.get("institution")
+        if not inst_param:
+            return Response([])
+        try:
+            inst_id = int(inst_param)
+        except (TypeError, ValueError):
+            return Response([])
+        campuses = list(
+            Campus.objects.filter(institution_id=inst_id)
+            .order_by("name")
+            .values("id", "name", "acronym", "institution_id")
+        )
+        return Response(campuses)

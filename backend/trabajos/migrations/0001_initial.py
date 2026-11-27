@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('catalogs', '0002_lada_campus'),
+        ('catalogs', '0004_campus_acronyms_and_otro'),
         ('congreso', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]

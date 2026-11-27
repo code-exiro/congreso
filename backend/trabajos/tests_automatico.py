@@ -9,7 +9,7 @@ from django.test import TestCase, override_settings
 from django.utils import timezone
 from rest_framework.test import APIClient
 
-from catalogs.models import AcademicLevel, Area, Country, Institution, State
+from catalogs.models import AcademicLevel, AcademicStatus, Area, Campus, Country, Institution, State
 from congreso import ventanas as vt
 from congreso.models import Actividad, Congreso, CongresoActividad, CongresoFechaImportante, FechaImportante, LimiteTrabajo
 from users.models import Privilege, Profile, Role, RolePrivilege, UserRole
@@ -42,10 +42,13 @@ class FlujoAutomaticoTests(TestCase):
     def setUpTestData(cls):
         cls.pon = User.objects.create_user(email="pon@x.com", password="x12345678", first_name="Ana", last_name="Pérez")
         UserRole.objects.create(user=cls.pon, role=rol("pon_auto", ["subir_trabajo", "ver_sus_trabajos"]))
-        pais = Country.objects.create(name="México")
+        pais = Country.objects.get_or_create(name="México")[0]
         Profile.objects.update_or_create(user=cls.pon, defaults=dict(
-            state=State.objects.create(country=pais, name="Jalisco"), institution=Institution.objects.create(name="UNAM"),
-            academic_level=AcademicLevel.objects.create(degree="Maestría"), dialing_code="+52", mobile_phone="5512345678",
+            state=State.objects.get_or_create(country=pais, name="Jalisco")[0], institution=Institution.objects.get_or_create(name="UNAM")[0],
+            academic_level=AcademicLevel.objects.get_or_create(degree="Maestría")[0],
+            campus=Campus.objects.get_or_create(institution=Institution.objects.get_or_create(name="UNAM")[0], name="Campus de prueba")[0],
+            academic_status=AcademicStatus.objects.get_or_create(code="terminado", defaults={"name": "Terminado"})[0], biography="Semblanza de prueba.",
+            dialing_code="+52", mobile_phone="5512345678",
         ))
         cls.evs = []
         for i in (1, 2, 3):
@@ -54,7 +57,7 @@ class FlujoAutomaticoTests(TestCase):
             cls.evs.append(u)
         cls.coord = User.objects.create_user(email="co@x.com", password="x12345678")
         UserRole.objects.create(user=cls.coord, role=rol("co_auto", ["evaluar_general", "asignar_evaluador"]))
-        cls.area = Area.objects.create(code="FE", name="Electricidad")
+        cls.area = Area.objects.get_or_create(code="FE", defaults={"name": "Electricidad"})[0]
         cls.congreso = Congreso.objects.create(
             nombre_congreso="CONING", edicion_congreso=22, modalidad_congreso="Presencial", correo_congreso="c@x.com",
             contrasena_aplicacion="x", contacto_correo="c@x.com", contacto_telefono="5512345678",

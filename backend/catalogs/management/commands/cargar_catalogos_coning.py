@@ -12,7 +12,7 @@ from django.db import connection, transaction
 from django.db.models import ProtectedError
 from django.core.management.color import no_style
 
-from catalogs.models import AcademicLevel, Area, Campus, Country, Institution, Lada, State
+from catalogs.models import AcademicLevel, Area, Campus, Country, DialingCode, Institution, State
 from congreso.models import (
     Actividad, Aula, CampusCongreso, ConceptoCuota, Edificio, FechaImportante,
     LimiteTrabajo, Patrocinador, TipoPatrocinador,
@@ -74,7 +74,7 @@ class Command(BaseCommand):
             _guardar(Institution, [(r["id"], {"name": r["nombre"], "acronym": r["acronimo"]}) for r in d["instituciones"]])
             _guardar(Campus, [(r["id"], {"institution_id": r["institucion_id"], "name": r["nombre"], "acronym": r["acronimo"]}) for r in d["campus"]])
             _guardar(AcademicLevel, [(r["id"], {"degree": r["grado"], "description": r["descripcion"]}) for r in d["niveles"]])
-            _guardar(Lada, [(r["id"], {"digitos": r["digitos"], "pais": r["pais"]}) for r in d["ladas"]])
+            _guardar(DialingCode, [(r["id"], {"code": r["digitos"], "country_name": r["pais"]}) for r in d["ladas"]])
             for r in d["areas"]:
                 Area.objects.update_or_create(code=r["clave"], defaults={"name": r["nombre"]})
 
@@ -105,7 +105,7 @@ class Command(BaseCommand):
             _quitar_sobrantes(Actividad, [r["id"] for r in d["actividades"]])
 
             # Con ids explícitos hay que realinear las secuencias de PostgreSQL.
-            modelos = [Country, State, Institution, Campus, AcademicLevel, Lada, Area, TipoPatrocinador, Patrocinador,
+            modelos = [Country, State, Institution, Campus, AcademicLevel, DialingCode, Area, TipoPatrocinador, Patrocinador,
                        ConceptoCuota, Actividad, LimiteTrabajo, CampusCongreso, Edificio, Aula, Documento, Fase, Pregunta]
             with connection.cursor() as cur:
                 for sql in connection.ops.sequence_reset_sql(no_style(), modelos):

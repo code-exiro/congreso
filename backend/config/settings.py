@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "congreso",
     "trabajos",
     "soporte",
+    "coning",
 ]
 
 MIDDLEWARE = [
@@ -154,6 +155,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
 ]
 
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https?://(localhost|127\.0\.0\.1):517[0-9]$",
+]
+
 AUTH_USER_MODEL = "users.User"
 
 MEDIA_URL = "/media/"
@@ -169,4 +174,3 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }
-

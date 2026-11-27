@@ -51,7 +51,7 @@ class PagosTests(TestCase):
         act = Actividad.objects.create(nombre="ponencia")
         cls.f_env = Fase.objects.create(actividad=act, nombre="resumen_enviado", secuencia=1)
         cls.f_apr = Fase.objects.create(actividad=act, nombre="resumen_aprobado", secuencia=3)
-        cls.t = Trabajo.objects.create(congreso=cls.congreso, actividad=act, area=Area.objects.create(code="FE", name="E"),
+        cls.t = Trabajo.objects.create(congreso=cls.congreso, actividad=act, area=Area.objects.get_or_create(code="FE", defaults={"name": "E"})[0],
                                        fase=cls.f_env, titulo="Secador solar", resumen=RESUMEN, palabras_clave="x")
         UsuarioTrabajo.objects.create(usuario=cls.pon, trabajo=cls.t, es_autor=True, orden_autor=1)
         UsuarioTrabajo.objects.create(usuario=cls.co, trabajo=cls.t, es_autor=False, orden_autor=2)

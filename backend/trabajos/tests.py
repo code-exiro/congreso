@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.utils import timezone
 from rest_framework.test import APIClient
 
-from catalogs.models import AcademicLevel, Area, Country, Institution, State
+from catalogs.models import AcademicLevel, AcademicStatus, Area, Campus, Country, Institution, State
 from congreso.models import (
     Actividad, Congreso, CongresoActividad, CongresoFechaImportante, FechaImportante, LimiteTrabajo,
 )
@@ -22,14 +22,16 @@ class SolicitudesPonenteTests(TestCase):
     def setUpTestData(cls):
         cls.ponente = User.objects.create_user(email="p@x.com", password="x12345678", first_name="Ana", last_name="Pérez")
         UserRole.objects.get_or_create(user=cls.ponente, role=Role.objects.get(name__iexact="ponente"))
-        pais = Country.objects.create(name="México")
+        pais = Country.objects.get_or_create(name="México")[0]
         Profile.objects.update_or_create(user=cls.ponente, defaults=dict(
-            state=State.objects.create(country=pais, name="Jalisco"),
-            institution=Institution.objects.create(name="UNAM"),
-            academic_level=AcademicLevel.objects.create(degree="Maestría"),
+            state=State.objects.get_or_create(country=pais, name="Jalisco")[0],
+            institution=Institution.objects.get_or_create(name="UNAM")[0],
+            academic_level=AcademicLevel.objects.get_or_create(degree="Maestría")[0],
+            campus=Campus.objects.get_or_create(institution=Institution.objects.get_or_create(name="UNAM")[0], name="Campus de prueba")[0],
+            academic_status=AcademicStatus.objects.get_or_create(code="terminado", defaults={"name": "Terminado"})[0], biography="Semblanza de prueba.",
             dialing_code="+52", mobile_phone="5512345678",
         ))
-        cls.area = Area.objects.create(code="FE", name="Electricidad")
+        cls.area = Area.objects.get_or_create(code="FE", defaults={"name": "Electricidad"})[0]
         cls.congreso = Congreso.objects.create(
             nombre_congreso="CONING", edicion_congreso=22, modalidad_congreso="Presencial", correo_congreso="c@x.com",
             contrasena_aplicacion="x", contacto_correo="c@x.com", contacto_telefono="5512345678",
@@ -87,10 +89,9 @@ class SolicitudesPonenteTests(TestCase):
         self.assertEqual((op["usados_global"], op["limite_global"]), (2, 2))
 
     def test_perfil_incompleto_no_puede_enviar(self):
-        Profile.objects.filter(user=self.ponente).update(dialing_code="")
         self.ponente.profile.refresh_from_db()
         p = self.ponente.profile
-        p.dialing_code = ""
+        p.biography = ""     # la semblanza es obligatoria para que el perfil cuente como completo
         p.save()
         r = self.c.post("/api/trabajos/mis-solicitudes/", self.datos(), format="json")
         self.assertEqual(r.status_code, 403)
@@ -154,7 +155,9 @@ class SolicitudesPonenteTests(TestCase):
         c2 = APIClient(); c2.force_authenticate(co)
         Profile.objects.update_or_create(user=co, defaults=dict(
             state=self.ponente.profile.state, institution=self.ponente.profile.institution,
-            academic_level=self.ponente.profile.academic_level, dialing_code="+52", mobile_phone="5512345678"))
+            academic_level=self.ponente.profile.academic_level, campus=self.ponente.profile.campus,
+            academic_status=self.ponente.profile.academic_status, biography="Semblanza de prueba.",
+            dialing_code="+52", mobile_phone="5512345678"))
         opciones = c2.get("/api/trabajos/opciones/").json()["congresos"][0]["actividades"]
         taller = next(a for a in opciones if a["nombre"] == "taller")
         self.assertEqual((taller["usados"], taller["limite"]), (1, 1))
@@ -219,7 +222,7 @@ class CoordinadorTests(TestCase):
         RolePrivilege.objects.create(role=rol, privilege=p)
         UserRole.objects.create(user=cls.coord, role=rol)
         cls.ponente = User.objects.create_user(email="pon@x.com", password="x12345678", first_name="Ana", last_name="Pérez")
-        cls.area = Area.objects.create(code="FE", name="Electricidad")
+        cls.area = Area.objects.get_or_create(code="FE", defaults={"name": "Electricidad"})[0]
         cls.congreso = Congreso.objects.create(
             nombre_congreso="CONING", edicion_congreso=22, modalidad_congreso="Presencial", correo_congreso="c@x.com",
             contrasena_aplicacion="x", contacto_correo="c@x.com", contacto_telefono="5512345678",
@@ -287,7 +290,7 @@ class EvaluacionTests(TestCase):
         for u in (cls.ev1, cls.ev2):
             UserRole.objects.create(user=u, role=rol_e)
         cls.pon = User.objects.create_user(email="pon@x.com", password="x12345678")
-        cls.area = Area.objects.create(code="FE", name="Electricidad")
+        cls.area = Area.objects.get_or_create(code="FE", defaults={"name": "Electricidad"})[0]
         cls.congreso = Congreso.objects.create(
             nombre_congreso="CONING", edicion_congreso=22, modalidad_congreso="Presencial", correo_congreso="c@x.com",
             contrasena_aplicacion="x", contacto_correo="c@x.com", contacto_telefono="5512345678",
@@ -388,7 +391,7 @@ class ExtensoTests(TestCase):
         UserRole.objects.create(user=cls.ev, role=rol("ev_t", ["evaluar_trabajo", "ver_sus_evaluaciones"]))
         cls.coord = User.objects.create_user(email="co@x.com", password="x12345678")
         UserRole.objects.create(user=cls.coord, role=rol("co_t", ["evaluar_general", "asignar_evaluador"]))
-        cls.area = Area.objects.create(code="FE", name="Electricidad")
+        cls.area = Area.objects.get_or_create(code="FE", defaults={"name": "Electricidad"})[0]
         cls.congreso = Congreso.objects.create(
             nombre_congreso="CONING", edicion_congreso=22, modalidad_congreso="Presencial", correo_congreso="c@x.com",
             contrasena_aplicacion="x", contacto_correo="c@x.com", contacto_telefono="5512345678",
