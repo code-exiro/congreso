@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
 import './registrarcongreso.css';
 
+// Nombre oficial del congreso: se propone siempre completo para no tener que escribirlo en cada edición.
+const NOMBRE_CONGRESO =
+  'Congreso Científico Tecnológico de las carreras de Ingeniería Mecánica Eléctrica, Industrial y Telecomunicaciones, Sistemas y Electrónica';
+
 export default function registrarcongreso() {
   // 1. Campos de la tabla [Congreso]
   const [congreso, setCongreso] = useState({
-    nombre_congreso: 'CONING',
+    nombre_congreso: NOMBRE_CONGRESO,
     edicion_congreso: '',
     modalidad_congreso: 'Híbrida',
     ubicacion_sede: 'FES Cuautitlán, UNAM',
@@ -251,7 +255,7 @@ export default function registrarcongreso() {
                   name="nombre_congreso"
                   value={congreso.nombre_congreso}
                   onChange={handleCongresoChange}
-                  placeholder="Ej. CONING"
+                  placeholder="Nombre completo del congreso"
                   required
                 />
               </div>

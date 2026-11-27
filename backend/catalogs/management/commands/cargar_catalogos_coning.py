@@ -43,6 +43,11 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
+            "--solo-congreso", action="store_true",
+            help="Carga solo los catálogos del congreso (actividades, fases, preguntas, cuotas, fechas…) y NO toca los de usuario "
+                 "(países, estados, instituciones, campus, ladas, áreas), que ya vienen sembrados por las migraciones de `catalogs`.",
+        )
+        parser.add_argument(
             "--reemplazar", action="store_true",
             help="Reemplaza los catálogos de usuario existentes (los temporales); limpia el estado/institución/nivel de los perfiles.",
         )
@@ -50,7 +55,8 @@ class Command(BaseCommand):
     def handle(self, *args, **opts):
         d = json.loads(DATOS.read_text(encoding="utf-8"))
 
-        previos = any(m.objects.exists() for m in (Country, State, Institution, AcademicLevel))
+        solo = opts["solo_congreso"]
+        previos = (not solo) and any(m.objects.exists() for m in (Country, State, Institution, AcademicLevel))
         ya_cargado = Country.objects.filter(pk=d["paises"][0]["id"], name=d["paises"][0]["nombre"]).exists()
         if previos and not ya_cargado:
             if not opts["reemplazar"]:
@@ -69,14 +75,15 @@ class Command(BaseCommand):
                 AcademicLevel.objects.all().delete()
                 self.stdout.write(f"Catálogos temporales reemplazados; {n} perfiles sin estado/institución/nivel (se vuelven a elegir).")
 
-            _guardar(Country, [(r["id"], {"name": r["nombre"]}) for r in d["paises"]])
-            _guardar(State, [(r["id"], {"country_id": r["pais_id"], "name": r["nombre"]}) for r in d["estados"]])
-            _guardar(Institution, [(r["id"], {"name": r["nombre"], "acronym": r["acronimo"]}) for r in d["instituciones"]])
-            _guardar(Campus, [(r["id"], {"institution_id": r["institucion_id"], "name": r["nombre"], "acronym": r["acronimo"]}) for r in d["campus"]])
-            _guardar(AcademicLevel, [(r["id"], {"degree": r["grado"], "description": r["descripcion"]}) for r in d["niveles"]])
-            _guardar(DialingCode, [(r["id"], {"code": r["digitos"], "country_name": r["pais"]}) for r in d["ladas"]])
-            for r in d["areas"]:
-                Area.objects.update_or_create(code=r["clave"], defaults={"name": r["nombre"]})
+            if not solo:
+                _guardar(Country, [(r["id"], {"name": r["nombre"]}) for r in d["paises"]])
+                _guardar(State, [(r["id"], {"country_id": r["pais_id"], "name": r["nombre"]}) for r in d["estados"]])
+                _guardar(Institution, [(r["id"], {"name": r["nombre"], "acronym": r["acronimo"]}) for r in d["instituciones"]])
+                _guardar(Campus, [(r["id"], {"institution_id": r["institucion_id"], "name": r["nombre"], "acronym": r["acronimo"]}) for r in d["campus"]])
+                _guardar(AcademicLevel, [(r["id"], {"degree": r["grado"], "description": r["descripcion"]}) for r in d["niveles"]])
+                _guardar(DialingCode, [(r["id"], {"code": r["digitos"], "country_name": r["pais"]}) for r in d["ladas"]])
+                for r in d["areas"]:
+                    Area.objects.update_or_create(code=r["clave"], defaults={"name": r["nombre"]})
 
             # --- Congreso ---
             _guardar(TipoPatrocinador, [(r["id"], {"nombre": r["nombre"]}) for r in d["tipos_patrocinador"]])
@@ -105,7 +112,7 @@ class Command(BaseCommand):
             _quitar_sobrantes(Actividad, [r["id"] for r in d["actividades"]])
 
             # Con ids explícitos hay que realinear las secuencias de PostgreSQL.
-            modelos = [Country, State, Institution, Campus, AcademicLevel, DialingCode, Area, TipoPatrocinador, Patrocinador,
+            modelos = ([] if solo else [Country, State, Institution, Campus, AcademicLevel, DialingCode, Area]) + [TipoPatrocinador, Patrocinador,
                        ConceptoCuota, Actividad, LimiteTrabajo, CampusCongreso, Edificio, Aula, Documento, Fase, Pregunta]
             with connection.cursor() as cur:
                 for sql in connection.ops.sequence_reset_sql(no_style(), modelos):

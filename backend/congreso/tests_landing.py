@@ -32,6 +32,44 @@ class LandingTests(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertEqual(r.data["congreso"]["edicion"], 1)
 
+    def test_la_landing_muestra_las_fechas_importantes_del_congreso(self):
+        import datetime
+        from . import ventanas as vt
+        from .models import CongresoFechaImportante, FechaImportante
+        self.assertEqual(self.c.get("/api/landing/").data["fechas_proceso"], [])           # sin fechas configuradas
+        hoy = datetime.date.today()
+        for clave, (i, f) in {vt.ENTREGA_EXTENSO: (10, 12), vt.RECEPCION: (0, 5)}.items():
+            fi, _ = FechaImportante.objects.get_or_create(nombre=vt.NOMBRES[clave])
+            CongresoFechaImportante.objects.create(congreso=self.cong, fecha_importante=fi,
+                                                   fecha_inicio=hoy + datetime.timedelta(days=i), fecha_fin=hoy + datetime.timedelta(days=f))
+        fechas = self.c.get("/api/landing/").data["fechas_proceso"]
+        self.assertEqual([x["title"] for x in fechas], [vt.NOMBRES[vt.RECEPCION], vt.NOMBRES[vt.ENTREGA_EXTENSO]])   # en orden de fecha
+        self.assertEqual(fechas[0]["startDate"], hoy.isoformat())
+        self.assertTrue(all(x["proceso"] and x["color"] for x in fechas))
+
+    def test_la_landing_muestra_los_archivos_subidos_al_crear_el_congreso(self):
+        import shutil
+        import tempfile
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        from django.test import override_settings
+        media = tempfile.mkdtemp()
+        try:
+            with override_settings(MEDIA_ROOT=media):
+                self.assertEqual(self.c.get("/api/landing/").data["documentos_congreso"], [])
+                self.cong.convocatoria = SimpleUploadedFile("conv.pdf", b"%PDF-1.4 x")
+                self.cong.plantilla_extenso = SimpleUploadedFile("ext.docx", b"x")
+                self.cong.plantilla_constancia = SimpleUploadedFile("const.docx", b"x")
+                self.cong.save()
+                docs = self.c.get("/api/landing/").data["documentos_congreso"]
+        finally:
+            shutil.rmtree(media, ignore_errors=True)
+        por_titulo = {d["title"]: d for d in docs}
+        self.assertEqual(por_titulo["Convocatoria"]["category"], "oficial")
+        self.assertEqual(por_titulo["Plantilla de extensos"]["category"], "plantilla")
+        self.assertTrue(por_titulo["Convocatoria"]["url"].startswith("http"))
+        self.assertNotIn("Plantilla de constancia", por_titulo)          # la de constancias es de uso interno
+        self.assertEqual(len(docs), 2)
+
     def test_put_requiere_admin(self):
         self.assertEqual(self.c.put("/api/landing/", {"contenido": {"a": 1}}, format="json").status_code, 401)
         self.c.force_authenticate(usuario("p@x.mx"))

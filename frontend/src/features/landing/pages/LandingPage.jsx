@@ -369,6 +369,10 @@ export default function App() {
 
   // Estado de Fechas y Plazos Importantes (inicio, fin, color)
   const [timeline, setTimeline] = useState(INITIAL_TIMELINE)
+  // Fechas importantes del proceso (se crean con el congreso): vienen del servidor, no se editan aquí.
+  const [fechasProceso, setFechasProceso] = useState([])
+  // Archivos que se subieron al crear el congreso (convocatoria, aviso de privacidad, plantillas…): vienen del servidor.
+  const [docsCongreso, setDocsCongreso] = useState([])
   const [calendarMonth, setCalendarMonth] = useState('2026-09')
   const [eventForm, setEventForm] = useState({ startDate: '', endDate: '', title: '', color: '#2563eb' })
   const [editingEventId, setEditingEventId] = useState(null)
@@ -411,6 +415,11 @@ export default function App() {
       if (c.posterImage) setPosterImage(c.posterImage)
       if (c.programImage) setProgramImage(c.programImage)
       if (c.timeline) setTimeline(c.timeline)
+      if (Array.isArray(data?.documentos_congreso)) setDocsCongreso(data.documentos_congreso)
+      if (Array.isArray(data?.fechas_proceso)) {
+        setFechasProceso(data.fechas_proceso)
+        if (data.fechas_proceso[0]) setCalendarMonth(data.fechas_proceso[0].startDate.slice(0, 7))
+      }
       if (c.docs) setDocs(c.docs)
       if (c.videos) setVideos(c.videos)
       if (c.historicos) setHistoricos(c.historicos)
@@ -580,8 +589,11 @@ export default function App() {
     contactInfo.mapQuery || `${contactInfo.institution} ${contactInfo.address}`
   )}`
 
-  const oficialDocs = docs.filter((d) => d.category === 'oficial')
-  const plantillaDocs = docs.filter((d) => d.category === 'plantilla')
+  // Los documentos reales del congreso van primero; los de ejemplo sin archivo ('#') solo los ve el administrador.
+  const manuales = docs.filter((d) => adminEnabled || !docsCongreso.length || (d.url && d.url !== '#'))
+  const todosDocs = [...docsCongreso, ...manuales]
+  const oficialDocs = todosDocs.filter((d) => d.category === 'oficial')
+  const plantillaDocs = todosDocs.filter((d) => d.category === 'plantilla')
 
   return (
     <div
@@ -605,7 +617,7 @@ export default function App() {
           <div className="nav-dropdown">
             <button onClick={() => nav('documentos')}>Documentos ▾</button>
             <div className="dropdown-content">
-              {docs.map((d) => (
+              {todosDocs.map((d) => (
                 <a
                   key={d.id}
                   href="#documentos"
@@ -776,7 +788,7 @@ export default function App() {
           <h2>Fechas y plazos importantes</h2>
           <div className="two">
             <ol className="timeline">
-              {[...timeline].sort((a, b) => a.startDate.localeCompare(b.startDate)).map((item) => (
+              {[...timeline, ...fechasProceso].sort((a, b) => a.startDate.localeCompare(b.startDate)).map((item) => (
                 <li key={item.id} style={{ '--event-color': item.color }}>
                   <div className="timeline-content">
                     <div className="timeline-date-row">
@@ -785,7 +797,7 @@ export default function App() {
                     </div>
                     <span>{item.title}</span>
                   </div>
-                  {adminEnabled && (
+                  {adminEnabled && !item.proceso && (
                     <div className="timeline-actions">
                       <button type="button" onClick={() => editEvent(item)}>Editar</button>
                       <button type="button" onClick={() => setTimeline((current) => current.filter((entry) => entry.id !== item.id))}>Eliminar</button>
@@ -794,7 +806,7 @@ export default function App() {
                 </li>
               ))}
             </ol>
-            <Calendar events={timeline} month={calendarMonth} onMonthChange={setCalendarMonth} />
+            <Calendar events={[...timeline, ...fechasProceso]} month={calendarMonth} onMonthChange={setCalendarMonth} />
           </div>
           {adminEnabled && (
             <form className="admin-form event-form" onSubmit={saveEvent}>
@@ -968,7 +980,7 @@ export default function App() {
                   >
                     <span>📄</span>{d.title}<b>→</b>
                   </a>
-                  {adminEnabled && (
+                  {adminEnabled && !d.proceso && (
                     <div className="doc-admin-actions">
                       <button type="button" onClick={() => startEditDoc(d)}>Editar</button>
                       <button type="button" onClick={() => setDocs((prev) => prev.filter((item) => item.id !== d.id))}>Borrar</button>
@@ -993,7 +1005,7 @@ export default function App() {
                   >
                     <span>📑</span>{d.title}<b>→</b>
                   </a>
-                  {adminEnabled && (
+                  {adminEnabled && !d.proceso && (
                     <div className="doc-admin-actions">
                       <button type="button" onClick={() => startEditDoc(d)}>Editar</button>
                       <button type="button" onClick={() => setDocs((prev) => prev.filter((item) => item.id !== d.id))}>Borrar</button>

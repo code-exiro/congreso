@@ -66,6 +66,67 @@ def _periodo(inicio, fin):
     return f"del {inicio.day} de {MESES[inicio.month - 1]} de {inicio.year} al {fin.day} de {MESES[fin.month - 1]} de {fin.year}."
 
 
+# Colores del calendario para las fechas del proceso (clave de ventanas.py -> color); las demás reciclan esta paleta.
+COLORES_PROCESO = {
+    "recepcion": "#2563eb", "asignacion_resumen": "#0891b2", "evaluacion_resumen": "#d97706",
+    "entrega_extenso": "#7c3aed", "asignacion_extenso": "#0d9488", "evaluacion_extenso": "#be185d", "realizacion": "#059669",
+}
+PALETA = ["#2563eb", "#0891b2", "#d97706", "#7c3aed", "#0d9488", "#be185d", "#059669", "#dc2626"]
+
+
+def fechas_del_proceso(congreso):
+    """Fechas importantes del congreso (las que se capturan al crearlo o en «Fechas Importantes») listas para el calendario público.
+
+    Se calculan al momento de consultar la landing, así que siempre reflejan lo último que se editó y no se duplican en el contenido.
+    """
+    if congreso is None:
+        return []
+    from . import ventanas
+    claves = {nombre: clave for clave, nombre in ventanas.NOMBRES.items()}
+    salida = []
+    filas = congreso.fechas_importantes.select_related("fecha_importante").order_by("fecha_inicio", "fecha_fin", "pk")
+    for n, f in enumerate(filas):
+        nombre = f.fecha_importante.nombre
+        salida.append({
+            "id": f"proceso-{f.pk}", "title": nombre, "startDate": f.fecha_inicio.isoformat(), "endDate": f.fecha_fin.isoformat(),
+            "color": COLORES_PROCESO.get(claves.get(nombre), PALETA[n % len(PALETA)]), "proceso": True,
+        })
+    return salida
+
+
+# Archivos que se suben al crear el congreso y se muestran al público: (campo del modelo, título, categoría de la landing).
+# La plantilla de constancia NO se publica: es de uso interno para emitir las constancias.
+DOCUMENTOS_PUBLICOS = [
+    ("convocatoria", "Convocatoria", "oficial"),
+    ("aviso_privacidad", "Aviso de privacidad", "oficial"),
+    ("terminos_condiciones", "Términos y condiciones", "oficial"),
+    ("plantilla_extenso", "Plantilla de extensos", "plantilla"),
+    ("plantilla_fondo_videoponencia", "Plantilla de fondo para videoponencia", "plantilla"),
+    ("plantilla_presentacion", "Plantilla de presentación", "plantilla"),
+    ("plantilla_autores", "Plantilla para autores", "plantilla"),
+]
+
+
+def documentos_del_congreso(congreso, request=None):
+    """Archivos que se subieron al crear el congreso, con su URL, para «Documentos y plantillas» de la landing.
+
+    Se calculan al consultar: si el coordinador cambia un archivo, la landing lo refleja sin copiar nada.
+    """
+    if congreso is None:
+        return []
+    salida = []
+    for campo, titulo, categoria in DOCUMENTOS_PUBLICOS:
+        archivo = getattr(congreso, campo, None)
+        if not archivo:
+            continue
+        url = archivo.url
+        salida.append({
+            "id": f"congreso-{campo}", "title": titulo, "category": categoria,
+            "url": request.build_absolute_uri(url) if request else url, "proceso": True,
+        })
+    return salida
+
+
 def conectar_datos_congreso(congreso):
     """Escribe en la landing los datos que ya se capturaron al crear el congreso (edición, modalidad, sede y periodo).
 
@@ -106,6 +167,8 @@ class LandingView(APIView):
         return Response({
             "congreso": {"id": c.pk, "nombre": c.nombre_congreso, "edicion": c.edicion_congreso} if c else None,
             "contenido": (pagina.contenido if pagina else {}) or {},
+            "fechas_proceso": fechas_del_proceso(c),
+            "documentos_congreso": documentos_del_congreso(c, request),
         })
 
     def put(self, request):
