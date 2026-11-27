@@ -32,7 +32,7 @@ import {
 const fields = [
   { name: "first_name", label: "Nombre(s)", autoComplete: "given-name", fullRow: true, maxLength: 150 },
   { name: "last_name", label: "Apellido paterno", autoComplete: "family-name", maxLength: 150 },
-  { name: "maternal_last_name", label: "Apellido materno (opcional)", autoComplete: "off", optional: true, maxLength: 150 },
+  { name: "maternal_last_name", label: "Apellido materno ", autoComplete: "off", optional: true, maxLength: 150 },
   { name: "email", label: "Correo electrónico", type: "email", autoComplete: "email", fullRow: true, maxLength: 254 },
   { name: "password", label: "Contraseña", type: "password", autoComplete: "new-password" },
   { name: "password_confirm", label: "Confirmar contraseña", type: "password", autoComplete: "new-password" },
